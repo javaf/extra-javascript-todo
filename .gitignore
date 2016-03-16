@@ -1,4 +1,21 @@
+
+# =========================
+# NetBeans Local Files
+# =========================
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+.nb-gradle/
+
+
+# =========================
+# Java Out Files
+# =========================
 *.class
+
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
