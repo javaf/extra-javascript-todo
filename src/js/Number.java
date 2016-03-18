@@ -1,6 +1,6 @@
 package js;
 
-public class Number extends object {
+public class Number extends oObject {
 	
 	/* static data */
 	/** The difference between one and the smallest value greater than one that can be represented as a Number. */
