@@ -1,5 +1,6 @@
 package js;
 import java.util.*;
+import java.util.regex.*;
 import java.util.function.*;
 
 /**
@@ -7,6 +8,35 @@ import java.util.function.*;
  * (JSON) and converting values to JSON.
  */
 public class JSON {
+	
+	/* data */
+	private static Pattern _string = Pattern.compile("[^\\\\]\"");
+	private static Pattern _number = Pattern.compile("[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?");
+	
+	public static Object parse(String text) {
+		return null;
+	}
+	private static Object _parse(String text) {
+		return null;
+	}
+	private static Map _parseMap(String text) {
+		return null;
+	}
+	private static Iterable _parseArray(String text) {
+		return null;
+	}
+	private static Object _parseValue(String text) {
+		if(text.startsWith("\"")) return text.substring(1, text.length()-1);
+		if(text.equalsIgnoreCase("true")) return true;
+		if(text.equalsIgnoreCase("false")) return false;
+		return null;
+	}
+	public static String _parseString(String t) {
+		if(t.charAt(0) != '\"') return null;
+		Matcher m = _string.matcher(t);
+		if(!m.find()) return null;
+		return t.substring(1, m.end()-1);
+	}
 	
 	
 	/**
