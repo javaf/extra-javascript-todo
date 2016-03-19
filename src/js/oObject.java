@@ -7,7 +7,8 @@ import java.util.*;
 public class oObject implements Map {
 	
 	/* data */
-	private oObjectData o;
+	/** Internal. Defines this oObject actual values. */
+	private oObjectValue value;
 	
 	
 	/* constructor */
@@ -16,8 +17,9 @@ public class oObject implements Map {
 	 * @param nameValuePairs Pairs of names (strings) and values (any value).
 	 */
 	public oObject(Entry... nameValuePairs) {
+		value = new oObjectValue();
 		for(Entry pair : nameValuePairs)
-			map().put(pair.getKey(), pair.getValue());
+			value.put(pair.getKey(), pair.getValue());
 	}
 	/**
 	 * The oObject constructor creates an object wrapper for the given value.
@@ -70,7 +72,7 @@ public class oObject implements Map {
 	 * @return Prototype of this object.
 	 */
 	public final oObject prototype() {
-		return data != null? data.prototype : null;
+		return value!=null? value.prototype : null;
 	}
 	/**
 	 * Sets the oObject's prototype object
@@ -78,8 +80,8 @@ public class oObject implements Map {
 	 * @return Same as value.
 	 */
 	public final oObject prototype(oObject value){
-		if(data == null) data = new oObjectData();
-		return (data.prototype = value);
+		if(this.value==null) this.value = new oObjectValue();
+		return (this.value.prototype = value);
 	}
 	
 	
@@ -226,17 +228,17 @@ public class oObject implements Map {
 
 	@Override
 	public boolean containsKey(Object key) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return value!=null? value.containsKey(key) : false;
 	}
 
 	@Override
 	public boolean containsValue(Object value) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return this.value!=null? this.value.containsValue(value) : false;
 	}
 
 	@Override
 	public Object remove(Object key) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return null;
 	}
 
 	@Override
@@ -262,16 +264,5 @@ public class oObject implements Map {
 	@Override
 	public Set entrySet() {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-	
-	
-	/**
-	 * Represents internal data for oObject
-	 */
-	private class oObjectData {
-		/**  */
-		public oObject prototype;
-		public HashMap special;
-		public boolean sealed;
 	}
 }

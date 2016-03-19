@@ -80,4 +80,13 @@ class oObjectDescriptor {
 	 */
 	public oObjectDescriptor() {
 	}
+	
+	
+	/**
+	 * Indicates if a property is a data property.
+	 * @return True if it is a data property, else false.
+	 */
+	public final boolean isData() {
+		return get==null && set==null;
+	}
 }
