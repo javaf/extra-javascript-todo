@@ -81,6 +81,42 @@ class oObjectDescriptor {
 	public oObjectDescriptor() {
 	}
 	
+
+	/**
+	 * Gets the fields as a map.
+	 * @return Fields as a map.
+	 */
+	public final oObject get() {
+		oObject o = new oObject();
+		o.set("configurable", configurable);
+		o.set("enumerable", enumerable);
+		o.set("writeable", writeable);
+		o.set("value", value);
+		o.set("get", get);
+		o.set("set", set);
+		return o;
+	}
+
+	
+	/**
+	 * Set the fields with a map.
+	 * @param value Map with field names, and values.
+	 */
+	public final void set(Map value) {
+		for(Object k : value.keySet()) {
+			Object v = value.get(k);
+			switch(k.toString()) {
+				case "configurable": configurable = (Boolean)v; break;
+				case "enumerable": enumerable = (Boolean)v; break;
+				case "writeable": writeable = (Boolean)v; break;
+				case "value": this.value = v; break;
+				case "get": get = (Supplier)v; break;
+				case "set": set = (Consumer)v; break;
+			}
+		}
+		// this.value = isData()? 
+	}
+	
 	
 	/**
 	 * Indicates if a property is a data property.

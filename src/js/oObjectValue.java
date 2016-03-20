@@ -18,12 +18,20 @@ class oObjectValue extends HashMap {
 	
 	/* method */
 	/**
+	 * Creates a new object value.
+	 */
+	public oObjectValue() {
+		descriptor = new HashMap<>();
+	}
+	
+	
+	/* method */
+	/**
 	 * Get the value of a property.
 	 * @param key Name of the property.
 	 * @return Property value.
 	 */
-	@Override
-	public final Object get(Object key) {
+	public final Object prop(Object key) {
 		oObjectDescriptor desc = descriptor.get(key);
 		if(desc!=null && !desc.isData()) return desc.get!=null? desc.get.get() : null;
 		return containsKey(key)? super.get(key) : (prototype!=null? prototype.get(key) : null);
@@ -36,8 +44,7 @@ class oObjectValue extends HashMap {
 	 * @param value New property value.
 	 * @return Old property value.
 	 */
-	@Override
-	public final Object put(Object key, Object value) {
+	public final Object prop(Object key, Object value) {
 		oObjectDescriptor desc = descriptor.get(key);
 		if(desc==null) return !containsKey(key) && prototype!=null && prototype.containsKey(key)? prototype.put(key, value) : super.put(key, value);
 		if(desc.isData()) { if(desc.writeable) return super.put(key, value); }
@@ -51,8 +58,7 @@ class oObjectValue extends HashMap {
 	 * @param key Property to remove.
 	 * @return Old value.
 	 */
-	@Override
-	public final Object remove(Object key) {
+	public final Object delete(Object key) {
 		boolean hasd = descriptor.containsKey(key);
 		if(!containsKey(key) || hasd && !descriptor.get(key).configurable) return null;
 		if(hasd) descriptor.remove(key);
