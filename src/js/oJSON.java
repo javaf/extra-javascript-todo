@@ -4,10 +4,10 @@ import java.util.regex.*;
 import java.util.function.*;
 
 /**
- * The JSON class contains methods for parsing JavaScript Object Notation
- * (JSON) and converting values to JSON.
+ * The oJSON class contains methods for parsing JavaScript Object Notation
+ (oJSON) and converting values to oJSON.
  */
-public class JSON {
+public class oJSON {
 	
 	/* data */
 	private static Pattern _string = Pattern.compile("[^\\\\]\"");
@@ -40,80 +40,80 @@ public class JSON {
 	
 	
 	/**
-	 * Converts a JavaScript value to a JSON string, optionally replacing values
-	 * if a replacer function is specified, or optionally including only the
-	 * specified properties if a replacer array is specified.
-	 * @param value The value to convert to a JSON string.
-	 * @return JSON string corresponding to the specified value, optionally
-	 * including only certain properties or replacing property values in a
-	 * user-defined manner.
+	 * Converts a JavaScript value to a oJSON string, optionally replacing values
+ if a replacer function is specified, or optionally including only the
+ specified properties if a replacer array is specified.
+	 * @param value The value to convert to a oJSON string.
+	 * @return oJSON string corresponding to the specified value, optionally
+ including only certain properties or replacing property values in a
+ user-defined manner.
 	 */
 	public static String stringify(Object value) {
 		return stringify(value, null, "");
 	}
 	/**
-	 * Converts a JavaScript value to a JSON string, optionally replacing values
-	 * if a replacer function is specified, or optionally including only the
-	 * specified properties if a replacer array is specified.
-	 * @param value The value to convert to a JSON string.
+	 * Converts a JavaScript value to a oJSON string, optionally replacing values
+ if a replacer function is specified, or optionally including only the
+ specified properties if a replacer array is specified.
+	 * @param value The value to convert to a oJSON string.
 	 * @param replacer Optional. A function that alters the behavior of the
-	 * stringification process, or an array of String and Number objects that
-	 * serve as a whitelist for selecting the properties of the value object to
-	 * be included in the JSON string. If this value is null or not provided, all
-	 * properties of the object are included in the resulting JSON string.
-	 * @return JSON string corresponding to the specified value, optionally
-	 * including only certain properties or replacing property values in a
-	 * user-defined manner.
+ stringification process, or an array of String and Number objects that
+ serve as a whitelist for selecting the properties of the value object to
+ be included in the oJSON string. If this value is null or not provided, all
+ properties of the object are included in the resulting oJSON string.
+	 * @return oJSON string corresponding to the specified value, optionally
+ including only certain properties or replacing property values in a
+ user-defined manner.
 	 */
 	public static String stringify(Object value, Object replacer) {
 		return stringify(value, replacer, "");
 	}
 	/**
-	 * Converts a JavaScript value to a JSON string, optionally replacing values
-	 * if a replacer function is specified, or optionally including only the
-	 * specified properties if a replacer array is specified.
-	 * @param value The value to convert to a JSON string.
+	 * Converts a JavaScript value to a oJSON string, optionally replacing values
+ if a replacer function is specified, or optionally including only the
+ specified properties if a replacer array is specified.
+	 * @param value The value to convert to a oJSON string.
 	 * @param replacer Optional. A function that alters the behavior of the
-	 * stringification process, or an array of String and Number objects that
-	 * serve as a whitelist for selecting the properties of the value object to
-	 * be included in the JSON string. If this value is null or not provided, all
-	 * properties of the object are included in the resulting JSON string.
+ stringification process, or an array of String and Number objects that
+ serve as a whitelist for selecting the properties of the value object to
+ be included in the oJSON string. If this value is null or not provided, all
+ properties of the object are included in the resulting oJSON string.
 	 * @param space Optional. A String or Number object that's used to insert
-	 * white space into the output JSON string for readability purposes. If this
-	 * is a Number, it indicates the number of space characters to use as white
-	 * space; this number is capped at 10 if it's larger than that. Values less
-	 * than 1 indicate that no space should be used. If this is a String, the
-	 * string (or the first 10 characters of the string, if it's longer than
-	 * that) is used as white space. If this parameter is not provided (or is
-	 * null), no white space is used.
-	 * @return JSON string corresponding to the specified value, optionally
-	 * including only certain properties or replacing property values in a
-	 * user-defined manner.
+ white space into the output oJSON string for readability purposes. If this
+ is a Number, it indicates the number of space characters to use as white
+ space; this number is capped at 10 if it's larger than that. Values less
+ than 1 indicate that no space should be used. If this is a String, the
+ string (or the first 10 characters of the string, if it's longer than
+ that) is used as white space. If this parameter is not provided (or is
+ null), no white space is used.
+	 * @return oJSON string corresponding to the specified value, optionally
+ including only certain properties or replacing property values in a
+ user-defined manner.
 	 */
 	public static String stringify(Object value, Object replacer, double space) {
 		return stringify(value, replacer, _repeat(" ", (int)space));
 	}
 	/**
-	 * Converts a JavaScript value to a JSON string, optionally replacing values
-	 * if a replacer function is specified, or optionally including only the
-	 * specified properties if a replacer array is specified.
-	 * @param value The value to convert to a JSON string.
+	 * Converts a JavaScript value to a oJSON string, optionally replacing values
+ if a replacer function is specified, or optionally including only the
+ specified properties if a replacer array is specified.
+	 * @param value The value to convert to a oJSON string.
 	 * @param replacer Optional. A function that alters the behavior of the
-	 * stringification process, or an array of String and Number objects that
-	 * serve as a whitelist for selecting the properties of the value object to
-	 * be included in the JSON string. If this value is null or not provided, all
-	 * properties of the object are included in the resulting JSON string.
+ stringification process, or an array of String and Number objects that
+ serve as a whitelist for selecting the properties of the value object to
+ be included in the oJSON string. If this value is null or not provided, all
+ properties of the object are included in the resulting oJSON string.
 	 * @param space Optional. A String or Number object that's used to insert
-	 * white space into the output JSON string for readability purposes. If this
-	 * is a Number, it indicates the number of space characters to use as white
-	 * space; this number is capped at 10 if it's larger than that. Values less
-	 * than 1 indicate that no space should be used. If this is a String, the
-	 * string (or the first 10 characters of the string, if it's longer than
-	 * that) is used as white space. If this parameter is not provided (or is
-	 * null), no white space is used.
-	 * @return JSON string corresponding to the specified value, optionally
-	 * including only certain properties or replacing property values in a
-	 * user-defined manner.
+ white space into the output oJSON string for readability purposes. If this
+ is a Number, it indicates the number of space characters to use as white
+ space; this number is capped at 10 if it's larger than that. Values less
+ than 1 indicate that no space should be used. If this is a String, the
+ string (or the first 10 characters of the string, if it's longer than
+ that) is used as white space. If this parameter is not provided (or is
+ null), no white space is used.
+	 * @return oJSON string corresponding to the specified value, optionally
+ including only certain properties or replacing property values in a
+ user-defined manner.
 	 */
 	public static String stringify(Object value, Object replacer, String space) {
 		space = space.length()>20? space.substring(0, 20) : space;

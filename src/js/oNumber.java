@@ -1,9 +1,9 @@
 package js;
 
-public class Number extends oObject {
+public class oNumber extends oObject {
 	
 	/* static data */
-	/** The difference between one and the smallest value greater than one that can be represented as a Number. */
+	/** The difference between one and the smallest value greater than one that can be represented as a oNumber. */
 	public static double EPSILON = Math.pow(2, -52);
 	/** The maximum safe integer in JavaScript (2^53 - 1). */
 	public static double MAX_SAFE_INTEGER = Math.pow(2, 53) - 1;

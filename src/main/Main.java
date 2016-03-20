@@ -7,6 +7,6 @@ import js.*;
 public class Main {
 
     public static void main(String[] args) {
-			System.out.println(JSON._parseString("\"Hell\\\"o\""));
+			System.out.println(oJSON._parseString("\"Hell\\\"o\""));
     }
 }
