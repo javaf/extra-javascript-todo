@@ -9,7 +9,7 @@ public class oObject implements Map, Iterable {
 	
 	/* data */
 	/** Internal. Defines this oObject actual values. */
-	private oObjectValue value;
+	private pObjectValue value;
 	
 	
 	/* constructor */
@@ -18,7 +18,7 @@ public class oObject implements Map, Iterable {
 	 * @param nameValuePairs Pairs of names (strings) and values (any value).
 	 */
 	public oObject(Entry... nameValuePairs) {
-		value = new oObjectValue();
+		value = new pObjectValue();
 		for(Entry p : nameValuePairs)
 			value.put(p.getKey(), p.getValue());
 	}
@@ -30,7 +30,7 @@ public class oObject implements Map, Iterable {
 	 */
 	public oObject(Object value) {
 		if(value==null) return;
-		this.value = new oObjectValue();
+		this.value = new pObjectValue();
 		this.value.put("[[PrimitiveValue]]", value);
 		this.value.descriptor.put("[[PrimitiveValue]]", new pObjectDescriptor());
 	}
@@ -38,7 +38,7 @@ public class oObject implements Map, Iterable {
 	 * The Object constructor creates an object wrapper for the given value.
 	 */
 	public oObject() {
-		value = new oObjectValue();
+		value = new pObjectValue();
 	}
 	
 	
@@ -413,7 +413,7 @@ public class oObject implements Map, Iterable {
 	 * Creates oObject data, if required, and returns it.
 	 * @return oObject data.
 	 */
-	private oObjectValue data() {
-		return (value = value==null? new oObjectValue() : value);
+	private pObjectValue data() {
+		return (value = value==null? new pObjectValue() : value);
 	}
 }

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Defines value for an oObject.
  */
-class oObjectValue extends HashMap {
+class pObjectValue extends HashMap {
 	
 	/* data */
 	/** Defines the prototype of this object. */
@@ -20,7 +20,7 @@ class oObjectValue extends HashMap {
 	/**
 	 * Creates a new object value.
 	 */
-	public oObjectValue() {
+	public pObjectValue() {
 		descriptor = new HashMap<>();
 	}
 	
