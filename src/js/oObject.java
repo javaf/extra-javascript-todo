@@ -32,7 +32,7 @@ public class oObject implements Map, Iterable {
 		if(value==null) return;
 		this.value = new oObjectValue();
 		this.value.put("[[PrimitiveValue]]", value);
-		this.value.descriptor.put("[[PrimitiveValue]]", new oObjectDescriptor());
+		this.value.descriptor.put("[[PrimitiveValue]]", new pObjectDescriptor());
 	}
 	/**
 	 * The Object constructor creates an object wrapper for the given value.

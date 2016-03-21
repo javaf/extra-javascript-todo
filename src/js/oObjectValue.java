@@ -13,7 +13,7 @@ class oObjectValue extends HashMap {
 	/** Tells whether this object is extensible. */
 	public boolean extensible;
 	/** Describes the state of properties. */
-	public HashMap<Object, oObjectDescriptor> descriptor;
+	public HashMap<Object, pObjectDescriptor> descriptor;
 
 	
 	/* method */
@@ -32,7 +32,7 @@ class oObjectValue extends HashMap {
 	 * @return Property value.
 	 */
 	public final Object prop(Object key) {
-		oObjectDescriptor desc = descriptor.get(key);
+		pObjectDescriptor desc = descriptor.get(key);
 		if(desc!=null && !desc.isData()) return desc.get!=null? desc.get.get() : null;
 		return containsKey(key)? super.get(key) : (prototype!=null? prototype.get(key) : null);
 	}
@@ -45,7 +45,7 @@ class oObjectValue extends HashMap {
 	 * @return Old property value.
 	 */
 	public final Object prop(Object key, Object value) {
-		oObjectDescriptor desc = descriptor.get(key);
+		pObjectDescriptor desc = descriptor.get(key);
 		if(desc==null) return !containsKey(key) && prototype!=null && prototype.containsKey(key)? prototype.put(key, value) : super.put(key, value);
 		if(desc.isData()) { if(desc.writeable) return super.put(key, value); }
 		else if(desc.set!=null) desc.set.accept(value);
@@ -73,7 +73,7 @@ class oObjectValue extends HashMap {
 	public final boolean isLocked(int l) {
 		if(l>0 && extensible) return false;
 		if(l>1 && size()>descriptor.size()) return false;
-		if(l>1) for(oObjectDescriptor d : descriptor.values())
+		if(l>1) for(pObjectDescriptor d : descriptor.values())
 			if(d.configurable || (l>2 && d.isData() && d.writeable)) return false;
 		return true;
 	}
@@ -86,9 +86,9 @@ class oObjectValue extends HashMap {
 	public final void lock(int l) {
 		extensible = l>0;
 		for(Object key : keySet()) {
-			oObjectDescriptor d = descriptor.get(key);
+			pObjectDescriptor d = descriptor.get(key);
 			if(d!=null) { d.configurable = l<2; if(d.isData()) d.writeable = l>0? (l<3? d.writeable : false) : true; }
-			else if(l>1) descriptor.put(key, new oObjectDescriptor(false, true, l<3, null, null, null));
+			else if(l>1) descriptor.put(key, new pObjectDescriptor(false, true, l<3, null, null, null));
 		}
 	}
 }

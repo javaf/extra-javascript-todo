@@ -6,7 +6,7 @@ import java.util.function.*;
 /**
  * Defines descriptors for special oObject properties.
  */
-class oObjectDescriptor {
+class pObjectDescriptor {
 	
 	/* data */
 	/**
@@ -49,7 +49,7 @@ class oObjectDescriptor {
 	 * Creates an oObject descriptor.
 	 * @param value Map describing the descriptor. Options not provided are set to default.
 	 */
-	public oObjectDescriptor(Map value) {
+	public pObjectDescriptor(Map value) {
 		set(value);
 	}
 	/**
@@ -61,7 +61,7 @@ class oObjectDescriptor {
 	 * @param get Defines get accessor for property.
 	 * @param set Defines set accessor for property.
 	 */
-	public oObjectDescriptor(boolean configurable, boolean enumerable, boolean writeable, Object value, Supplier get, Consumer set) {
+	public pObjectDescriptor(boolean configurable, boolean enumerable, boolean writeable, Object value, Supplier get, Consumer set) {
 		this.configurable = configurable;
 		this.enumerable = enumerable;
 		this.writeable = writeable;
@@ -72,7 +72,7 @@ class oObjectDescriptor {
 	/**
 	 * Creates an oObject descriptor with default options.
 	 */
-	public oObjectDescriptor() {
+	public pObjectDescriptor() {
 	}
 	
 	
