@@ -64,6 +64,143 @@ public class oArray {
 		return null;
 	}
 	
+	/**
+	 * Fills all the elements of an array from a start index to an end index with
+	 * a static value.
+	 * @param value Value to fill an array.
+	 * @param start Optional. Start index.
+	 * @param end Optional. End index.
+	 * @return This array.
+	 */
+	public oArray fill(Object value, int start, int end) {
+		return null;
+	}
+	
+	/**
+	 * Removes the last element from an array and returns that element.
+	 * @return Last element of array.
+	 */
+	public Object pop() {
+		return null;
+	}
+	
+	/**
+	 * Adds one or more elements to the end of an array and returns the new
+	 * length of the array.
+	 * @param elements The elements to add to the end of the array.
+	 * @return The new length property of the object upon which the method was
+	 * called.
+	 */
+	public int push(Object... elements) {
+		return 0;
+	}
+	
+	
+	public void reverse() {
+		
+	}
+	
+	public void shift() {
+		
+	}
+	
+	public void sort() {
+		
+	}
+	
+	public void splice() {
+		
+	}
+	
+	public void unshift() {
+		
+	}
+	
+	public void concat() {
+		
+	}
+	
+	public void includes() {
+		
+	}
+	
+	public void join() {
+		
+	}
+	
+	@Override
+	public String toString() {
+		return null;
+	}
+	
+	public String toLocaleString() {
+		return null;
+	}
+	
+	public int indexOf() {
+		return 0;
+	}
+	
+	public int lastIndexOf() {
+		return 0;
+	}
+	
+	public void forEach() {
+		
+	}
+	
+	public void entries() {
+		
+	}
+	
+	public void every() {
+		
+	}
+	
+	public void some() {
+		
+	}
+	
+	public void filter() {
+		
+	}
+	
+	public void find() {
+		
+	}
+	
+	public void findIndex() {
+		
+	}
+	
+	public void keys() {
+		
+	}
+	
+	public void map() {
+		
+	}
+	
+	public void reduce() {
+		
+	}
+	
+	public void reduceRight() {
+		
+	}
+	
+	public void values() {
+		
+	}
+	
+	public void get() {
+		
+	}
+	
+	public void set() {
+		
+	}
+	
 	
 	
 	/* static method */
