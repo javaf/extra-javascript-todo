@@ -1,14 +1,52 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package js;
 
-/**
- *
- * @author wolfram77
- */
 public class oFloat32Array {
+	
+	public static final int BYTES_PER_ELEMENT = 4;
+	
+	public oFloat32Array(int length) {
+		
+	}
+	
+	public oFloat32Array(oArray typedArray) {
+		
+	}
+	
+	public oFloat32Array(Object object) {
+		
+	}
+	
+	public oFloat32Array(Object buffer, int byteOffset, int length) {
+		
+	}
+	
+	public int length() {
+		return 0;
+	}
+	
+	public String name() {
+		return null;
+	}
+	
+	public static void from() {
+		
+	}
+	
+	public static void of() {
+		
+	}
+	
+	public void buffer() {
+		
+	}
+	
+	public void byteLength() {
+		
+	}
+	
+	public void byteOffset() {
+		
+	}
+	
 	
 }

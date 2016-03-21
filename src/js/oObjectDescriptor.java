@@ -50,13 +50,7 @@ class oObjectDescriptor {
 	 * @param value Map describing the descriptor. Options not provided are set to default.
 	 */
 	public oObjectDescriptor(Map value) {
-		if(value == null) return;
-		if(value.get("configurable") instanceof Boolean) configurable = (Boolean)value.get("configurable");
-		if(value.get("enumerable") instanceof Boolean) enumerable = (Boolean)value.get("enumerable");
-		if(value.get("writeable") instanceof Boolean) writeable = (Boolean)value.get("writeable");
-		if(value.get("get") instanceof Supplier) get = (Supplier)value.get("get");
-		if(value.get("set") instanceof Consumer) set = (Consumer)value.get("set");
-		if(get==null && set==null) this.value = value.get("value");
+		set(value);
 	}
 	/**
 	 * Creates an oObject descriptor.
@@ -81,7 +75,8 @@ class oObjectDescriptor {
 	public oObjectDescriptor() {
 	}
 	
-
+	
+	/* method */
 	/**
 	 * Gets the fields as a map.
 	 * @return Fields as a map.
@@ -103,6 +98,7 @@ class oObjectDescriptor {
 	 * @param value Map with field names, and values.
 	 */
 	public final void set(Map value) {
+		if(value==null) return;
 		for(Object k : value.keySet()) {
 			Object v = value.get(k);
 			switch(k.toString()) {
@@ -114,7 +110,7 @@ class oObjectDescriptor {
 				case "set": set = (Consumer)v; break;
 			}
 		}
-		// this.value = isData()? 
+		this.value = get==null && set==null? this.value : null;
 	}
 	
 	

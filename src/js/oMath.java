@@ -39,8 +39,9 @@ public class oMath {
 	 * @return Absolute value.
 	 */
 	public final static long abs(long x) {
-		return x<0? -x : x;
+		return Math.abs(x);
 	}
+	
 	
 	/**
 	 * Returns the arc-cosine of a number.
