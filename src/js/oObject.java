@@ -9,7 +9,7 @@ public class oObject implements iObject {
 	
 	/* data */
 	/** Internal object value/map. */
-	private final Object value;
+	private final zObjectValue value;
 	
 	
 	/* constructor */
@@ -18,10 +18,9 @@ public class oObject implements iObject {
 	 * @param nameValuePairs Pairs of names (strings) and values (any value).
 	 */
 	public oObject(Entry... nameValuePairs) {
-		zObjectValue v = new zObjectValue();
+		value = new zObjectValue();
 		for(Entry p : nameValuePairs)
-			v.put(p.getKey(), p.getValue());
-		this.value = v;
+			value.put(p.getKey().toString(), p.getValue());
 	}
 	/**
 	 * The Object constructor creates an object wrapper for the given value.
@@ -30,7 +29,8 @@ public class oObject implements iObject {
 	 * the value.
 	 */
 	public oObject(Object value) {
-		this.value = value;
+		this.value = new zObjectValue();
+		this.value.primitive = value;
 	}
 	/**
 	 * The Object constructor creates an object wrapper for the given value.
@@ -43,7 +43,7 @@ public class oObject implements iObject {
 	/* property */
 	@Override
 	public zObjectValue zvalue() {
-		return (zObjectValue)value;
+		return value;
 	}
 	
 	
@@ -93,7 +93,7 @@ public class oObject implements iObject {
 	 * @param obj 
 	 */
 	public static void freeze(oObject obj) {
-		obj.data().lock(3);
+		obj.value.lock(3);
 	}
 	
 	public static Map getOwnPropertyDescriptor() {
@@ -182,7 +182,7 @@ public class oObject implements iObject {
 	 * @return Returns a reference to the passed Object.
 	 */
 	public static oObject preventExtensions(oObject obj) {
-		obj.data().lock(1);
+		obj.value.lock(1);
 		return obj;
 	}
 	
@@ -195,7 +195,7 @@ public class oObject implements iObject {
 	 * @return Returns a reference to the passed Object.
 	 */
 	public static oObject seal(oObject obj) {
-		obj.data().lock(2);
+		obj.value.lock(2);
 		return obj;
 	}
 }
