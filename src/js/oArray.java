@@ -6,6 +6,12 @@ import java.util.function.*;
  */
 public class oArray {
 	
+	/* data */
+	protected Object value;
+	
+	/* property */
+	
+	
 	/* constructor */
 	/**
 	 * Create a new array.
