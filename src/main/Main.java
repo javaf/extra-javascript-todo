@@ -1,7 +1,5 @@
 package main;
-import js.core.oJSON;
-import java.util.*;
-import java.util.function.*;
+import js.core.*;
 
 
 public class Main {
