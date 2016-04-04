@@ -9,9 +9,16 @@ import java.util.function.*;
  */
 public interface iFunction2<TA, TB, TR> extends iMethod, BiFunction<TA, TB, TR> {
 	
+	/* super property */
+	@Override
+	default int length() {
+		return 2;
+	}
+	
+	
 	/* method */
 	/**
-	 * Represents then method to the called when "call" is called.
+	 * Represents then method to the called when "run" is called.
 	 * @param a Input argument 1.
 	 * @param b Input argument 2.
 	 * @return The output value of method.
@@ -22,7 +29,12 @@ public interface iFunction2<TA, TB, TR> extends iMethod, BiFunction<TA, TB, TR> 
 	
 	/* super method */
 	@Override
-	default Object call(Object... args) {
+	default Object run(Object... args) {
 		return apply((TA)args[0], (TB)args[1]);
+	}
+	
+	@Override
+	default String _toString() {
+		return "TR "+name()+"(TA a, TB b) { [native code] }";
 	}
 }

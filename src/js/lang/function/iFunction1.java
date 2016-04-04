@@ -8,9 +8,16 @@ import java.util.function.*;
  */
 public interface iFunction1<TA, TR> extends iMethod, Function<TA, TR> {
 	
+	/* super property */
+	@Override
+	default int length() {
+		return 1;
+	}
+	
+	
 	/* method */
 	/**
-	 * Represents then method to the called when "call" is called.
+	 * Represents then method to the called when "run" is called.
 	 * @param a Input argument 1.
 	 * @return The output value of method.
 	 */
@@ -20,7 +27,12 @@ public interface iFunction1<TA, TR> extends iMethod, Function<TA, TR> {
 	
 	/* super method */
 	@Override
-	default Object call(Object... args) {
+	default Object run(Object... args) {
 		return apply((TA)args[0]);
+	}
+	
+	@Override
+	default String _toString() {
+		return "TR "+name()+"(TA a) { [native code] }";
 	}
 }

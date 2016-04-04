@@ -9,7 +9,7 @@ public interface iFunction0<TR> extends iMethod, Supplier<TR> {
 	
 	/* method */
 	/**
-	 * Represents then method to the called when "call" is called.
+	 * Represents then method to the called when "run" is called.
 	 * @return The output value of method.
 	 */
 	TR apply();
@@ -22,7 +22,12 @@ public interface iFunction0<TR> extends iMethod, Supplier<TR> {
 	}
 	
 	@Override
-	default Object call(Object... args) {
+	default Object run(Object... args) {
 		return apply();
+	}
+	
+	@Override
+	default String _toString() {
+		return "TR "+name()+"() { [native code] }";
 	}
 }

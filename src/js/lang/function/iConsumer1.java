@@ -7,9 +7,16 @@ import java.util.function.*;
  */
 public interface iConsumer1<TA> extends iMethod, Consumer<TA> {
 	
+	/* super property */
+	@Override
+	default int length() {
+		return 1;
+	}
+	
+	
 	/* method */
 	/**
-	 * Represents then method to the called when "call" is called.
+	 * Represents then method to the called when "run" is called.
 	 * @param a Input argument 1.
 	 */
 	@Override
@@ -18,8 +25,13 @@ public interface iConsumer1<TA> extends iMethod, Consumer<TA> {
 	
 	/* super method */
 	@Override
-	default Object call(Object... args) {
+	default Object run(Object... args) {
 		accept((TA)args[0]);
 		return null;
+	}
+	
+	@Override
+	default String _toString() {
+		return "void "+name()+"(TA a) { [native code] }";
 	}
 }

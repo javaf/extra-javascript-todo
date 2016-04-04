@@ -6,6 +6,24 @@ package js.lang.function;
  */
 public interface iMethod {
 	
+	/* property */
+	/**
+	 * Specifies the number of arguments expected by the function.
+	 * @return Number of function arguments.
+	 */
+	default int length() {
+		return 0;
+	}
+	
+	/**
+	 * Returns the name of the function.
+	 * @return Function name.
+	 */
+	default String name() {
+		return "";
+	}
+	
+	
 	/* method */
 	/**
 	 * Calls the (main) method of this object defined in a class, which implements
@@ -13,5 +31,13 @@ public interface iMethod {
 	 * @param args The input arguments to pass to the function.
 	 * @return The output value.
 	 */
-	Object call(Object... args);
+	Object run(Object... args);
+	
+	/**
+	 * Returns string representation of the method.
+	 * @return String representation of method.
+	 */
+	default String _toString() {
+		return "? "+name()+"(...) { [native code] }";
+	}
 }
