@@ -4,14 +4,6 @@ import java.lang.invoke.*;
 
 /**
  * Defines a method which can be called.
- * @param <TA> Input argument 1 type.
- * @param <TB> Input argument 2 type.
- * @param <TC> Input argument 3 type.
- * @param <TD> Input argument 4 type.
- * @param <TE> Input argument 5 type.
- * @param <TF> Input argument 6 type.
- * @param <TG> Input argument 7 type.
- * @param <TR> Return type. 
  */
 public class cMethod implements iMethod {
 	
@@ -39,36 +31,76 @@ public class cMethod implements iMethod {
 	
 	
 	/* data */
-	protected final iMethod mthd;
+	/** Object implementing iMethod interface which can be called. */
+	private final iMethod method;
+	/** MethodHandle factory that can be used to generate iMethod object. */
+	private final MethodHandle factory;
+	/** Name of the callable method. */
 	private final String name;
 	
+	
 	/* constructor */
-	public cMethod(iMethod method) {
-		mthd = method;
-		name = method.name();
+	/**
+	 * Create a callable Method object from object implementing iMehtod interface.
+	 * @param mthd iMethod implementing object.
+	 */
+	public cMethod(iMethod mthd) {
+		method = mthd;
+		factory = null;
+		name = mthd.name();
 	}
-	public cMethod(Object obj, Class cls, String method, Class... types) throws Throwable {
-		Method m = cls.getMethod(method, types);
-		int nArg = m.getParameterCount();
-		Class tRet = m.getReturnType();
-		Class dCls = tRet==void.class? CONSUMER_INTERFACE[nArg] : FUNCTION_INTERFACE[nArg];
-		MethodType sSig = MethodType.methodType(tRet, m.getParameterTypes());
-		MethodType dSig = tRet==void.class? CONSUMER_SIGNATURE[nArg] : FUNCTION_SIGNATURE[nArg];
-		String dMthd = tRet==void.class? iConsumer.NAME : iFunction.NAME;
-		boolean isstatic = Modifier.isStatic(m.getModifiers());
-		MethodHandles.Lookup lookup = MethodHandles.lookup();
-		MethodType dType = obj==null? MethodType.methodType(dCls) : MethodType.methodType(dCls, cls);
-		MethodHandle factory = LambdaMetafactory.metafactory(lookup, dMthd, dType, dSig, lookup.unreflect(m), sSig).getTarget();
-		if(!isstatic && obj!=null) factory = factory.bindTo(obj);
-		mthd = (iMethod)factory.invoke();
-		name = method;
+	/**
+	 * Create a callable Method object from class, method name, and parameter types.
+	 * @param obj Object bound to function. Can be null if method is static, or
+	 * binding is to be done later using bind().
+	 * @param cls Class which contains the method.
+	 * @param mthd Name of the method.
+	 * @param types Parameter types of the method.
+	 */
+	public cMethod(Object obj, Class<?> cls, String mthd, Class<?>... types) {
+		System.out.println("cMethod constructor");
+		try {
+			Method m = cls.getMethod(mthd, types);
+			int nArg = m.getParameterCount();
+			Class<?> tRet = m.getReturnType();
+			Class<?> dCls = tRet==void.class? CONSUMER_INTERFACE[nArg] : FUNCTION_INTERFACE[nArg];
+			MethodType sSig = MethodType.methodType(tRet, m.getParameterTypes());
+			MethodType dSig = tRet==void.class? CONSUMER_SIGNATURE[nArg] : FUNCTION_SIGNATURE[nArg];
+			String dMthd = tRet==void.class? iConsumer.NAME : iFunction.NAME;
+			boolean isstatic = Modifier.isStatic(m.getModifiers());
+			MethodHandles.Lookup lookup = MethodHandles.lookup();
+			MethodType dType = isstatic? MethodType.methodType(dCls) : MethodType.methodType(dCls, cls);
+			MethodHandle fctry = LambdaMetafactory.metafactory(lookup, dMthd, dType, dSig, lookup.unreflect(m), sSig).getTarget();
+			factory = !isstatic && obj!=null? fctry.bindTo(obj) : fctry;
+			method = (iMethod)factory.invoke();
+			name = mthd;
+		}
+		catch(Throwable e) { throw new RuntimeException(e); }
 	}
- 	
+	/**
+	 * Internal. Copy constructor.
+	 * @param o cMethod object.
+	 */
+	protected cMethod(cMethod o) {
+		this(o.method, o.factory, o.name);
+	}
+	/**
+	 * Internal. Direct field constructor.
+	 * @param mthd iMethod object.
+	 * @param fctry MethodHandle factory.
+	 * @param nm Method name.
+	 */
+	private cMethod(iMethod mthd, MethodHandle fctry, String nm) {
+		method = mthd;
+		factory = fctry;
+		name = nm;
+	}
+	
 	
 	/* super property */
 	@Override
 	public int length() {
-		return mthd.length();
+		return method.length();
 	}
 	
 	@Override
@@ -86,7 +118,28 @@ public class cMethod implements iMethod {
 	 * @return Return value of function.
 	 */
 	public Object apply(Object thisArg, Object[] argsArray) {
-		return run(argsArray);
+		return call(thisArg, argsArray);
+	}
+	
+	/**
+	 * Creates a new function that, when called, has its "this" set to the
+	 * provided value, with a given sequence of arguments preceding any provided
+	 * when the new function is called.
+	 * @param thisArg The value to be passed as the this parameter to the target
+	 * function when the bound function is called.
+	 * @param args Arguments to prepend to arguments provided to the bound
+	 * function when invoking the target function.
+	 * @return Function with bound "this" and any arguments.
+	 */
+	public cMethod bind(Object thisArg, Object... args) {
+		System.out.println("cMethod bind");
+		try {
+			MethodHandle fctry = factory.bindTo(thisArg);
+			for(Object arg : args)
+				fctry = fctry.bindTo(arg);
+			return new cMethod((iMethod)fctry.invoke(), fctry, name);
+		}
+		catch(Throwable e) { throw new RuntimeException(e); }
 	}
 	
 	/**
@@ -97,23 +150,28 @@ public class cMethod implements iMethod {
 	 * @return Return value of function.
 	 */
 	public Object call(Object thisArg, Object... args) {
-		return run(args);
+		return thisArg!=null? bind(thisArg).run(args) : run(args);
 	}
 	
 	
 	/* super method */
 	@Override
 	public Object run(Object... args) {
-		return mthd.run(args);
+		return method.run(args);
 	}
 	
 	@Override
 	public String _toString() {
-		return mthd._toString();
+		return method._toString();
 	}
 	
 	@Override
 	public String toString() {
 		return _toString();
+	}
+	
+	// TODO:
+	public Object valueOf() {
+		return method;
 	}
 }
