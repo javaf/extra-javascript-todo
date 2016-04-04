@@ -1,5 +1,4 @@
 package js.lang.function;
-import java.util.function.*;
 
 /**
  * Represents a single output and 1-input method that can be called.
@@ -7,7 +6,7 @@ import java.util.function.*;
  * @param <TB> Input argument 2 type.
  * @param <TR> Return type.
  */
-public interface iFunction2<TA, TB, TR> extends iMethod, BiFunction<TA, TB, TR> {
+public interface iFunction2<TA, TB, TR> extends iMethod {
 	
 	/* super property */
 	@Override
@@ -23,7 +22,6 @@ public interface iFunction2<TA, TB, TR> extends iMethod, BiFunction<TA, TB, TR> 
 	 * @param b Input argument 2.
 	 * @return The output value of method.
 	 */
-	@Override
 	TR apply(TA a, TB b);
 	
 	

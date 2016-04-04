@@ -13,9 +13,14 @@ import js.lang.function.*;
  * @param <TF>
  * @param <TG>
  */
-public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod<TA, TB, TC, TD, TE, TF, TG, TR> {
+public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implements iConsumer0 {
 	
 	/* constructor */
+	/**
+	 * Creates a new Function object.
+	 * @param function Can be an object implementing Consumer, or a lambda
+	 * expression.
+	 */
 	public oFunction(iMethod function) {
 		super(function);
 	}
@@ -59,6 +64,9 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod<TA, TB, T
 	public oFunction(BiFunction<TA, TB, TR> function) {
 		super((iFunction2<TA, TB, TR>) (TA a, TB b) -> function.apply(a, b));
 	}
+	public oFunction(Object obj, Class cls, String mthd, Class... types) throws Throwable {
+		super(obj, cls, mthd, types);
+	}
 	/**
 	 * Creates a new Function object.
 	 * @param args Names to be used by the function as formal argument names.
@@ -87,5 +95,10 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod<TA, TB, T
 	 */
 	private oFunction(Object func, int len) {
 		super(null);
+	}
+
+	@Override
+	public void accept() {
+		((iConsumer0)mthd).accept();
 	}
 }

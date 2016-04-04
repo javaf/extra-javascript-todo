@@ -1,11 +1,10 @@
 package js.lang.function;
-import java.util.function.*;
 
 /**
  * Represents a no-output and 1 input method that can be called.
  * @param <TA> Input Argument 1 type.
  */
-public interface iConsumer1<TA> extends iMethod, Consumer<TA> {
+public interface iConsumer1<TA> extends iMethod {
 	
 	/* super property */
 	@Override
@@ -19,7 +18,6 @@ public interface iConsumer1<TA> extends iMethod, Consumer<TA> {
 	 * Represents then method to the called when "run" is called.
 	 * @param a Input argument 1.
 	 */
-	@Override
 	void accept(TA a);
 	
 	
