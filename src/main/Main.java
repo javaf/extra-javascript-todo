@@ -8,8 +8,8 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws Throwable {
-		oFunction f = new oFunction(new Main(), Main.class, "add", int.class, int.class, int.class);
-		// f = f.bind(new Main());
+		oFunction f = new oFunction(Main.class, "add", int.class, int.class, int.class);
+		f = f.bind(new Main());
 		System.out.println("name: "+f.name());
 		System.out.println("length: "+f.length());
 		long j = 0;

@@ -58,7 +58,6 @@ public class cMethod implements iMethod {
 	 * @param types Parameter types of the method.
 	 */
 	public cMethod(Object obj, Class<?> cls, String mthd, Class<?>... types) {
-		System.out.println("cMethod constructor");
 		try {
 			Method m = cls.getMethod(mthd, types);
 			int nArg = m.getParameterCount();
@@ -72,7 +71,7 @@ public class cMethod implements iMethod {
 			MethodType dType = isstatic? MethodType.methodType(dCls) : MethodType.methodType(dCls, cls);
 			MethodHandle fctry = LambdaMetafactory.metafactory(lookup, dMthd, dType, dSig, lookup.unreflect(m), sSig).getTarget();
 			factory = !isstatic && obj!=null? fctry.bindTo(obj) : fctry;
-			method = (iMethod)factory.invoke();
+			method = isstatic || obj!=null? (iMethod)factory.invoke() : null;
 			name = mthd;
 		}
 		catch(Throwable e) { throw new RuntimeException(e); }
@@ -132,7 +131,6 @@ public class cMethod implements iMethod {
 	 * @return Function with bound "this" and any arguments.
 	 */
 	public cMethod bind(Object thisArg, Object... args) {
-		System.out.println("cMethod bind");
 		try {
 			MethodHandle fctry = factory.bindTo(thisArg);
 			for(Object arg : args)

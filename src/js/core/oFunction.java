@@ -27,7 +27,6 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 	 */
 	public oFunction(iMethod function) {
 		super(function);
-		System.out.println("oFunction constructor");
 	}
 	/**
 	 * Creates a new Function object.
@@ -108,7 +107,6 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 	/* super method */
 	@Override
 	public oFunction<TA, TB, TC, TD, TE, TF, TG, TR> bind(Object thisArg, Object... args) {
-		System.out.println("oFunction bind");
 		return new oFunction<>(super.bind(thisArg, args));
 	}
 
