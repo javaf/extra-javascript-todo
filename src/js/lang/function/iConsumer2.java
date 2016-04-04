@@ -1,11 +1,17 @@
 package js.lang.function;
+import java.lang.invoke.*;
 
 /**
  * Represents a no-output and 2 input method that can be called.
  * @param <TA> Input Argument 1 type.
  * @param <TB> Input Argument 2 type.
  */
-public interface iConsumer2<TA, TB> extends iMethod {
+public interface iConsumer2<TA, TB> extends iConsumer {
+	
+	/* static data */
+	/** Method signature of this interface. */
+	static MethodType SIGNATURE = MethodType.methodType(void.class, Object.class, Object.class);
+	
 	
 	/* super property */
 	@Override

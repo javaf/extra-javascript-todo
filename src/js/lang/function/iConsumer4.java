@@ -1,4 +1,5 @@
 package js.lang.function;
+import java.lang.invoke.*;
 
 /**
  * Represents a no-output and 4 input method that can be called.
@@ -7,7 +8,12 @@ package js.lang.function;
  * @param <TC> Input Argument 3 type.
  * @param <TD> Input Argument 4 type.
  */
-public interface iConsumer4<TA, TB, TC, TD> extends iMethod {
+public interface iConsumer4<TA, TB, TC, TD> extends iConsumer {
+	
+	/* static data */
+	/** Method signature of this interface. */
+	static MethodType SIGNATURE = MethodType.methodType(void.class, Object.class, Object.class, Object.class, Object.class);
+	
 	
 	/* super property */
 	@Override

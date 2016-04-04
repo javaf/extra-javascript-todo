@@ -1,4 +1,5 @@
 package js.lang.function;
+import java.lang.invoke.*;
 
 /**
  * Represents a single output and 1-input method that can be called.
@@ -11,7 +12,12 @@ package js.lang.function;
  * @param <TG> Input argument 7 type.
  * @param <TR> Return type.
  */
-public interface iFunction7<TA, TB, TC, TD, TE, TF, TG, TR> extends iMethod {
+public interface iFunction7<TA, TB, TC, TD, TE, TF, TG, TR> extends iFunction {
+	
+	/* static data */
+	/** Method signature of this interface. */
+	static MethodType SIGNATURE = MethodType.methodType(Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class);
+
 	
 	/* super property */
 	@Override

@@ -26,6 +26,16 @@ public class cMethod implements iMethod {
 		iFunction0.class, iFunction1.class, iFunction2.class, iFunction3.class,
 		iFunction4.class, iFunction5.class, iFunction6.class, iFunction7.class
 	};
+	/** Array defining all iConsumer method signatures in order of input parameters */
+	private static final MethodType[] CONSUMER_SIGNATURE = new MethodType[] {
+		iConsumer0.SIGNATURE, iConsumer1.SIGNATURE, iConsumer2.SIGNATURE, iConsumer3.SIGNATURE,
+		iConsumer4.SIGNATURE, iConsumer5.SIGNATURE, iConsumer6.SIGNATURE, iConsumer7.SIGNATURE
+	};
+	/** Array defining all iFunction method signatures in order of input parameters */
+	private static final MethodType[] FUNCTION_SIGNATURE = new MethodType[] {
+		iFunction0.SIGNATURE, iFunction1.SIGNATURE, iFunction2.SIGNATURE, iFunction3.SIGNATURE,
+		iFunction4.SIGNATURE, iFunction5.SIGNATURE, iFunction6.SIGNATURE, iFunction7.SIGNATURE
+	};
 	
 	
 	/* data */
@@ -35,19 +45,20 @@ public class cMethod implements iMethod {
 	/* constructor */
 	public cMethod(iMethod method) {
 		mthd = method;
-		name = null;
+		name = method.name();
 	}
 	public cMethod(Object obj, Class cls, String method, Class... types) throws Throwable {
 		Method m = cls.getMethod(method, types);
 		int nArg = m.getParameterCount();
 		Class tRet = m.getReturnType();
-		Class cTgt = tRet==void.class? CONSUMER_INTERFACE[nArg] : FUNCTION_INTERFACE[nArg];
-		String mTgt = tRet==void.class? "accept" : "apply";
+		Class dCls = tRet==void.class? CONSUMER_INTERFACE[nArg] : FUNCTION_INTERFACE[nArg];
+		MethodType sSig = MethodType.methodType(tRet, m.getParameterTypes());
+		MethodType dSig = tRet==void.class? CONSUMER_SIGNATURE[nArg] : FUNCTION_SIGNATURE[nArg];
+		String dMthd = tRet==void.class? iConsumer.NAME : iFunction.NAME;
 		boolean isstatic = Modifier.isStatic(m.getModifiers());
 		MethodHandles.Lookup lookup = MethodHandles.lookup();
-		MethodType invType = obj==null? MethodType.methodType(cTgt) : MethodType.methodType(cTgt, cls);
-		MethodType getter = MethodType.methodType(tRet, m.getParameterTypes());
-		MethodHandle factory = LambdaMetafactory.metafactory(lookup, mTgt, invType, MethodType.methodType(Object.class, Object.class, Object.class), lookup.unreflect(m), getter).getTarget();
+		MethodType dType = obj==null? MethodType.methodType(dCls) : MethodType.methodType(dCls, cls);
+		MethodHandle factory = LambdaMetafactory.metafactory(lookup, dMthd, dType, dSig, lookup.unreflect(m), sSig).getTarget();
 		if(!isstatic && obj!=null) factory = factory.bindTo(obj);
 		mthd = (iMethod)factory.invoke();
 		name = method;
@@ -62,7 +73,7 @@ public class cMethod implements iMethod {
 	
 	@Override
 	public String name() {
-		return name!=null? name : mthd.name();
+		return name;
 	}
 	
 	
