@@ -10,7 +10,7 @@ public interface iConsumer3<TA, TB, TC> extends iMethod {
 	
 	/* method */
 	/**
-	 * Represents then function to the called when "call" is called.
+	 * Represents then method to the called when "call" is called.
 	 * @param a Input argument 1.
 	 * @param b Input argument 2.
 	 * @param c Input argument 3.

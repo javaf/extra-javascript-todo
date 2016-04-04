@@ -7,7 +7,7 @@ public interface iConsumer0 extends iMethod {
 	
 	/* method */
 	/**
-	 * Represents then function to the called when "call" is called.
+	 * Represents then method to the called when "call" is called.
 	 */
 	void accept();
 	

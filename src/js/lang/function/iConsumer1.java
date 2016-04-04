@@ -9,7 +9,7 @@ public interface iConsumer1<TA> extends iMethod, Consumer<TA> {
 	
 	/* method */
 	/**
-	 * Represents then function to the called when "call" is called.
+	 * Represents then method to the called when "call" is called.
 	 * @param a Input argument 1.
 	 */
 	@Override
