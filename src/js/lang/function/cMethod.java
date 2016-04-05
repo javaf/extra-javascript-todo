@@ -1,11 +1,25 @@
 package js.lang.function;
 import java.lang.reflect.*;
 import java.lang.invoke.*;
+import java.util.function.*;
 
 /**
  * Defines a method which can be called.
+ * @param <TA> Input argument 1 type.
+ * @param <TB> Input argument 2 type.
+ * @param <TC> Input argument 3 type.
+ * @param <TD> Input argument 4 type.
+ * @param <TE> Input argument 5 type.
+ * @param <TF> Input argument 6 type.
+ * @param <TG> Input argument 7 type.
+ * @param <TR> Return type.
  */
-public class cMethod implements iMethod {
+public class cMethod<TA, TB, TC, TD, TE, TF, TG, TR> implements iMethod,
+	iConsumer0, iConsumer1<TA>, iConsumer2<TA, TB>, iConsumer3<TA, TB, TC>, iConsumer4<TA, TB, TC, TD>,
+	iConsumer5<TA, TB, TC, TD, TE>, iConsumer6<TA, TB, TC, TD, TE, TF>, iConsumer7<TA, TB, TC, TD, TE, TF, TG>,
+	iFunction0<TR>, iFunction1<TA, TR>, iFunction2<TA, TB, TR>, iFunction3<TA, TB, TC, TR>, iFunction4<TA, TB, TC, TD, TR>,
+	iFunction5<TA, TB, TC, TD, TE, TR>, iFunction6<TA, TB, TC, TD, TE, TF, TR>, iFunction7<TA, TB, TC, TD, TE, TF, TG, TR>,
+	Consumer<TA>, BiConsumer<TA, TB>, Supplier<TR>, Function<TA, TR>, BiFunction<TA, TB, TR> {
 	
 	/* static data */
 	/** Array defining all iConsumer interfaces in order of input parameters */
@@ -41,13 +55,48 @@ public class cMethod implements iMethod {
 	
 	/* constructor */
 	/**
-	 * Create a callable Method object from object implementing iMehtod interface.
-	 * @param mthd iMethod implementing object.
+	 * Create a callable Method object from object implementing iMethod interface.
+	 * @param m iMethod implementing object.
 	 */
-	public cMethod(iMethod mthd) {
-		method = mthd;
+	public cMethod(iMethod m) {
+		method = m;
 		factory = null;
-		name = mthd.name();
+		name = m.name();
+	}
+	/**
+	 * Create a callable Method object from object implementing Consumer interface.
+	 * @param m Consumer implementing object.
+	 */
+	public cMethod(Consumer<TA> m) {
+		this((iConsumer1<TA>) (TA a) -> m.accept(a));
+	}
+	/**
+	 * Create a callable Method object from object implementing BiConsumer interface.
+	 * @param m BiConsumer implementing object.
+	 */
+	public cMethod(BiConsumer<TA, TB> m) {
+		this((iConsumer2<TA, TB>) (TA a, TB b) -> m.accept(a, b));
+	}
+	/**
+	 * Create a callable Method object from object implementing Supplier interface.
+	 * @param m Supplier implementing object.
+	 */
+	public cMethod(Supplier<TR> m) {
+		this((iFunction0<TR>) () -> m.get());
+	}
+	/**
+	 * Create a callable Method object from object implementing Function interface.
+	 * @param m Function implementing object.
+	 */
+	public cMethod(Function<TA, TR> m) {
+		this((iFunction1<TA, TR>) (TA a) -> m.apply(a));
+	}
+	/**
+	 * Create a callable Method object from object implementing BiFunction interface.
+	 * @param m BiFunction implementing object.
+	 */
+	public cMethod(BiFunction<TA, TB, TR> m) {
+		this((iFunction2<TA, TB, TR>) (TA a, TB b) -> m.apply(a, b));
 	}
 	/**
 	 * Create a callable Method object from class, method name, and parameter types.
@@ -77,22 +126,25 @@ public class cMethod implements iMethod {
 		catch(Throwable e) { throw new RuntimeException(e); }
 	}
 	/**
-	 * Internal. Copy constructor.
-	 * @param o cMethod object.
+	 * Internal. Direct field constructor.
+	 * @param m iMethod object.
+	 * @param f MethodHandle factory.
+	 * @param n Method name.
 	 */
-	protected cMethod(cMethod o) {
-		this(o.method, o.factory, o.name);
+	private cMethod(iMethod m, MethodHandle f, String n) {
+		method = m;
+		factory = f;
+		name = n;
 	}
 	/**
-	 * Internal. Direct field constructor.
-	 * @param mthd iMethod object.
-	 * @param fctry MethodHandle factory.
-	 * @param nm Method name.
+	 * Internal. Copy constructor.
+	 * @param o cMethod object
+	 * @param n New method name.
 	 */
-	private cMethod(iMethod mthd, MethodHandle fctry, String nm) {
-		method = mthd;
-		factory = fctry;
-		name = nm;
+	protected cMethod(cMethod o, String n) {
+		method = o.method;
+		factory = o.factory;
+		name = n!=null? n: o.name;
 	}
 	
 	
@@ -133,8 +185,7 @@ public class cMethod implements iMethod {
 	public cMethod bind(Object thisArg, Object... args) {
 		try {
 			MethodHandle fctry = factory.bindTo(thisArg);
-			for(Object arg : args)
-				fctry = fctry.bindTo(arg);
+			MethodHandles.insertArguments(fctry, 0, args);
 			return new cMethod((iMethod)fctry.invoke(), fctry, name);
 		}
 		catch(Throwable e) { throw new RuntimeException(e); }
@@ -161,6 +212,96 @@ public class cMethod implements iMethod {
 	@Override
 	public String _toString() {
 		return method._toString();
+	}
+	
+	@Override
+	public void accept() {
+		((iConsumer0)valueOf()).accept();
+	}
+
+	@Override
+	public void accept(TA a) {
+		((iConsumer1<TA>)valueOf()).accept(a);
+	}
+
+	@Override
+	public void accept(TA a, TB b) {
+		((iConsumer2<TA, TB>)valueOf()).accept(a, b);
+	}
+
+	@Override
+	public void accept(TA a, TB b, TC c) {
+		((iConsumer3<TA, TB, TC>)valueOf()).accept(a, b, c);
+	}
+
+	@Override
+	public void accept(TA a, TB b, TC c, TD d) {
+		((iConsumer4<TA, TB, TC, TD>)valueOf()).accept(a, b, c, d);
+	}
+
+	@Override
+	public void accept(TA a, TB b, TC c, TD d, TE e) {
+		((iConsumer5<TA, TB, TC, TD, TE>)valueOf()).accept(a, b, c, d, e);
+	}
+
+	@Override
+	public void accept(TA a, TB b, TC c, TD d, TE e, TF f) {
+		((iConsumer6<TA, TB, TC, TD, TE, TF>)valueOf()).accept(a, b, c, d, e, f);
+	}
+
+	@Override
+	public void accept(TA a, TB b, TC c, TD d, TE e, TF f, TG g) {
+		((iConsumer7<TA, TB, TC, TD, TE, TF, TG>)valueOf()).accept(a, b, c, d, e, f, g);
+	}
+	
+	@Override
+	public TR get() {
+		return apply();
+	}
+
+	@Override
+	public TR apply() {
+		return ((iFunction0<TR>)valueOf()).apply();
+	}
+
+	@Override
+	public TR apply(TA a) {
+		return ((iFunction1<TA, TR>)valueOf()).apply(a);
+	}
+
+	@Override
+	public TR apply(TA a, TB b) {
+		return ((iFunction2<TA, TB, TR>)valueOf()).apply(a, b);
+	}
+
+	@Override
+	public TR apply(TA a, TB b, TC c) {
+		return ((iFunction3<TA, TB, TC, TR>)valueOf()).apply(a, b, c);
+	}
+
+	@Override
+	public TR apply(TA a, TB b, TC c, TD d) {
+		return ((iFunction4<TA, TB, TC, TD, TR>)valueOf()).apply(a, b, c, d);
+	}
+
+	@Override
+	public TR apply(TA a, TB b, TC c, TD d, TE e) {
+		return ((iFunction5<TA, TB, TC, TD, TE, TR>)valueOf()).apply(a, b, c, d, e);
+	}
+
+	@Override
+	public TR apply(TA a, TB b, TC c, TD d, TE e, TF f) {
+		return ((iFunction6<TA, TB, TC, TD, TE, TF, TR>)valueOf()).apply(a, b, c, d, e, f);
+	}
+
+	@Override
+	public TR apply(TA a, TB b, TC c, TD d, TE e, TF f, TG g) {
+		return ((iFunction7<TA, TB, TC, TD, TE, TF, TG, TR>)valueOf()).apply(a, b, c, d, e, f, g);
+	}
+	
+	@Override
+	public <TV> cMethod<TA, TB, TC, TD, TE, TF, TG, TV> andThen(Function<? super TR, ? extends TV> after) {
+		return new cMethod<>((iMethod)(Object... args) -> after.apply((TR)((iMethod)valueOf()).run(args)));
 	}
 	
 	@Override

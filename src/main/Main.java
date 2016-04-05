@@ -1,5 +1,5 @@
 package main;
-import js.core.*;
+import js.lang.function.oFunction;
 
 public class Main {
 		
