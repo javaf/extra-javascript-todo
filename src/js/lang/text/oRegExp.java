@@ -21,10 +21,23 @@ public class oRegExp {
 	private int lastIndex;
 	
 	
-	
+	/* constructor */
+	/**
+	 * 
+	 * @param pattern
+	 * @param flags 
+	 */
 	public oRegExp(String pattern, String flags) {
 		this.p = Pattern.compile(pattern, _flags(flags));
 	}
+	/**
+	 * Creates a regular expression object from an existing Pattern object.
+	 * @param pattern Pattern object.
+	 */
+	public oRegExp(Pattern pattern) {
+		p = pattern;
+	}
+	
 	
 	/* property */
 	/**
@@ -124,10 +137,14 @@ public class oRegExp {
 	 * @return Flags for Pattern object.
 	 */
 	private static int _flags(String f) {
-		return (f.contains("i")? Pattern.CASE_INSENSITIVE : 0) | (f.contains("m")? Pattern.MULTILINE : 0) |
-			(f.contains("u")? Pattern.UNICODE_CHARACTER_CLASS | Pattern.UNICODE_CASE : 0);
+		return (f.contains("g")? GLOBAL:0) | (f.contains("i")? IGNORE_CASE:0) | (f.contains("m")? MULTILINE:0) |
+			(f.contains("u")? UNICODE:0) | (f.contains("y")? STICKY:0);
 	}
 	
-	/* super method */
 	
+	/* super method */
+	@Override
+	public String toString() {
+		return "/"+source()+"/"+flags();
+	}
 }
