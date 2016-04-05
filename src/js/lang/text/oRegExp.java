@@ -7,28 +7,37 @@ import java.util.regex.*;
 public class oRegExp {
 	
 	/* static data */
+	/** Internal. Global pattern flag. */
 	private final static int GLOBAL = 0x10000;
+	/** Internal. Ignore case pattern flag. */
 	private final static int IGNORE_CASE = Pattern.CASE_INSENSITIVE;
+	/** Internal. Multi-line pattern flag. */
 	private final static int MULTILINE = Pattern.MULTILINE;
+	/** Internal. Unicode pattern flag. */
 	private final static int UNICODE = Pattern.UNICODE_CHARACTER_CLASS | Pattern.UNICODE_CASE;
+	/** Internal. Sticky pattern flag. */
 	private final static int STICKY = 0x20000;
 	
 	
 	/* data */
-	private Pattern p;
-	private Matcher matcher;
-	private String string;
-	private int lastIndex;
+	/** Specifies the pattern object for this regular expression. */
+	private final Pattern p;
+	/** Specifies the matcher object for this regular expression. */
+	private final Matcher m;
+	/** Specifies the original input string. */
+	private String in;
+	/** Specifies the index at which to start the next match. */
+	private int off;
 	
 	
 	/* constructor */
 	/**
-	 * 
-	 * @param pattern
-	 * @param flags 
+	 * Creates a regular expression object from specified pattern and flags.
+	 * @param pattern Regular expression pattern string.
+	 * @param flags Flags for regular expression "gimuy".
 	 */
 	public oRegExp(String pattern, String flags) {
-		this.p = Pattern.compile(pattern, _flags(flags));
+		this(Pattern.compile(pattern, _flags(flags)));
 	}
 	/**
 	 * Creates a regular expression object from an existing Pattern object.
@@ -36,6 +45,7 @@ public class oRegExp {
 	 */
 	public oRegExp(Pattern pattern) {
 		p = pattern;
+		m = p.matcher("");
 	}
 	
 	
@@ -45,14 +55,14 @@ public class oRegExp {
 	 * @return Index of next match start.
 	 */
 	public int lastIndex() {
-		return lastIndex;
+		return off;
 	}
 	/**
 	 * Specifies the index at which to start the next match.
 	 * @param value New index from where to start the next match.
 	 */
 	public void lastIndex(int value) {
-		lastIndex = value;
+		off = value;
 	}
 	
 	/**
@@ -123,12 +133,28 @@ public class oRegExp {
 	 * @return True if found, otherwise false.
 	 */
 	public boolean test(String str) {
-		return p.matcher(str).find();
+		m.reset(in = str);
+		m.region(off, str.length());
+		return m.find();
 	}
 	
-	public Object exec(String str) {
-		
-		return null;
+	/**
+	 * Executes a search for a match in a specified string. Returns a result
+	 * array, or null.
+	 * @param str The string against which to match the regular expression.
+	 * @return If the match succeeds, the exec() method returns a cRegExpResult
+	 * object and updates properties of the regular expression object. The
+	 * returned object has the matched text as the first item, and then one item
+	 * for each capturing parenthesis that matched containing the text that was
+	 * captured. If the match fails, the exec() method returns null.
+	 */
+	public cRegExpResult exec(String str) {
+		if(str==null) return null;
+		else if(!str.equals(in) || !global()) m.reset((in = str));
+		m.region(off, str.length());
+		m.find();
+		m.region(off = !m.hitEnd()? m.end() : 0, m.regionEnd());
+		return !sticky() || m.start()==off? new cRegExpResult(m, in) : null;
 	}
 	
 	/**
@@ -146,5 +172,10 @@ public class oRegExp {
 	@Override
 	public String toString() {
 		return "/"+source()+"/"+flags();
+	}
+	
+	// TODO:
+	public Object valueOf() {
+		return p;
 	}
 }

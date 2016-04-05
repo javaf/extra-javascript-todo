@@ -8,9 +8,9 @@ public class cRegExpResult {
 	
 	/* data */
 	/** Represents the match result of execution of regular expression on a string. */
-	private final Matcher match;
+	private final Matcher m;
 	/** Original input string given to regular expression for matching. */
-	private final String input;
+	private final String in;
 	
 	
 	/* constructor */
@@ -21,8 +21,8 @@ public class cRegExpResult {
 	 * @param input Input string.
 	 */
 	public cRegExpResult(Matcher match, String input) {
-		this.match = match;
-		this.input = input;
+		m = match;
+		in = input;
 	}
 	
 	
@@ -33,7 +33,7 @@ public class cRegExpResult {
 	 * @return Total number of indexes for get() and index().
 	 */
 	public int length() {
-		return 1+match.groupCount();
+		return 1+m.groupCount();
 	}
 	
 	/**
@@ -41,7 +41,7 @@ public class cRegExpResult {
 	 * @return Matched value.
 	 */
 	public String get() {
-		return match.group();
+		return m.group();
 	}
 	/**
 	 * Returns the matched value for index 0, else returns the nth parenthesized
@@ -50,7 +50,7 @@ public class cRegExpResult {
 	 * @return Matched value or a parenthesized substring value.
 	 */
 	public String get(int index) {
-		return match.group(index);
+		return m.group(index);
 	}
 	/**
 	 * Returns the named parenthesized substring value in the regular expression,
@@ -59,7 +59,7 @@ public class cRegExpResult {
 	 * @return Parenthesized substring value.
 	 */
 	public String get(String string) {
-		return match.group(string);
+		return m.group(string);
 	}
 	
 	/**
@@ -68,7 +68,7 @@ public class cRegExpResult {
 	 * @return Index of matched value.
 	 */
 	public int index() {
-		return match.start();
+		return m.start();
 	}
 	/**
 	 * Returns the index of matched value for index 0, else returns the index of
@@ -78,7 +78,7 @@ public class cRegExpResult {
 	 * @return Index of matched value or a parenthesized substring value.
 	 */
 	public int index(int index) {
-		return match.start(index);
+		return m.start(index);
 	}
 	/**
 	 * Returns the index of named parenthesized substring value in the regular
@@ -87,7 +87,7 @@ public class cRegExpResult {
 	 * @return Index of parenthesized substring.
 	 */
 	public int index(String string) {
-		return match.start(string);
+		return m.start(string);
 	}
 	
 	/**
@@ -95,6 +95,6 @@ public class cRegExpResult {
 	 * @return Input string.
 	 */
 	public String input() {
-		return input;
+		return in;
 	}
 }

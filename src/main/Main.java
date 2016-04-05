@@ -1,6 +1,5 @@
 package main;
-import java.util.regex.Pattern;
-import js.lang.function.oFunction;
+import js.lang.function.*;
 
 public class Main {
 		
