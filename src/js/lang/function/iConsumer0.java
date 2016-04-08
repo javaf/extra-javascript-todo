@@ -26,7 +26,7 @@ public interface iConsumer0 extends iConsumer {
 	}
 	
 	@Override
-	default String _toString() {
+	default String ztoString() {
 		return "void "+name()+"() { [native code] }";
 	}
 }

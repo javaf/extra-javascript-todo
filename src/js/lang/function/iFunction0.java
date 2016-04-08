@@ -27,7 +27,7 @@ public interface iFunction0<TR> extends iFunction {
 	}
 	
 	@Override
-	default String _toString() {
+	default String ztoString() {
 		return "TR "+name()+"() { [native code] }";
 	}
 }

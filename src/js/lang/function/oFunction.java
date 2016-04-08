@@ -11,6 +11,7 @@ import java.util.function.*;
  * @param <TF> Input argument 6 type.
  * @param <TG> Input argument 7 type.
  * @param <TR> Return type.
+ * @author Didier L, wolfram77
  */
 public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implements
 	iConsumer0, iConsumer1<TA>, iConsumer2<TA, TB>, iConsumer3<TA, TB, TC>, iConsumer4<TA, TB, TC, TD>,
@@ -112,42 +113,42 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 	
 	@Override
 	public void accept() {
-		((iConsumer0)valueOf()).accept();
+		apply();
 	}
 
 	@Override
 	public void accept(TA a) {
-		((iConsumer1<TA>)valueOf()).accept(a);
+		apply(a);
 	}
 
 	@Override
 	public void accept(TA a, TB b) {
-		((iConsumer2<TA, TB>)valueOf()).accept(a, b);
+		apply(a, b);
 	}
 
 	@Override
 	public void accept(TA a, TB b, TC c) {
-		((iConsumer3<TA, TB, TC>)valueOf()).accept(a, b, c);
+		apply(a, b, c);
 	}
 
 	@Override
 	public void accept(TA a, TB b, TC c, TD d) {
-		((iConsumer4<TA, TB, TC, TD>)valueOf()).accept(a, b, c, d);
+		apply(a, b, c, d);
 	}
 
 	@Override
 	public void accept(TA a, TB b, TC c, TD d, TE e) {
-		((iConsumer5<TA, TB, TC, TD, TE>)valueOf()).accept(a, b, c, d, e);
+		apply(a, b, c, d, e);
 	}
 
 	@Override
 	public void accept(TA a, TB b, TC c, TD d, TE e, TF f) {
-		((iConsumer6<TA, TB, TC, TD, TE, TF>)valueOf()).accept(a, b, c, d, e, f);
+		apply(a, b, c, d, e, f);
 	}
 
 	@Override
 	public void accept(TA a, TB b, TC c, TD d, TE e, TF f, TG g) {
-		((iConsumer7<TA, TB, TC, TD, TE, TF, TG>)valueOf()).accept(a, b, c, d, e, f, g);
+		apply(a, b, c, d, e, f, g);
 	}
 	
 	@Override
@@ -157,42 +158,42 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 
 	@Override
 	public TR apply() {
-		return ((iFunction0<TR>)valueOf()).apply();
+		return (TR)((iMethod)valueOf()).run();
 	}
 
 	@Override
 	public TR apply(TA a) {
-		return ((iFunction1<TA, TR>)valueOf()).apply(a);
+		return (TR)((iMethod)valueOf()).run(a);
 	}
 
 	@Override
 	public TR apply(TA a, TB b) {
-		return ((iFunction2<TA, TB, TR>)valueOf()).apply(a, b);
+		return (TR)((iMethod)valueOf()).run(a, b);
 	}
 
 	@Override
 	public TR apply(TA a, TB b, TC c) {
-		return ((iFunction3<TA, TB, TC, TR>)valueOf()).apply(a, b, c);
+		return (TR)((iMethod)valueOf()).run(a, b, c);
 	}
 
 	@Override
 	public TR apply(TA a, TB b, TC c, TD d) {
-		return ((iFunction4<TA, TB, TC, TD, TR>)valueOf()).apply(a, b, c, d);
+		return (TR)((iMethod)valueOf()).run(a, b, c, d);
 	}
 
 	@Override
 	public TR apply(TA a, TB b, TC c, TD d, TE e) {
-		return ((iFunction5<TA, TB, TC, TD, TE, TR>)valueOf()).apply(a, b, c, d, e);
+		return (TR)((iMethod)valueOf()).run(a, b, c, d, e);
 	}
 
 	@Override
 	public TR apply(TA a, TB b, TC c, TD d, TE e, TF f) {
-		return ((iFunction6<TA, TB, TC, TD, TE, TF, TR>)valueOf()).apply(a, b, c, d, e, f);
+		return (TR)((iMethod)valueOf()).run(a, b, c, d, e, f);
 	}
 
 	@Override
 	public TR apply(TA a, TB b, TC c, TD d, TE e, TF f, TG g) {
-		return ((iFunction7<TA, TB, TC, TD, TE, TF, TG, TR>)valueOf()).apply(a, b, c, d, e, f, g);
+		return (TR)((iMethod)valueOf()).run(a, b, c, d, e, f, g);
 	}
 	
 	@Override

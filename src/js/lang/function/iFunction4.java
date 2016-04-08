@@ -42,7 +42,7 @@ public interface iFunction4<TA, TB, TC, TD, TR> extends iFunction {
 	}
 	
 	@Override
-	default String _toString() {
+	default String ztoString() {
 		return "TR "+name()+"(TA a, TB b, TC c, TD d) { [native code] }";
 	}
 }

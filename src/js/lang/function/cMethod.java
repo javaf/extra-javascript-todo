@@ -196,13 +196,13 @@ public class cMethod implements iMethod {
 	}
 	
 	@Override
-	public String _toString() {
-		return method._toString();
+	public String ztoString() {
+		return method.ztoString();
 	}
 	
 	@Override
 	public String toString() {
-		return _toString();
+		return ztoString();
 	}
 	
 	// TODO:

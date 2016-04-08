@@ -41,7 +41,7 @@ public interface iConsumer4<TA, TB, TC, TD> extends iConsumer {
 	}
 	
 	@Override
-	default String _toString() {
+	default String ztoString() {
 		return "void "+name()+"(TA a, TB b, TC c, TD d) { [native code] }";
 	}
 }

@@ -37,7 +37,7 @@ public interface iMethod {
 	 * Returns string representation of the method.
 	 * @return String representation of method.
 	 */
-	default String _toString() {
+	default String ztoString() {
 		return "? "+name()+"(...) { [native code] }";
 	}
 }

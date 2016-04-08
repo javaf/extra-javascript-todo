@@ -31,12 +31,29 @@ public class oInt8Array extends oArray {
 	
 	/* property */
 	/**
+	 * Get the elements as a byte array.
+	 * @return Byte array containing the elements.
+	 */
+	public final byte[] array() {
+		return o.array();
+	}
+	
+	/**
 	 * Get the value stored at given index.
 	 * @param index Location of stored value.
 	 * @return Int8 value.
 	 */
-	public byte get(int index) {
-		return o[index];
+	@Override
+	public final Byte get(int index) {
+		return getByte(index);
+	}
+	/**
+	 * Get the byte stored at given index.
+	 * @param index Location of stored value.
+	 * @return byte value.
+	 */
+	public final byte getByte(int index) {
+		return o.get(index);
 	}
 	
 	/**
@@ -45,8 +62,12 @@ public class oInt8Array extends oArray {
 	 * @param value New Int8 value.
 	 * @return Int8 value.
 	 */
-	public byte set(int index, byte value) {
-		return (o[index] = value);
+	public Byte set(int index, Byte value) {
+		return setByte(index, value);
+	}
+	public byte setByte(int index, byte value) {
+		o.put(index, value);
+		return value;
 	}
 	
 	public Object buffer() {
@@ -61,15 +82,16 @@ public class oInt8Array extends oArray {
 		return 0;
 	}
 	
+	@Override
 	public int length() {
-		return o.length;
+		return o.capacity();
 	}
 	
 	
 	
 	
-	public Iterator<Byte> values() {
-		return null;
+	@Override
+	public void values() {
 	}
 	
 	@Override
@@ -78,7 +100,7 @@ public class oInt8Array extends oArray {
 	}
 	
 	public byte[] valueOf() {
-		return o;
+		return array();
 	}
 	
 	
@@ -90,6 +112,8 @@ public class oInt8Array extends oArray {
 			b[0] = (byte)v;
 		return a;
 	}
+	
+	
 	
 	/**
 	 * Creates a new typed array with a variable number of arguments. This method

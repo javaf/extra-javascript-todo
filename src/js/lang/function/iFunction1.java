@@ -36,7 +36,7 @@ public interface iFunction1<TA, TR> extends iFunction {
 	}
 	
 	@Override
-	default String _toString() {
+	default String ztoString() {
 		return "TR "+name()+"(TA a) { [native code] }";
 	}
 }
