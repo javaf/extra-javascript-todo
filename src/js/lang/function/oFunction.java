@@ -107,97 +107,97 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 	
 	/* super method */
 	@Override
-	public oFunction<TA, TB, TC, TD, TE, TF, TG, TR> bind(Object thisArg, Object... args) {
+	public final oFunction<TA, TB, TC, TD, TE, TF, TG, TR> bind(Object thisArg, Object... args) {
 		return new oFunction<>(super.bind(thisArg, args));
 	}
 	
 	@Override
-	public void accept() {
+	public final void accept() {
 		apply();
 	}
 
 	@Override
-	public void accept(TA a) {
+	public final void accept(TA a) {
 		apply(a);
 	}
 
 	@Override
-	public void accept(TA a, TB b) {
+	public final void accept(TA a, TB b) {
 		apply(a, b);
 	}
 
 	@Override
-	public void accept(TA a, TB b, TC c) {
+	public final void accept(TA a, TB b, TC c) {
 		apply(a, b, c);
 	}
 
 	@Override
-	public void accept(TA a, TB b, TC c, TD d) {
+	public final void accept(TA a, TB b, TC c, TD d) {
 		apply(a, b, c, d);
 	}
 
 	@Override
-	public void accept(TA a, TB b, TC c, TD d, TE e) {
+	public final void accept(TA a, TB b, TC c, TD d, TE e) {
 		apply(a, b, c, d, e);
 	}
 
 	@Override
-	public void accept(TA a, TB b, TC c, TD d, TE e, TF f) {
+	public final void accept(TA a, TB b, TC c, TD d, TE e, TF f) {
 		apply(a, b, c, d, e, f);
 	}
 
 	@Override
-	public void accept(TA a, TB b, TC c, TD d, TE e, TF f, TG g) {
+	public final void accept(TA a, TB b, TC c, TD d, TE e, TF f, TG g) {
 		apply(a, b, c, d, e, f, g);
 	}
 	
 	@Override
-	public TR get() {
+	public final TR get() {
 		return apply();
 	}
 
 	@Override
-	public TR apply() {
+	public final TR apply() {
 		return (TR)((iMethod)valueOf()).run();
 	}
 
 	@Override
-	public TR apply(TA a) {
+	public final TR apply(TA a) {
 		return (TR)((iMethod)valueOf()).run(a);
 	}
 
 	@Override
-	public TR apply(TA a, TB b) {
+	public final TR apply(TA a, TB b) {
 		return (TR)((iMethod)valueOf()).run(a, b);
 	}
 
 	@Override
-	public TR apply(TA a, TB b, TC c) {
+	public final TR apply(TA a, TB b, TC c) {
 		return (TR)((iMethod)valueOf()).run(a, b, c);
 	}
 
 	@Override
-	public TR apply(TA a, TB b, TC c, TD d) {
+	public final TR apply(TA a, TB b, TC c, TD d) {
 		return (TR)((iMethod)valueOf()).run(a, b, c, d);
 	}
 
 	@Override
-	public TR apply(TA a, TB b, TC c, TD d, TE e) {
+	public final TR apply(TA a, TB b, TC c, TD d, TE e) {
 		return (TR)((iMethod)valueOf()).run(a, b, c, d, e);
 	}
 
 	@Override
-	public TR apply(TA a, TB b, TC c, TD d, TE e, TF f) {
+	public final TR apply(TA a, TB b, TC c, TD d, TE e, TF f) {
 		return (TR)((iMethod)valueOf()).run(a, b, c, d, e, f);
 	}
 
 	@Override
-	public TR apply(TA a, TB b, TC c, TD d, TE e, TF f, TG g) {
+	public final TR apply(TA a, TB b, TC c, TD d, TE e, TF f, TG g) {
 		return (TR)((iMethod)valueOf()).run(a, b, c, d, e, f, g);
 	}
 	
 	@Override
-	public <TV> oFunction<TA, TB, TC, TD, TE, TF, TG, TV> andThen(Function<? super TR, ? extends TV> after) {
+	public final <TV> oFunction<TA, TB, TC, TD, TE, TF, TG, TV> andThen(Function<? super TR, ? extends TV> after) {
 		return new oFunction<>((iMethod)(Object... args) -> after.apply((TR)((iMethod)valueOf()).run(args)));
 	}
 }

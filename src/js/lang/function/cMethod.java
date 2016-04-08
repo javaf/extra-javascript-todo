@@ -154,7 +154,7 @@ public class cMethod implements iMethod {
 	 * @param argsArray Arguments for the object.
 	 * @return Return value of function.
 	 */
-	public Object apply(Object thisArg, Object[] argsArray) {
+	public final Object apply(Object thisArg, Object[] argsArray) {
 		return call(thisArg, argsArray);
 	}
 	
@@ -184,29 +184,29 @@ public class cMethod implements iMethod {
 	 * @param args Arguments for the object.
 	 * @return Return value of function.
 	 */
-	public Object call(Object thisArg, Object... args) {
+	public final Object call(Object thisArg, Object... args) {
 		return thisArg!=null? bind(thisArg).run(args) : run(args);
 	}
 	
 	
 	/* super method */
 	@Override
-	public Object run(Object... args) {
+	public final Object run(Object... args) {
 		return method.run(args);
 	}
 	
 	@Override
-	public String ztoString() {
+	public final String ztoString() {
 		return method.ztoString();
 	}
 	
 	@Override
-	public String toString() {
+	public final String toString() {
 		return ztoString();
 	}
 	
 	// TODO:
-	public Object valueOf() {
+	public final Object valueOf() {
 		return method;
 	}
 }
