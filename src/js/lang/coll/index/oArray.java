@@ -4,12 +4,10 @@ import java.util.function.*;
 /**
  * Class that is used in the construction of arrays; which are high-level, list-like objects.
  */
-public class oArray {
+public class oArray<T> {
 	
 	/* data */
-	protected Object value;
-	
-	/* property */
+	private T[] v;
 	
 	
 	/* constructor */
@@ -34,9 +32,27 @@ public class oArray {
 	 */
 	public oArray(int arrayLength) {
 	}
-
 	
-	/* method */
+	
+	/* property */
+	/**
+	 * Fetch value stored at specified index.
+	 * @param index Location of stored value.
+	 * @return Stored value.
+	 */
+	public T get(int index) {
+		return v[index];
+	}
+	
+	/**
+	 * Set the value at a specific location.
+	 * @param index Location of new value.
+	 * @param value Value to store.
+	 * @return Stored value.
+	 */
+	public T set(int index, T value) {
+		return v[index] = value;
+	}
 	/**
 	 * Reflects the number of elements in an array.
 	 * @return Number of elements in array.
@@ -54,6 +70,8 @@ public class oArray {
 		return 0;
 	}
 	
+	
+	/* method */
 	/**
 	 * Copies the sequence of array elements within the array to the position
 	 * starting at target. The copy is taken from the index positions of the
@@ -78,9 +96,31 @@ public class oArray {
 	 * @param end Optional. End index.
 	 * @return This array.
 	 */
-	public oArray fill(Object value, int start, int end) {
-		return null;
+	public oArray<T> fill(T value, int start, int end) {
+		for(int i=start; i<end; i++)
+			v[i] = value;
+		return this;
 	}
+	/**
+	 * Fills all the elements of an array from a start index to an end index with
+	 * a static value.
+	 * @param value Value to fill an array.
+	 * @param start Optional. Start index.
+	 * @return This array.
+	 */
+	public oArray<T> fill(T value, int start) {
+		return fill(value, start, length());
+	}
+	/**
+	 * Fills all the elements of an array from a start index to an end index with
+	 * a static value.
+	 * @param value Value to fill an array.
+	 * @return This array.
+	 */
+	public oArray<T> fill(T value) {
+		return fill(value, 0, length());
+	}
+	
 	
 	/**
 	 * Removes the last element from an array and returns that element.

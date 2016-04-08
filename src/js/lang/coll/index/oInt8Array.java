@@ -1,6 +1,6 @@
 package js.lang.coll.index;
-
-import java.util.Iterator;
+import java.nio.*;
+import java.util.*;
 
 /**
  * The Int8Array typed array represents an array of twos-complement 8-bit
@@ -8,7 +8,7 @@ import java.util.Iterator;
  * can reference elements in the array using the object's methods, or using
  * standard array index syntax (that is, using bracket notation).
  */
-public class oInt8Array {
+public class oInt8Array extends oArray {
 	
 	/* static data */
 	/** Returns a number value of the element size. 1 in the case of an Int8Array. */
@@ -16,14 +16,16 @@ public class oInt8Array {
 	/** Returns the string value of the constructor name. In the case of the Int8Array type: "Int8Array". */
 	public static final String name = "Int8Array";
 	
+	
 	/* data */
 	/** Stores the int8 values. */
-	private final byte[] o;
+	private final ByteBuffer o;
 	
 	
 	/* constructor */
 	public oInt8Array(int length) {
-		o = new byte[length];
+		super(0);
+		o = ByteBuffer.allocate(length);
 	}
 	
 	
@@ -87,7 +89,6 @@ public class oInt8Array {
 		for(Byte v : source)
 			b[0] = (byte)v;
 		return a;
-		
 	}
 	
 	/**
