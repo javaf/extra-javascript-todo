@@ -2,6 +2,7 @@ package js.lang.function;
 import js.lang.code.compile.*;
 import java.lang.reflect.*;
 import java.lang.invoke.*;
+import js.lang.error.*;
 
 /**
  * Defines a method which can be called.
@@ -93,12 +94,16 @@ public class cMethod implements iMethod {
 		if(args.length==0) { method = (Object... a) -> null; return; }
 		String code = args[args.length-1], className = "c"+classNumber();
 		boolean isvoid = !code.contains("return") || code.replace(" ", "").contains("return;");
-		StringBuilder s = new StringBuilder("package js.lang.funtion.dynamic;");
-		s.append("class ").append(className).append(" implements js.lang.function.");
+		StringBuilder s = new StringBuilder("package js.lang.function.dynamic;");
+		s.append("public class ").append(className).append(" implements js.lang.function.");
 		s.append(isvoid? "iConsumer" : "iFunction").append(args.length-1).append(" {");
-		s.append("public ").append(isvoid? "void "+iConsumer.NAME : "Object "+iFunction.NAME).append(" {");
-		s.append(code).append("}").append("}");
-		try { method = (iMethod)cJavaMemoryCompiler.compile(className, s.toString()).newInstance();	}
+		s.append("public ").append(isvoid? "void "+iConsumer.NAME : "Object "+iFunction.NAME).append("(");
+		for(int i=0; i<args.length-1; i++)
+			s.append("Object ").append(args[i]).append(", ");
+		if(args.length>1) s.delete(s.length()-2, s.length());
+		s.append(") {").append(code).append("} }");
+		System.out.println(s);
+		try { method = (iMethod)cJavaMemoryCompiler.compile("js.lang.function.dynamic."+className, s.toString()).newInstance(); }
 		catch(Exception e) { throw new RuntimeException(e); }
 	}
 	/**
@@ -174,6 +179,7 @@ public class cMethod implements iMethod {
 			MethodHandles.insertArguments(fctry, 0, args);
 			return new cMethod((iMethod)fctry.invoke(), fctry, name);
 		}
+		catch(NullPointerException e) { throw new oError("Cannot bind any object to this already bound oFunction."); }
 		catch(Throwable e) { throw new RuntimeException(e); }
 	}
 	

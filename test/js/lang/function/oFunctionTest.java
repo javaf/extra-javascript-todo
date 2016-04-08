@@ -197,6 +197,17 @@ public class oFunctionTest {
 		System.out.println();
 	}
 	
+	@Test
+	public void newStringFn() {
+		System.out.println("# oFunction(String...)");
+		f0MathPi = new oFunction("return Math.PI;");
+		f1StrRev = new oFunction("a", "return new StringBuilder((String)a).reverse().toString();");
+		f2StrCat = new oFunction("a", "b", "return (String)a+(String)b;");
+		f3MathMax = new oFunction("a", "b", "c", "return Math.max((double)a, Math.max((double)b, (double)c));");
+		f4MathMin = new oFunction("a", "b", "c", "d", "return Math.min((double)a, Math.min((double)b, Math.min((double)c, (double)d)));");
+		accept(); apply(); run(); fcall(null); fapply(null);
+	}
+	
 	
 	/* test use function */
 	/**
@@ -298,6 +309,9 @@ public class oFunctionTest {
 		}
 	}
 	
+	/**
+	 * Test of run method, of class oFunction.
+	 */
 	public void run() {
 		System.out.println("## run");
 		if(c0MathPi!=null) {
@@ -641,5 +655,4 @@ public class oFunctionTest {
 		Arrays.sort(p);
 		return p;
 	}
-
 }

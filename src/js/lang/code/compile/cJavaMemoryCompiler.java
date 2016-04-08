@@ -10,7 +10,7 @@ public class cJavaMemoryCompiler {
 	
 	/* static data */
 	/** Java compiler provided by JDK. */
-	private static JavaCompiler compiler;
+	private static final JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 	
 	
 	/* static method */
