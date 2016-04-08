@@ -1,5 +1,6 @@
 package js.lang.function;
 import static org.junit.Assert.*;
+import java.util.function.*;
 import java.util.*;
 import org.junit.*;
 
@@ -9,23 +10,23 @@ import org.junit.*;
 public class oFunctionTest {
 	
 	/* data */
-	private Object ans;
-	private oFunction c0MathPi;
-	private oFunction c1StrRev;
-	private oFunction c2StrCat;
-	private oFunction c3MathMax;
-	private oFunction c4MathMin;
-	private oFunction c5ListAdd;
-	private oFunction c6MapRemove;
-	private oFunction c7NumSort;
-	private oFunction f0MathPi;
-	private oFunction f1StrRev;
-	private oFunction f2StrCat;
-	private oFunction f3MathMax;
-	private oFunction f4MathMin;
-	private oFunction f5ListAdd;
-	private oFunction f6MapRemove;
-	private oFunction f7NumSort;
+	public Object ans;
+	public oFunction c0MathPi;
+	public oFunction c1StrRev;
+	public oFunction c2StrCat;
+	public oFunction c3MathMax;
+	public oFunction c4MathMin;
+	public oFunction c5ListAdd;
+	public oFunction c6MapRemove;
+	public oFunction c7NumSort;
+	public oFunction f0MathPi;
+	public oFunction f1StrRev;
+	public oFunction f2StrCat;
+	public oFunction f3MathMax;
+	public oFunction f4MathMin;
+	public oFunction f5ListAdd;
+	public oFunction f6MapRemove;
+	public oFunction f7NumSort;
 	
 	
 	/* constructor */
@@ -60,7 +61,6 @@ public class oFunctionTest {
 	@Test
 	public void newiMethod() {
 		System.out.println("# oFunction(iMethod)");
-		Object t = new oFunctionTest();
 		c0MathPi = new oFunction((iMethod)(Object... a) -> { c0MathPi(); return null; });
 		c1StrRev = new oFunction((iMethod)(Object... a) -> { c1StrRev((String)a[0]); return null; });
 		c2StrCat = new oFunction((iMethod)(Object... a) -> { c2StrCat((String)a[0], (String)a[1]); return null; });
@@ -78,6 +78,122 @@ public class oFunctionTest {
 		f6MapRemove = new oFunction((iMethod)(Object... a) -> f6MapRemove((int)a[0], (int)a[1], (int)a[2], (int)a[3], (int)a[4], (int)a[5]));
 		f7NumSort = new oFunction((iMethod)(Object... a) -> f7NumSort((int)a[0], (int)a[1], (int)a[2], (int)a[3], (int)a[4], (int)a[5], (int)a[6]));
 		accept(); apply(); run(); fcall(null); fapply(null);
+		System.out.println();
+	}
+	
+	@Test
+	public void newiConsumerX() {
+		System.out.println("# oFunction(iConsumerX)");
+		c0MathPi = new oFunction((iConsumer0)() -> { c0MathPi(); });
+		c1StrRev = new oFunction((iConsumer1<String>)(a) -> { c1StrRev(a); });
+		c2StrCat = new oFunction((iConsumer2<String, String>)(a, b) -> { c2StrCat(a, b); });
+		c3MathMax = new oFunction((iConsumer3<Double, Double, Double>)(a, b, c) -> { c3MathMax((double)a, (double)b, (double)c); });
+		c4MathMin = new oFunction((iConsumer4<Double, Double, Double, Double>)(a, b, c, d) -> { c4MathMin((double)a, (double)b, (double)c, (double)d); });
+		c5ListAdd = new oFunction((iConsumer5<Double, Double, Double, Double, Double>)(a, b, c, d, e) -> { c5ListAdd((double)a, (double)b, (double)c, (double)d, (double)e); });
+		c6MapRemove = new oFunction((iConsumer6<Integer, Integer, Integer, Integer, Integer, Integer>)(a, b, c, d, e, f) -> { c6MapRemove((int)a, (int)b, (int)c, (int)d, (int)e, (int)f); });
+		c7NumSort = new oFunction((iConsumer7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>)(a, b, c, d, e, f, g) -> { c7NumSort((int)a, (int)b, (int)c, (int)d, (int)e, (int)f, (int)g); });
+		accept(); apply(); run(); fcall(null); fapply(null);
+		System.out.println();
+	}
+
+	@Test
+	public void newiFunctionX() {
+		System.out.println("# oFunction(iFunctionX)");
+		f0MathPi = new oFunction((iFunction0<Double>)() -> f0MathPi());
+		f1StrRev = new oFunction((iFunction1<String, String>)(a) -> f1StrRev(a));
+		f2StrCat = new oFunction((iFunction2<String, String, String>)(a, b) -> f2StrCat(a, b));
+		f3MathMax = new oFunction((iFunction3<Double, Double, Double, Double>)(a, b, c) -> f3MathMax((double)a, (double)b, (double)c));
+		f4MathMin = new oFunction((iFunction4<Double, Double, Double, Double, Double>)(a, b, c, d) -> f4MathMin((double)a, (double)b, (double)c, (double)d));
+		f5ListAdd = new oFunction((iFunction5<Double, Double, Double, Double, Double, List>)(a, b, c, d, e) -> f5ListAdd((double)a, (double)b, (double)c, (double)d, (double)e));
+		f6MapRemove = new oFunction((iFunction6<Integer, Integer, Integer, Integer, Integer, Integer, Map>)(a, b, c, d, e, f) -> f6MapRemove((int)a, (int)b, (int)c, (int)d, (int)e, (int)f));
+		f7NumSort = new oFunction((iFunction7<Integer, Integer, Integer, Integer, Integer, Integer, Integer, int[]>)(a, b, c, d, e, f, g) -> f7NumSort((int)a, (int)b, (int)c, (int)d, (int)e, (int)f, (int)g));
+		accept(); apply(); run(); fcall(null); fapply(null);
+		System.out.println();
+	}
+	
+	@Test
+	public void newConsumer() {
+		System.out.println("# oFunction(Consumer)");
+		c1StrRev = new oFunction((Consumer<String>)(a) -> { c1StrRev(a); });
+		accept(); apply(); run(); fcall(null); fapply(null);
+		System.out.println();
+	}
+	
+	@Test
+	public void newBiConsumer() {
+		System.out.println("# oFunction(BiConsumer)");
+		c2StrCat = new oFunction((BiConsumer<String, String>)(a, b) -> { c2StrCat(a, b); });
+		accept(); apply(); run(); fcall(null); fapply(null);
+		System.out.println();
+	}
+
+	@Test
+	public void newSupplier() {
+		System.out.println("# oFunction(Supplier)");
+		f0MathPi = new oFunction((Supplier)() -> f0MathPi());
+		accept(); apply(); run(); fcall(null); fapply(null);
+		System.out.println();
+	}
+
+	@Test
+	public void newFunction() {
+		System.out.println("# oFunction(Function)");
+		f1StrRev = new oFunction((Function<String, String>)(a) -> f1StrRev(a));
+		accept(); apply(); run(); fcall(null); fapply(null);
+		System.out.println();
+	}
+
+	@Test
+	public void newBiFunction() {
+		System.out.println("# oFunction(BiFunction)");
+		f2StrCat = new oFunction((BiFunction<String, String, String>)(a, b) -> f2StrCat(a, b));
+		accept(); apply(); run(); fcall(null); fapply(null);
+		System.out.println();
+	}
+
+	@Test
+	public void newObjClsMthd() {
+		System.out.println("# oFunction(Object, Class, Method, Parameter types)");
+		c0MathPi = new oFunction(this, oFunctionTest.class, "c0MathPi");
+		c1StrRev = new oFunction(this, oFunctionTest.class, "c1StrRev", String.class);
+		c2StrCat = new oFunction(this, oFunctionTest.class, "c2StrCat", String.class, String.class);
+		c3MathMax = new oFunction(this, oFunctionTest.class, "c3MathMax", double.class, double.class, double.class);
+		c4MathMin = new oFunction(this, oFunctionTest.class, "c4MathMin", double.class, double.class, double.class, double.class);
+		c5ListAdd = new oFunction(this, oFunctionTest.class, "c5ListAdd", double.class, double.class, double.class, double.class, double.class);
+		c6MapRemove = new oFunction(this, oFunctionTest.class, "c6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class);
+		c7NumSort = new oFunction(this, oFunctionTest.class, "c7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class);
+		f0MathPi = new oFunction(this, oFunctionTest.class, "f0MathPi");
+		f1StrRev = new oFunction(this, oFunctionTest.class, "f1StrRev", String.class);
+		f2StrCat = new oFunction(this, oFunctionTest.class, "f2StrCat", String.class, String.class);
+		f3MathMax = new oFunction(this, oFunctionTest.class, "f3MathMax", double.class, double.class, double.class);
+		f4MathMin = new oFunction(this, oFunctionTest.class, "f4MathMin", double.class, double.class, double.class, double.class);
+		f5ListAdd = new oFunction(this, oFunctionTest.class, "f5ListAdd", double.class, double.class, double.class, double.class, double.class);
+		f6MapRemove = new oFunction(this, oFunctionTest.class, "f6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class);
+		f7NumSort = new oFunction(this, oFunctionTest.class, "f7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class);
+		accept(); apply(); run(); fcall(null); fapply(null);
+		System.out.println();
+	}
+
+	@Test
+	public void newClsMthd() {
+		System.out.println("# oFunction(Class, Method, Parameter types)");
+		c0MathPi = new oFunction(null, oFunctionTest.class, "c0MathPi");
+		c1StrRev = new oFunction(null, oFunctionTest.class, "c1StrRev", String.class);
+		c2StrCat = new oFunction(null, oFunctionTest.class, "c2StrCat", String.class, String.class);
+		c3MathMax = new oFunction(null, oFunctionTest.class, "c3MathMax", double.class, double.class, double.class);
+		c4MathMin = new oFunction(null, oFunctionTest.class, "c4MathMin", double.class, double.class, double.class, double.class);
+		c5ListAdd = new oFunction(null, oFunctionTest.class, "c5ListAdd", double.class, double.class, double.class, double.class, double.class);
+		c6MapRemove = new oFunction(null, oFunctionTest.class, "c6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class);
+		c7NumSort = new oFunction(null, oFunctionTest.class, "c7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class);
+		f0MathPi = new oFunction(null, oFunctionTest.class, "f0MathPi");
+		f1StrRev = new oFunction(null, oFunctionTest.class, "f1StrRev", String.class);
+		f2StrCat = new oFunction(null, oFunctionTest.class, "f2StrCat", String.class, String.class);
+		f3MathMax = new oFunction(null, oFunctionTest.class, "f3MathMax", double.class, double.class, double.class);
+		f4MathMin = new oFunction(null, oFunctionTest.class, "f4MathMin", double.class, double.class, double.class, double.class);
+		f5ListAdd = new oFunction(null, oFunctionTest.class, "f5ListAdd", double.class, double.class, double.class, double.class, double.class);
+		f6MapRemove = new oFunction(null, oFunctionTest.class, "f6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class);
+		f7NumSort = new oFunction(null, oFunctionTest.class, "f7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class);
+		fcall(this); fapply(this); bind(this); accept(); apply(); run(); fcall(null); fapply(null);
 		System.out.println();
 	}
 	
@@ -130,7 +246,7 @@ public class oFunctionTest {
 	/**
 	 * Test of get method, of class oFunction.
 	 */
-	private void get() {
+	public void get() {
 		System.out.println("## get");
 		if(f0MathPi!=null) {
 			ans = f0MathPi.get();
@@ -141,7 +257,7 @@ public class oFunctionTest {
 	/**
 	 * Test of apply method, of class oFunction.
 	 */
-	private void apply() {
+	public void apply() {
 		System.out.println("## apply");
 		if(f0MathPi!=null) {
 			ans = f0MathPi.apply();
@@ -182,7 +298,7 @@ public class oFunctionTest {
 		}
 	}
 	
-	private void run() {
+	public void run() {
 		System.out.println("## run");
 		if(c0MathPi!=null) {
 			c0MathPi.run();
@@ -262,8 +378,9 @@ public class oFunctionTest {
 	
 	/**
 	 * Test of call method, of class oFunction.
+	 * @param t This object.
 	 */
-	private void fcall(Object t) {
+	public void fcall(Object t) {
 		System.out.println("## fcall");
 		if(c0MathPi!=null) {
 			c0MathPi.call(t);
@@ -343,11 +460,12 @@ public class oFunctionTest {
 	
 	/**
 	 * Test of apply method, of class oFunction.
+	 * @param t This object.
 	 */
-	private void fapply(Object t) {
+	public void fapply(Object t) {
 		System.out.println("## fapply");
 		if(c0MathPi!=null) {
-			c0MathPi.apply(t);
+			c0MathPi.apply(t, new Object[] {});
 			assertEquals((double)ans, Math.PI, 0.0);
 		}
 		if(c1StrRev!=null) {
@@ -384,7 +502,7 @@ public class oFunctionTest {
 			assertArrayEquals((int[])ans, new int[] {0, 1, 2, 3, 4, 5, 6});
 		}
 		if(f0MathPi!=null) {
-			ans = f0MathPi.apply(t);
+			ans = f0MathPi.apply(t, new Object[] {});
 			assertEquals((double)ans, Math.PI, 0.0);
 		}
 		if(f1StrRev!=null) {
@@ -424,24 +542,25 @@ public class oFunctionTest {
 	
 	/**
 	 * Test of bind method, of class oFunction.
+	 * @param t This object.
 	 */
-	private void bind(Object t) {
-		c0MathPi.bind(t);
-		c1StrRev.bind(t);
-		c2StrCat.bind(t);
-		c3MathMax.bind(t);
-		c4MathMin.bind(t);
-		c5ListAdd.bind(t);
-		c6MapRemove.bind(t);
-		c7NumSort.bind(t);
-		f0MathPi.bind(t);
-		f1StrRev.bind(t);
-		f2StrCat.bind(t);
-		f3MathMax.bind(t);
-		f4MathMin.bind(t);
-		f5ListAdd.bind(t);
-		f6MapRemove.bind(t);
-		f7NumSort.bind(t);
+	public void bind(Object t) {
+		c0MathPi = c0MathPi.bind(t);
+		c1StrRev = c1StrRev.bind(t);
+		c2StrCat = c2StrCat.bind(t);
+		c3MathMax = c3MathMax.bind(t);
+		c4MathMin = c4MathMin.bind(t);
+		c5ListAdd = c5ListAdd.bind(t);
+		c6MapRemove = c6MapRemove.bind(t);
+		c7NumSort = c7NumSort.bind(t);
+		f0MathPi = f0MathPi.bind(t);
+		f1StrRev = f1StrRev.bind(t);
+		f2StrCat = f2StrCat.bind(t);
+		f3MathMax = f3MathMax.bind(t);
+		f4MathMin = f4MathMin.bind(t);
+		f5ListAdd = f5ListAdd.bind(t);
+		f6MapRemove = f6MapRemove.bind(t);
+		f7NumSort = f7NumSort.bind(t);
 	}
 
 	/**
@@ -452,72 +571,72 @@ public class oFunctionTest {
 	
 	
 	/* support function */
-	private void c0MathPi() {
+	public void c0MathPi() {
 		ans = f0MathPi();
 	}
 	
-	private void c1StrRev(String a) {
+	public void c1StrRev(String a) {
 		ans = f1StrRev(a);
 	}
 	
-	private void c2StrCat(String a, String b) {
+	public void c2StrCat(String a, String b) {
 		ans = f2StrCat(a, b);
 	}
 	
-	private void c3MathMax(double a, double b, double c) {
+	public void c3MathMax(double a, double b, double c) {
 		ans = f3MathMax(a, b, c);
 	}
 	
-	private void c4MathMin(double a, double b, double c, double d) {
+	public void c4MathMin(double a, double b, double c, double d) {
 		ans = f4MathMin(a, b, c, d);
 	}
 	
-	private void c5ListAdd(double a, double b, double c, double d, double e) {
+	public void c5ListAdd(double a, double b, double c, double d, double e) {
 		ans = f5ListAdd(a, b, c, d, e);
 	}
 	
-	private void c6MapRemove(int a, int b, int c, int d, int e, int f) {
+	public void c6MapRemove(int a, int b, int c, int d, int e, int f) {
 		ans = f6MapRemove(a, b, c, d, e, f);
 	}
 	
-	private void c7NumSort(int a, int b, int c, int d, int e, int f, int g) {
+	public void c7NumSort(int a, int b, int c, int d, int e, int f, int g) {
 		ans = f7NumSort(a, b, c, d, e, f, g);
 	}
 	
-	private double f0MathPi() {
+	public double f0MathPi() {
 		return Math.PI;
 	}
 	
-	private String f1StrRev(String a) {
+	public String f1StrRev(String a) {
 		return new StringBuilder(a).reverse().toString();
 	}
 	
-	private String f2StrCat(String a, String b) {
+	public String f2StrCat(String a, String b) {
 		return a+b;
 	}
 	
-	private double f3MathMax(double a, double b, double c) {
+	public double f3MathMax(double a, double b, double c) {
 		return Math.max(a, Math.max(b, c));
 	}
 	
-	private double f4MathMin(double a, double b, double c, double d) {
+	public double f4MathMin(double a, double b, double c, double d) {
 		return Math.min(a, Math.min(b, Math.min(c, d)));
 	}
 	
-	private List f5ListAdd(double a, double b, double c, double d, double e) {
+	public List f5ListAdd(double a, double b, double c, double d, double e) {
 		List p = (List)ans;
 		p.addAll(Arrays.asList(a, b, c, d, e));
 		return p;
 	}
 	
-	private Map f6MapRemove(int a, int b, int c, int d, int e, int f) {
+	public Map f6MapRemove(int a, int b, int c, int d, int e, int f) {
 		Map p = (Map)ans;
 		for(int n : new int[] {a, b, c, d, e, f})
 			p.remove(n);
 		return p;
 	}
 	
-	private int[] f7NumSort(int a, int b, int c, int d, int e, int f, int g) {
+	public int[] f7NumSort(int a, int b, int c, int d, int e, int f, int g) {
 		int[] p = new int[] {a, b, c, d, e, f, g};
 		Arrays.sort(p);
 		return p;
