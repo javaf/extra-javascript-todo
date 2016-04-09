@@ -1,12 +1,12 @@
-package js.lang;
-import java.util.*;
+package js.lang.object;
 import java.util.function.*;
+import java.util.*;
 
 
 /**
  * Defines descriptors for special oObject properties.
  */
-class zObjectDescriptor {
+class cDescriptor<T> {
 	
 	/* data */
 	/**
@@ -26,31 +26,31 @@ class zObjectDescriptor {
 	 */
 	public boolean writeable;
 	/**
-	 * The value associated with the property. Can be any valid JavaScript value
-	 * (number, object, function, etc). Defaults to null.
-	 */
-	public Object value;
-	/**
 	 * A function which serves as a getter for the property, or null if there is
 	 * no getter. The function return will be used as the value of property.
 	 * Defaults to null.
 	 */
-	public Supplier get;
+	public Supplier<T> get;
 	/**
 	 * A function which serves as a setter for the property, or null if there is
 	 * no setter. The function will receive as only argument the new value being
 	 * assigned to the property. Defaults to null.
 	 */
-	public Consumer set;
+	public Consumer<T> set;
+	/**
+	 * The value associated with the property. Can be any valid JavaScript value
+	 * (number, object, function, etc). Defaults to null.
+	 */
+	public T value;
 	
 	
 	/* constructor */
 	/**
 	 * Creates an oObject descriptor.
-	 * @param value Map describing the descriptor. Options not provided are set to default.
+	 * @param val Map describing the descriptor. Options not provided are set to default.
 	 */
-	public zObjectDescriptor(Map value) {
-		set(value);
+	public cDescriptor(Map val) {
+		set(val);
 	}
 	/**
 	 * Creates an oObject descriptor.
@@ -61,18 +61,18 @@ class zObjectDescriptor {
 	 * @param get Defines get accessor for property.
 	 * @param set Defines set accessor for property.
 	 */
-	public zObjectDescriptor(boolean configurable, boolean enumerable, boolean writeable, Object value, Supplier get, Consumer set) {
+	public cDescriptor(boolean configurable, boolean enumerable, boolean writeable, Supplier<T> get, Consumer<T> set, T value) {
+		this.value = get==null && set==null? value : null;
 		this.configurable = configurable;
 		this.enumerable = enumerable;
 		this.writeable = writeable;
-		this.value = get==null && set==null? value : null;
 		this.get = get;
 		this.set = set;
 	}
 	/**
 	 * Creates an oObject descriptor with default options.
 	 */
-	public zObjectDescriptor() {
+	public cDescriptor() {
 	}
 	
 	
@@ -81,35 +81,34 @@ class zObjectDescriptor {
 	 * Gets the fields as a map.
 	 * @return Fields as a map.
 	 */
-	public final oObject get() {
-		oObject o = new oObject();
-		o.set("configurable", configurable);
-		o.set("enumerable", enumerable);
-		o.set("writeable", writeable);
-		o.set("value", value);
-		o.set("get", get);
-		o.set("set", set);
+	public final Map get(Map o) {
+		o.put("configurable", configurable);
+		o.put("enumerable", enumerable);
+		o.put("writeable", writeable);
+		o.put("value", value);
+		o.put("get", get);
+		o.put("set", set);
 		return o;
 	}
 
 	/**
 	 * Set the fields with a map.
-	 * @param value Map with field names, and values.
+	 * @param val Map with field names, and values.
 	 */
-	public final void set(Map value) {
-		if(value==null) return;
-		for(Object k : value.keySet()) {
-			Object v = value.get(k);
+	public final void set(Map val) {
+		if(val==null) return;
+		for(Object k : val.keySet()) {
+			Object v = val.get(k);
 			switch(k.toString()) {
-				case "configurable": configurable = (Boolean)v; break;
-				case "enumerable": enumerable = (Boolean)v; break;
-				case "writeable": writeable = (Boolean)v; break;
-				case "value": this.value = v; break;
-				case "get": get = (Supplier)v; break;
-				case "set": set = (Consumer)v; break;
+				case "configurable": configurable = (boolean)v; break;
+				case "enumerable": enumerable = (boolean)v; break;
+				case "writeable": writeable = (boolean)v; break;
+				case "get": get = (Supplier<T>)v; break;
+				case "set": set = (Consumer<T>)v; break;
+				case "value": value = (T)v; break;
 			}
 		}
-		this.value = get==null && set==null? this.value : null;
+		value = get==null && set==null? value : null;
 	}
 	
 	/**

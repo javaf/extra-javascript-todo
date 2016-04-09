@@ -2,24 +2,48 @@ package js.lang.object;
 import java.lang.reflect.*;
 import java.util.*;
 
-/*
-
-*/
+/**
+ * Creates an object which contains properties.
+ * @param <K> Datatype of property name.
+ * @param <V> Datatype of property value.
+ */
 public class oObject<K, V> {
 	
+	/* data */
+	private Object obj;
+	private Map<K, Field> map;
+	private oObject proto;
+	
 	/* property */
+	/**
+	 * Get the value of the specified property.
+	 * @param prop Name of the property.
+	 * @return Value of the property.
+	 */
 	public V get(K prop) {
-		return null;
+		try { return (V)map.get(prop).get(obj); }
+		catch(IllegalArgumentException | IllegalAccessException e) { throw new RuntimeException(e); }
 	}
 	public V set(K prop, V value) {
-		return null;
+		try { map.get(prop).set(obj, value); }
+		catch(IllegalArgumentException | IllegalAccessException e) { throw new RuntimeException(e); }
+		return value;
 	}
 	
+	/**
+	 * Get the prototype of this object.
+	 * @return Prototype object.
+	 */
 	public oObject prototype() {
-		return null;
+		return proto;
 	}
-	public oObject prototype(Object obj) {
-		return null;
+	/**
+	 * Set the prototype of the object.
+	 * @param obj New prototype object.
+	 * @return New prototype object.
+	 */
+	public oObject prototype(oObject obj) {
+		return proto = obj;
 	}
 	
 	
@@ -95,7 +119,7 @@ public class oObject<K, V> {
 		return null;
 	}
 	
-	public static Object setPrototypeOf(Object obj, Object prototype) {
+	public static oObject setPrototypeOf(Object obj, Object prototype) {
 		return null;
 	}
 	
@@ -107,5 +131,31 @@ public class oObject<K, V> {
 	public Constructor<?> constructor() {
 		try { return this.getClass().getConstructor(); }
 		catch(NoSuchMethodException e) { throw new RuntimeException(e); }
+	}
+	
+	
+	
+	/**
+	 * Returns a locale-specific string representing the object.
+	 * @return Locale-specific string.
+	 */
+	public String toLocaleString() {
+		return toString();
+	}
+	
+	/**
+	 * Returns the primitive value of the specified object.
+	 * @return Object.
+	 */
+	public Object valueOf() {
+		return obj;
+	}
+	
+	
+	/* super method */
+	// TODO: circular check parameter
+	@Override
+	public String toString() {
+		return null;
 	}
 }

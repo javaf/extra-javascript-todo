@@ -1,29 +1,27 @@
 package js.lang.object;
+import js.lang.coll.*;
 import java.util.*;
 
 /**
- * Defines a map type thing.
+ * Defines a map-like object.
  * @param <K> Key datatype.
  * @param <V> Value datatype.
  */
-public interface iMap<K, V> extends Map<K, V> {
+public interface iMap<K, V> extends Map<K, V>, iColl<K, V> {
 	
 	/* property */
 	/**
-	 * Returns this object's prototype
-	 * @return Prototype object.
+	 * Returns the prototype of this object.
+	 * @return This object's prototype.
 	 */
-	default Object prototype() {
-		return null;
-	}
+	iMap prototype();
+	
 	/**
 	 * Sets the prototype of this object.
-	 * @param obj Object's prototype.
-	 * @return Object's prototype.
+	 * @param prototype This object's prototype
+	 * @return This object's prototype.
 	 */
-	default Object prototype(Object obj) {
-		return obj;
-	}
+	iMap prototype(iMap prototype);
 	
 	
 	/* method */
@@ -32,8 +30,8 @@ public interface iMap<K, V> extends Map<K, V> {
 	 * @param prop The name of the property to test.
 	 * @return Whether the object has the specified own property.
 	 */
-	default boolean hasOwnProperty(String prop) {
-		return false;
+	default boolean hasOwnProperty(K prop) {
+		return this.containsKey(prop);
 	}
 	
 	/**
@@ -41,7 +39,9 @@ public interface iMap<K, V> extends Map<K, V> {
 	 * @param obj The object whose prototype chain will be searched.
 	 * @return Whether this object is the specified object's prototype.
 	 */
-	default boolean isPrototypeOf(Object obj) {
+	default boolean isPrototypeOf(iMap obj) {
+		for(; obj!=null; obj=obj.prototype())
+			if(obj==this) return true;
 		return false;
 	}
 	
@@ -56,7 +56,7 @@ public interface iMap<K, V> extends Map<K, V> {
 	
 	/**
 	 * Returns a locale-specific string representing the object.
-	 * @return Locale specific string.
+	 * @return Locale-specific string.
 	 */
 	default String toLocaleString() {
 		return toString();
@@ -64,9 +64,9 @@ public interface iMap<K, V> extends Map<K, V> {
 	
 	/**
 	 * Returns the primitive value of the specified object.
-	 * @return Primitive value.
+	 * @return Object.
 	 */
 	default Object valueOf() {
-		return null;
+		return this;
 	}
 }
