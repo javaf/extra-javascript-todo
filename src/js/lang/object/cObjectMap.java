@@ -8,7 +8,7 @@ import js.lang.coll.*;
  * Defines a map interface for a object of normal or access-controlled class.
  * @author wolfram77
  */
-public class cObject extends cMap<String, Object> {
+public class cObjectMap extends cMap<String, Object> {
 	
 	/* data */
 	/** Object that is reflectively connected to this object. */
@@ -20,7 +20,7 @@ public class cObject extends cMap<String, Object> {
 	
 	
 	/* constructor */
-	public cObject(Object v) {
+	public cObjectMap(Object v) {
 		enumerable = new HashSet<>();
 		writable = new HashSet<>();
 		Class<?> c = v.getClass();

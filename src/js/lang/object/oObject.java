@@ -1,5 +1,4 @@
 package js.lang.object;
-import java.lang.reflect.*;
 import java.util.*;
 
 /**
@@ -9,36 +8,105 @@ import java.util.*;
  */
 public class oObject<K, V> extends cProtoMap<K, V> {
 	
-	public oObject(Object v) {
-		super(v);
+	/* constructor */
+	/**
+	 * Create an oObject.
+	 * @param nameValuePairs Pairs of names (strings) and values (any value) where
+	 * the name is separated from the value by a colon.
+	 */
+	public oObject(Entry... nameValuePairs) {
+		super(new HashMap<>());
+		for(Entry e : nameValuePairs)
+			value.put(e.getKey(), e.getValue());
 	}
+	/**
+	 * Create an oObject.
+	 * @param value Any value.
+	 */
+	public oObject(Object value) {
+		super(value instanceof Map? (Map)value : new cObjectMap(value));
+	}
+	
 	
 	/* static method */
-	public static oObject assign(Object target, Object... sources) {
-		return null;
+	/**
+	 * Copy the values of all enumerable own properties from one or more source
+	 * objects to a target object. It will return the target object.
+	 * @param target The target object.
+	 * @param sources The source object(s).
+	 * @return The target object which was assigned.
+	 */
+	public static oObject assign(oObject target, oObject... sources) {
+		for(oObject s : sources)
+			for(Object k : s.keySet)
+				target.put(k, s.get(k));
+		return target;
 	}
 	
-	public static oObject create(Object proto, Object propertiesObject) {
-		return null;
+	/**
+	 * Creates a new object with the specified prototype object and properties.
+	 * @param proto The object which should be the prototype of the newly-created object.
+	 * @param propertiesObject Optional. If specified and not undefined, an object whose
+	 * enumerable own properties (that is, those properties defined upon itself and not
+	 * enumerable properties along its prototype chain) specify property descriptors to
+	 * be added to the newly-created object, with the corresponding property names. These
+	 * properties correspond to the second argument of Object.defineProperties().
+	 * @return Newly created object.
+	 */
+	public static oObject create(oObject proto, Map propertiesObject) {
+		oObject o = new oObject(new HashMap<>(propertiesObject));
+		o.prototype(proto);
+		return o;
 	}
-	public static oObject create(Object proto) {
+	/**
+	 * Creates a new object with the specified prototype object and properties.
+	 * @param proto The object which should be the prototype of the newly-created object.
+	 * @return Newly created object.
+	 */
+	public static oObject create(oObject proto) {
 		return create(proto, null);
 	}
 	
-	public static oObject defineProperties(Object obj, Object props) {
-		return null;
-	}
-	
-	public static oObject defineProperty(Object obj, Object prop, Object descriptor) {
+	/**
+	 * Defines new or modifies existing properties directly on an object, returning the object.
+	 * @param obj The object on which to define or modify properties.
+	 * @param props An object whose own enumerable properties constitute descriptors
+	 * for the properties to be defined or modified. Property descriptors present in
+	 * objects come in two main flavors: data descriptors and accessor descriptors
+	 * (see Object.defineProperty() for more details).
+	 * @return Object whose properties were defined.
+	 */
+	public static oObject defineProperties(oObject obj, Map props) {
+		for(Object e : props.entrySet())
+			defineProperty(obj, ((Entry)e).getKey(), (Map)((Entry)e).getValue());
 		return null;
 	}
 	
 	/**
-	 * 
-	 * @return 
+	 * Defines a new property directly on an object, or modifies an existing
+	 * property on an object, and returns the object.
+	 * @param obj The object on which to define the property.
+	 * @param prop The name of the property to be defined or modified.
+	 * @param descriptor The descriptor for the property being defined or modified.
+	 * @return Object whose property was defined.
 	 */
-	public static Set<Map.Entry<String,Object>> entries() {
-		return null;
+	public static oObject defineProperty(oObject obj, Object prop, Map descriptor) {
+		obj.access(prop, descriptor);;
+		return obj;
+	}
+	
+	/**
+	 * Returns an array of a given object's own enumerable property [key, value] pairs,
+	 * in the same order as that provided by a for...in loop (the difference being that
+	 * a for-in loop enumerates properties in the prototype chain as well).
+	 * @param obj The object whose enumerable own property [key, value] pairs are to be returned.
+	 * @return Set of object's own enumerable properties.
+	 */
+	public static Set<Map.Entry<String, Object>> entries(oObject obj) {
+		Set<Map.Entry<String, Object>> o = new HashSet<>();
+		for(Object k : obj.keySet)
+			o.add(new AbstractMap.SimpleEntry<>(k.toString(), obj.get(k)));
+		return o;
 	}
 	
 	/**
@@ -56,15 +124,15 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	}
 	
 	/**
-	 * Returns a property descriptor for an own property (that is, one directly
-	 * present on an object, not present by dint of being along an object's
-	 * prototype chain) of a given object.
+	 * Returns a property access for an own property (that is, one directly
+ present on an object, not present by dint of being along an object's
+ prototype chain) of a given object.
 	 * @param obj The object in which to look for the property.
 	 * @param prop The name of the property whose description is to be retrieved.
 	 * @return Descriptor of specified property.
 	 */
 	public static Map getOwnPropertyDescriptor(oObject obj, Object prop) {
-		return ((cAccess)obj.descriptor.get(prop)).get(new HashMap());
+		return obj.access(prop).get(new HashMap<>());
 	}
 	
 	/**
@@ -139,7 +207,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @return Own enumerable key-set of object.
 	 */
 	public static Set<String> keys(oObject obj) {
-		return obj.value.keySet();
+		return obj.keySet;
 	}
 	
 	/**
@@ -184,12 +252,9 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @return Array of values.
 	 */
 	public static Collection<Object> values(oObject obj) {
-		return obj.value.values();
-	}
-	
-	/* method */
-	public Constructor<?> constructor() {
-		try { return this.getClass().getConstructor(); }
-		catch(NoSuchMethodException e) { throw new RuntimeException(e); }
+		Collection<Object> o = new ArrayList<>();
+		for(Object k : obj.keySet)
+			o.add(obj.get(k));
+		return o;
 	}
 }

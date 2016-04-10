@@ -6,7 +6,7 @@ import java.util.*;
 /**
  * Defines descriptors for special oObject properties.
  */
-class cAccess<T> {
+public class cAccess<T> {
 	
 	/* data */
 	/**
@@ -79,6 +79,7 @@ class cAccess<T> {
 	/* method */
 	/**
 	 * Gets the fields as a map.
+	 * @param o Input map where values are to be stored.
 	 * @return Fields as a map.
 	 */
 	public final Map get(Map o) {

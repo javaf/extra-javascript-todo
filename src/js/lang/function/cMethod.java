@@ -64,17 +64,8 @@ public class cMethod implements iMethod {
 	public cMethod(Object obj, Class<?> cls, String mthd, Class<?>... types) {
 		try {
 			Method m = cls.getMethod(mthd, types);
-			int nArg = m.getParameterCount();
-			Class<?> tRet = m.getReturnType();
-			Class<?> dCls = tRet==void.class? CONSUMER_INTERFACE[nArg] : FUNCTION_INTERFACE[nArg];
-			MethodType sSig = MethodType.methodType(tRet, m.getParameterTypes());
-			MethodType dSig = tRet==void.class? CONSUMER_SIGNATURE[nArg] : FUNCTION_SIGNATURE[nArg];
-			String dMthd = tRet==void.class? iConsumer.NAME : iFunction.NAME;
 			boolean isstatic = Modifier.isStatic(m.getModifiers());
-			MethodHandles.Lookup lookup = MethodHandles.lookup();
-			MethodType dType = isstatic? MethodType.methodType(dCls) : MethodType.methodType(dCls, cls);
-			MethodHandle fctry = LambdaMetafactory.metafactory(lookup, dMthd, dType, dSig, lookup.unreflect(m), sSig).getTarget();
-			factory = !isstatic && obj!=null? fctry.bindTo(obj) : fctry;
+			factory = _factory(obj, cls, m, isstatic);
 			method = isstatic || obj!=null? (iMethod)factory.invoke() : null;
 			name = mthd;
 		}
@@ -82,17 +73,8 @@ public class cMethod implements iMethod {
 	}
 	public cMethod(Object obj, Class<?> cls, Method m) {
 		try {
-			int nArg = m.getParameterCount();
-			Class<?> tRet = m.getReturnType();
-			Class<?> dCls = tRet==void.class? CONSUMER_INTERFACE[nArg] : FUNCTION_INTERFACE[nArg];
-			MethodType sSig = MethodType.methodType(tRet, m.getParameterTypes());
-			MethodType dSig = tRet==void.class? CONSUMER_SIGNATURE[nArg] : FUNCTION_SIGNATURE[nArg];
-			String dMthd = tRet==void.class? iConsumer.NAME : iFunction.NAME;
 			boolean isstatic = Modifier.isStatic(m.getModifiers());
-			MethodHandles.Lookup lookup = MethodHandles.lookup();
-			MethodType dType = isstatic? MethodType.methodType(dCls) : MethodType.methodType(dCls, cls);
-			MethodHandle fctry = LambdaMetafactory.metafactory(lookup, dMthd, dType, dSig, lookup.unreflect(m), sSig).getTarget();
-			factory = !isstatic && obj!=null? fctry.bindTo(obj) : fctry;
+			factory = _factory(obj, cls, m, isstatic);
 			method = isstatic || obj!=null? (iMethod)factory.invoke() : null;
 			name = m.getName();
 		}
@@ -210,6 +192,27 @@ public class cMethod implements iMethod {
 	 */
 	public final Object call(Object thisArg, Object... args) {
 		return thisArg!=null? bind(thisArg).run(args) : run(args);
+	}
+	
+	/**
+	 * Get method handle factory of specified method.
+	 * @param obj Object bound to function. Can be null if method is static, or
+	 * binding is to be done later using bind().
+	 * @param cls Class which contains the method.
+	 * @param m Method whose method handle factory is obtained.
+	 * @throws Exception Occurs when un-reflecting the method fails.
+	 */
+	private MethodHandle _factory(Object obj, Class<?> cls, Method m, boolean isstatic) throws Exception {
+			int nArg = m.getParameterCount();
+			Class<?> tRet = m.getReturnType();
+			Class<?> dCls = tRet==void.class? CONSUMER_INTERFACE[nArg] : FUNCTION_INTERFACE[nArg];
+			MethodType sSig = MethodType.methodType(tRet, m.getParameterTypes());
+			MethodType dSig = tRet==void.class? CONSUMER_SIGNATURE[nArg] : FUNCTION_SIGNATURE[nArg];
+			String dMthd = tRet==void.class? iConsumer.NAME : iFunction.NAME;
+			MethodHandles.Lookup lookup = MethodHandles.lookup();
+			MethodType dType = isstatic? MethodType.methodType(dCls) : MethodType.methodType(dCls, cls);
+			MethodHandle fctry = LambdaMetafactory.metafactory(lookup, dMthd, dType, dSig, lookup.unreflect(m), sSig).getTarget();
+			return !isstatic && obj!=null? fctry.bindTo(obj) : fctry;
 	}
 	
 	
