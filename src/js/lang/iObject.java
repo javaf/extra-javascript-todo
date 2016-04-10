@@ -1,5 +1,5 @@
 package js.lang;
-import js.lang.object.zObjectValue;
+import js.lang.object.*;
 import java.util.*;
 
 
@@ -10,7 +10,7 @@ public interface iObject extends Map<String, Object>, Iterable<String> {
 	 * Do not use. Returns Internal object value.
 	 * @return Internal object value.
 	 */
-	default zObjectValue zvalue() {
+	default cDescription zvalue() {
 		return null;
 	}
 	

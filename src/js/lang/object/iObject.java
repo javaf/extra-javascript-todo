@@ -7,21 +7,21 @@ import java.util.*;
  * @param <K> Key datatype.
  * @param <V> Value datatype.
  */
-public interface iMap<K, V> extends Map<K, V>, iColl<K, V> {
+public interface iObject<K, V> extends Map<K, V>, iColl<K, V> {
 	
 	/* property */
 	/**
 	 * Returns the prototype of this object.
 	 * @return This object's prototype.
 	 */
-	iMap prototype();
+	iObject prototype();
 	
 	/**
 	 * Sets the prototype of this object.
 	 * @param prototype This object's prototype
 	 * @return This object's prototype.
 	 */
-	iMap prototype(iMap prototype);
+	iObject prototype(iObject prototype);
 	
 	
 	/* method */
@@ -39,7 +39,7 @@ public interface iMap<K, V> extends Map<K, V>, iColl<K, V> {
 	 * @param obj The object whose prototype chain will be searched.
 	 * @return Whether this object is the specified object's prototype.
 	 */
-	default boolean isPrototypeOf(iMap obj) {
+	default boolean isPrototypeOf(iObject obj) {
 		for(; obj!=null; obj=obj.prototype())
 			if(obj==this) return true;
 		return false;

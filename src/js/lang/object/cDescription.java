@@ -6,7 +6,7 @@ import js.lang.iObject;
 /**
  * Defines value for an oObject.
  */
-class cDescription<K, V> extends HashMap<K, V> {
+public class cDescription<K, V> extends HashMap<K, V> {
 	
 	/* data */
 	/** Defines the prototype of this object. */
