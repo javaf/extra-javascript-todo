@@ -80,6 +80,24 @@ public class cMethod implements iMethod {
 		}
 		catch(Throwable e) { throw new RuntimeException(e); }
 	}
+	public cMethod(Object obj, Class<?> cls, Method m) {
+		try {
+			int nArg = m.getParameterCount();
+			Class<?> tRet = m.getReturnType();
+			Class<?> dCls = tRet==void.class? CONSUMER_INTERFACE[nArg] : FUNCTION_INTERFACE[nArg];
+			MethodType sSig = MethodType.methodType(tRet, m.getParameterTypes());
+			MethodType dSig = tRet==void.class? CONSUMER_SIGNATURE[nArg] : FUNCTION_SIGNATURE[nArg];
+			String dMthd = tRet==void.class? iConsumer.NAME : iFunction.NAME;
+			boolean isstatic = Modifier.isStatic(m.getModifiers());
+			MethodHandles.Lookup lookup = MethodHandles.lookup();
+			MethodType dType = isstatic? MethodType.methodType(dCls) : MethodType.methodType(dCls, cls);
+			MethodHandle fctry = LambdaMetafactory.metafactory(lookup, dMthd, dType, dSig, lookup.unreflect(m), sSig).getTarget();
+			factory = !isstatic && obj!=null? fctry.bindTo(obj) : fctry;
+			method = isstatic || obj!=null? (iMethod)factory.invoke() : null;
+			name = m.getName();
+		}
+		catch(Throwable e) { throw new RuntimeException(e); }
+	}
 	/**
 	 * Creates a callable oFunction object from a String specification of the function.
 	 * @param args Names to be used by the function as formal argument names.

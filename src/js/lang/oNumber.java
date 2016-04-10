@@ -1,6 +1,6 @@
 package js.lang;
 
-public class oNumber extends oObject {
+public class oNumber {
 	
 	/* static data */
 	/** The difference between one and the smallest value greater than one that can be represented as a oNumber. */
@@ -33,7 +33,6 @@ public class oNumber extends oObject {
 		return String.valueOf(o);
 	}
 	
-	@Override
 	public Object valueOf() {
 		return o;
 	}

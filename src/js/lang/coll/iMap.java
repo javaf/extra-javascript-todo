@@ -3,50 +3,50 @@ import java.util.function.*;
 import java.util.*;
 
 /**
- * Represents an easily extendable map implementation.
+ * Represents an easily implementable map interface.
  * @param <K> Datatype of the key.
  * @param <V> Datatype of the value.
  */
-public class cMap<K, V> extends HashMap<K, V> {
+public interface iMap<K, V> extends Map<K, V> {
 	
 	/* super method */
 	@Override
-	public void clear() {
+	default void clear() {
 		for(K k : keySet())
 			remove(k);
 	}
 	
 	@Override
-	public V compute(K k, BiFunction<? super K, ? super V, ? extends V> f) {
+	default V compute(K k, BiFunction<? super K, ? super V, ? extends V> f) {
 		return put(k, f.apply(k, get(k)));
 	}
 	
 	@Override
-	public V computeIfAbsent(K k, Function<? super K, ? extends V> f) {
+	default V computeIfAbsent(K k, Function<? super K, ? extends V> f) {
 		V v = get(k);
 		return k==null? put(k, f.apply(k)) : v;
 	}
 	
 	@Override
-	public V computeIfPresent(K k, BiFunction<? super K, ? super V, ? extends V> f) {
+	default V computeIfPresent(K k, BiFunction<? super K, ? super V, ? extends V> f) {
 		V v = get(k);
 		return k!=null? put(k, f.apply(k, v)) : v;
 	}
 	
 	@Override
-	public boolean containsKey(Object k) {
+	default boolean containsKey(Object k) {
 		return keySet().contains((K)k);
 	}
 	
 	@Override
-	public boolean containsValue(Object v) {
+	default boolean containsValue(Object v) {
 		for(K k : keySet())
 			if(get(k)==v) return true;
 		return false;
 	}
 	
 	@Override
-	public Set<Entry<K, V>> entrySet() {
+	default Set<Entry<K, V>> entrySet() {
 		Set<Entry<K, V>> o = new HashSet<>();
 		for(K k : keySet())
 			o.add(new AbstractMap.SimpleEntry<>(k, get(k)));
@@ -54,42 +54,42 @@ public class cMap<K, V> extends HashMap<K, V> {
 	}
 	
 	@Override
-	public void forEach(BiConsumer<? super K, ? super V> f) {
-		for(Map.Entry<K, V> e : entrySet())
+	default void forEach(BiConsumer<? super K, ? super V> f) {
+		for(Entry<K, V> e : entrySet())
 			f.accept(e.getKey(), e.getValue());
 	}
 	
 	@Override
-	public V getOrDefault(Object k, V dv) {
+	default V getOrDefault(Object k, V dv) {
 		V v = get((K)k);
 		return v!=null? v : dv;
 	}
 	
 	@Override
-	public boolean isEmpty() {
+	default boolean isEmpty() {
 		return size()==0;
 	}
 	
 	@Override
-	public V merge(K k, V dv, BiFunction<? super V, ? super V, ? extends V> f) {
+	default V merge(K k, V dv, BiFunction<? super V, ? super V, ? extends V> f) {
 		V v = get(k);
 		return put(k, v!=null? f.apply(v, dv) : dv);
 	}
 	
 	@Override
-	public void putAll(Map<? extends K, ? extends V> m) {
-		for(Map.Entry<? extends K, ? extends V> e : m.entrySet())
+	default void putAll(Map<? extends K, ? extends V> m) {
+		for(Entry<? extends K, ? extends V> e : m.entrySet())
 			put(e.getKey(), e.getValue());
 	}
 	
 	@Override
-	public V putIfAbsent(K k, V dv) {
+	default V putIfAbsent(K k, V dv) {
 		V v = get(k);
 		return v!=null? v : put(k, dv);
 	}
 	
 	@Override
-	public boolean remove(Object k, Object dv) {
+	default boolean remove(Object k, Object dv) {
 		V v = get((K)k);
 		if(v!=dv) return false;
 		remove((K)k);
@@ -97,12 +97,12 @@ public class cMap<K, V> extends HashMap<K, V> {
 	}
 	
 	@Override
-	public V replace(K k, V v) {
+	default V replace(K k, V v) {
 		return containsKey(k)? put(k, v) : null;
 	}
 	
 	@Override
-	public boolean replace(K k, V ov, V nv) {
+	default boolean replace(K k, V ov, V nv) {
 		V v = get(k);
 		if(v!=ov) return false;
 		put(k, nv);
@@ -110,20 +110,20 @@ public class cMap<K, V> extends HashMap<K, V> {
 	}
 	
 	@Override
-	public void replaceAll(BiFunction<? super K, ? super V, ? extends V> f) {
-		for(Map.Entry<K, V> e : entrySet())
+	default void replaceAll(BiFunction<? super K, ? super V, ? extends V> f) {
+		for(Entry<K, V> e : entrySet())
 			put(e.getKey(), f.apply(e.getKey(), e.getValue()));
 	}
 	
 	@Override
-	public int size() {
+	default int size() {
 		return keySet().size();
 	}
 	
 	@Override
-	public Collection<V> values() {
+	default Collection<V> values() {
 		Collection<V> o = new ArrayList<>();
-		for(Map.Entry<K, V> e : entrySet())
+		for(Entry<K, V> e : entrySet())
 			o.add(e.getValue());
 		return o;
 	}

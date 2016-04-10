@@ -6,7 +6,7 @@ import java.util.*;
 /**
  * Defines descriptors for special oObject properties.
  */
-class cDescriptor<T> {
+class cAccess<T> {
 	
 	/* data */
 	/**
@@ -49,7 +49,7 @@ class cDescriptor<T> {
 	 * Creates an oObject descriptor.
 	 * @param val Map describing the descriptor. Options not provided are set to default.
 	 */
-	public cDescriptor(Map val) {
+	public cAccess(Map val) {
 		set(val);
 	}
 	/**
@@ -61,7 +61,7 @@ class cDescriptor<T> {
 	 * @param get Defines get accessor for property.
 	 * @param set Defines set accessor for property.
 	 */
-	public cDescriptor(boolean configurable, boolean enumerable, boolean writeable, Supplier<T> get, Consumer<T> set, T value) {
+	public cAccess(boolean configurable, boolean enumerable, boolean writeable, Supplier<T> get, Consumer<T> set, T value) {
 		this.value = get==null && set==null? value : null;
 		this.configurable = configurable;
 		this.enumerable = enumerable;
@@ -72,7 +72,7 @@ class cDescriptor<T> {
 	/**
 	 * Creates an oObject descriptor with default options.
 	 */
-	public cDescriptor() {
+	public cAccess() {
 	}
 	
 	
