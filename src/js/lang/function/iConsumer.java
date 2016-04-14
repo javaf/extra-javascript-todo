@@ -6,7 +6,7 @@ package js.lang.function;
 public interface iConsumer extends iMethod {
 	
 	/* static data */
-	/** Defines the name of (main) function of all iConsumer interfaces. */
+	/** Defines the default name of (main) function of all iConsumer interfaces. */
 	static String NAME = "accept";
 	
 	

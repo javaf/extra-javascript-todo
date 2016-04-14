@@ -36,6 +36,7 @@ public class iMethodTest implements iMethod {
 	
 	@After
 	public void tearDown() {
+		System.out.println();
 	}
 
 	
@@ -48,6 +49,7 @@ public class iMethodTest implements iMethod {
 		assertEquals(strCat.name(), "");
 		assertEquals(strCat.length(), 0);
 		assertEquals(strCat.ztoString(), "? (...) { [native code] }");
+		System.out.println();
 	}
 	
 	@Test
@@ -58,6 +60,7 @@ public class iMethodTest implements iMethod {
 		assertEquals(strCat.name(), "");
 		assertEquals(strCat.length(), 0);
 		assertEquals(strCat.ztoString(), "? (...) { [native code] }");
+		System.out.println();
 	}
 	
 	@Test
@@ -68,6 +71,7 @@ public class iMethodTest implements iMethod {
 		assertEquals(strCat.name(), "strCat");
 		assertEquals(strCat.length(), 2);
 		assertEquals(strCat.toString(), "String (String a, String b) { ... }");
+		System.out.println();
 	}
 	
 	@Test
@@ -103,40 +107,48 @@ public class iMethodTest implements iMethod {
 		assertEquals(strCat.name(), "strCat");
 		assertEquals(strCat.length(), 2);
 		assertEquals(strCat.toString(), "String (String a, String b) { ... }");
+		System.out.println();
 	}
 	
 	
 	/* support function */
 	public String strCatDirect(String a, String b) {
+		System.out.print("strCatDirect.");
 		return a+b;
 	}
 
 	public Object strCatVararg(Object... a) {
+		System.out.print("strCatVararg.");
 		return strCatDirect((String)a[0], (String)a[1]);
 	}
 	
 	@Override
 	public Object run(Object... a) {
+		System.out.print("run.");
 		return strCatVararg(a);
 	}
 	
 	@Override
 	public int length() {
+		System.out.print("length.");
 		return 2;
 	}
 	
 	@Override
 	public String name() {
+		System.out.print("name.");
 		return "strCat";
 	}
 	
 	@Override
 	public String ztoString() {
+		System.out.print("ztoString.");
 		return "String (String a, String b) { ... }";
 	}
 	
 	@Override
 	public String toString() {
+		System.out.print("toString.");
 		return ztoString();
 	}
 }

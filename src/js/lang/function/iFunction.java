@@ -6,7 +6,7 @@ package js.lang.function;
 public interface iFunction extends iMethod {
 	
 	/* static data */
-	/** Defines the name of (main) function of all iFunction interfaces. */
+	/** Defines the default name of (main) function of all iFunction interfaces. */
 	static String NAME = "apply";
 	
 	
