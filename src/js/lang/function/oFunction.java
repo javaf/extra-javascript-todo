@@ -97,7 +97,7 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 		super(args);
 	}
 	/**
-	 * Internal. Super copy constructor
+	 * Super copy constructor
 	 * @param o cMethod object.
 	 */
 	private oFunction(cMethod o) {
