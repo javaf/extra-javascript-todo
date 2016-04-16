@@ -24,7 +24,7 @@ public class cAccess<T> {
 	 * True if and only if the value associated with the property may be changed
 	 * with an assignment operator. Defaults to false.
 	 */
-	public boolean writeable;
+	public boolean writable;
 	/**
 	 * A function which serves as a getter for the property, or null if there is
 	 * no getter. The function return will be used as the value of property.
@@ -56,16 +56,16 @@ public class cAccess<T> {
 	 * Creates an oObject descriptor.
 	 * @param configurable Tells is property is configurable.
 	 * @param enumerable Tells if property is enumerable.
-	 * @param writeable Tells if property can be written to.
+	 * @param writable Tells if property can be written to.
 	 * @param value Defines the value of property (if accessors are not set).
 	 * @param get Defines get accessor for property.
 	 * @param set Defines set accessor for property.
 	 */
-	public cAccess(boolean configurable, boolean enumerable, boolean writeable, Supplier<T> get, Consumer<T> set, T value) {
-		this.value = get==null && set==null? value : null;
+	public cAccess(boolean configurable, boolean enumerable, boolean writable, Supplier<T> get, Consumer<T> set, T value) {
 		this.configurable = configurable;
 		this.enumerable = enumerable;
-		this.writeable = writeable;
+		this.writable = writable;
+		this.value = value;
 		this.get = get;
 		this.set = set;
 	}
@@ -85,7 +85,7 @@ public class cAccess<T> {
 	public final Map get(Map o) {
 		o.put("configurable", configurable);
 		o.put("enumerable", enumerable);
-		o.put("writeable", writeable);
+		o.put("writable", writable);
 		o.put("value", value);
 		o.put("get", get);
 		o.put("set", set);
@@ -103,13 +103,12 @@ public class cAccess<T> {
 			switch(k.toString()) {
 				case "configurable": configurable = (boolean)v; break;
 				case "enumerable": enumerable = (boolean)v; break;
-				case "writeable": writeable = (boolean)v; break;
+				case "writable": writable = (boolean)v; break;
 				case "get": get = (Supplier<T>)v; break;
 				case "set": set = (Consumer<T>)v; break;
 				case "value": value = (T)v; break;
 			}
 		}
-		value = get==null && set==null? value : null;
 	}
 	
 	/**
