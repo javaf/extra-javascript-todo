@@ -46,7 +46,7 @@ public class cProtoMap<K, V> implements iObject<K, V>, iMap<K, V> {
 		a = a!=null? a : new cAccess();
 		if(a.configurable) a.set(v);
 		if(!value.containsKey(k)) value.put(k, null);
-		if(a.writeable && a.value!=null) { value.put(k, a.value); a.value = null; }
+		if(a.writable && a.value!=null) { value.put(k, a.value); a.value = null; }
 		access.put(k, a);
 		if(a.enumerable) keySet.add(k);
 		else keySet.remove(k);
@@ -83,7 +83,7 @@ public class cProtoMap<K, V> implements iObject<K, V>, iMap<K, V> {
 	public V put(K key, V value) {
 		cAccess desc = access.get(key);
 		if(desc==null) return !this.value.containsKey(key) && prototype!=null && prototype.containsKey((String)key)?	(V)prototype.put((String)key, (V)value) : (V)this.value.put((Object)key, value);
-		if(desc.isData()) { if(desc.writeable) return (V)this.value.put(key, value); }
+		if(desc.isData()) { if(desc.writable) return (V)this.value.put(key, value); }
 		else if(desc.set!=null) desc.set.accept(value);
 		return null;
 	}
@@ -99,7 +99,7 @@ public class cProtoMap<K, V> implements iObject<K, V>, iMap<K, V> {
 		if(l>0 && extensible) return false;
 		if(l>1 && size()>access.size()) return false;
 		if(l>1) for(cAccess d : access.values())
-			if(d.configurable || (l>2 && d.isData() && d.writeable)) return false;
+			if(d.configurable || (l>2 && d.isData() && d.writable)) return false;
 		return true;
 	}
 	
@@ -111,7 +111,7 @@ public class cProtoMap<K, V> implements iObject<K, V>, iMap<K, V> {
 		extensible = l>0;
 		for(K key : keySet()) {
 			cAccess d = access.get(key);
-			if(d!=null) { d.configurable = l<2; if(d.isData()) d.writeable = l>0? (l<3? d.writeable : false) : true; }
+			if(d!=null) { d.configurable = l<2; if(d.isData()) d.writable = l>0? (l<3? d.writable : false) : true; }
 			else if(l>1) access.put(key, new cAccess(false, true, l<3, null, null, null));
 		}
 	}

@@ -6,8 +6,7 @@ import org.junit.*;
 import java.util.*;
 
 /**
- *
- * @author wolfram77
+ * Test cAccess.
  */
 public class cAccessTest {
 	
