@@ -356,14 +356,14 @@ public class cLevel0 {
 
 	
 	/* merged data and methods */
-	@aAccess(enumerable=true,writable=true,value=".")
-	public int mfpe1w1v1 = 0x111;
-	@aAccess(enumerable=true,writable=true,value=".")
-	public int mmpe1w1v1(int v) { return mfpe1w1v1=v; }
-	@aAccess(enumerable=true,writable=true,value="cLevel0_.")
-	public int mfpe1w1v2 = 0x112;
-	@aAccess(enumerable=true,writable=true,value="cLevel0_.")
-	public int mmpe1w1v2() { return mfpe1w1v2; }
+	@aAccess(enumerable=false,writable=true,value=".")
+	public int mfpe0w1v1 = 0x111;
+	@aAccess(enumerable=false,writable=true,value=".")
+	public int mmpe0w1v1(int v) { return mfpe0w1v1=v; }
+	@aAccess(enumerable=false,writable=true,value="cLevel0_.")
+	public int mfpe0w1v2 = 0x112;
+	@aAccess(enumerable=false,writable=true,value="cLevel0_.")
+	public int mmpe0w1v2() { return mfpe0w1v2; }
 	
 	
 	/* unspecified data and methods */

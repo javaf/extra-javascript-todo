@@ -2,6 +2,7 @@ package js.lang.object;
 import static org.junit.Assert.*;
 import org.junit.*;
 import java.util.*;
+import java.util.Map.*;
 import js.lang.object.support.*;
 
 /**
@@ -10,6 +11,13 @@ import js.lang.object.support.*;
 public class cObjectMapTest {
 	
 	/* data */
+	public final static String[] specified = new String[] {"dfsp", "dfso", "dsp", "dso", "dp", "do", "msp", "mso", "mp", "mo"};
+	public final static String[] merged = new String[] {"mfpe1w1v1", "mmpe1w1v2"};
+	public final static String[] unspecified = new String[] {"mfpu0", "mmpu1"};
+	public final static cLevel0 lvl0 = new cLevel0();
+	public final static cLevel1 lvl1 = new cLevel1();
+	public final static Map mlvl0 = new cObjectMap(lvl0);
+	public final static Map mlvl1 = new cObjectMap(lvl1);
 	
 	
 	/* constructor */
@@ -46,8 +54,7 @@ public class cObjectMapTest {
 	@Test
 	public void fget() {
 		System.out.println("# Get");
-		Map m = new cObjectMap(new cLevel0());
-		System.out.println(m);
+		System.out.println(mlvl0);
 	}
 	
 	/**
@@ -64,6 +71,17 @@ public class cObjectMapTest {
 	@Test
 	public void fclear() {
 		System.out.println("# Clear");
+		int n0 = mlvl0.size();
+		mlvl0.clear();
+		int n1 = mlvl0.size();
+		System.out.println("mlvl0: "+n0+" -> "+n1);
+		assertEquals(n1, n0);
+		n0 = mlvl1.size();
+		mlvl1.clear();
+		n1 = mlvl1.size();
+		System.out.println("mlvl1: "+n0+" -> "+n1);
+		assertEquals(n1, n0);
+		System.out.println();
 	}
 
 	/**
@@ -80,5 +98,13 @@ public class cObjectMapTest {
 	@Test
 	public void fkeySet() {
 		System.out.println("# Key Set");
+		Set<String> ks = mlvl0.keySet();
+		for(String t : specified)
+			for(int e=0; e<2; e++)
+				for(int w=0; w<2; w++)
+					for(int v=0; v<3; v++) {
+						System.out.println(t+"e"+e+"w"+w+"v"+v);
+						// assertEquals(ks.contains(t+"e"+e+"w"+w+"v"+v), e>0);
+					}
 	}
 }
