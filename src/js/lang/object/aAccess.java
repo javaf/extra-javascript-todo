@@ -19,4 +19,7 @@ public @interface aAccess {
 	 * @return Whether element can be written to.
 	 */
 	public boolean writeable() default true;
+	/** Tells the name of the property for this element.
+	 * @return Name of the property this element represents. */
+	public String value() default ".";
 }

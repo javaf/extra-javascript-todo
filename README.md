@@ -19,3 +19,7 @@ class {
 	method1
 }
 
+possible issues with object:
+- multiple fields with same name (variable, getter, setter)
+- same field but different names (variable, getter, setter)
+- option to by default include all fields?

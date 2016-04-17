@@ -24,11 +24,12 @@ public class cObjectMap extends cMap<String, Object> {
 		enumerable = new HashSet<>();
 		writable = new HashSet<>();
 		Class<?> c = v.getClass();
-		boolean norm = c.getAnnotation(aAccess.class)==null;
+		aAccess a = c.getAnnotation(aAccess.class);
+		boolean enu = a!=null && a.enumerable();
 		for(Field f : c.getFields())
-			if(norm) _normField(f); else _accField(f);
-		if(!norm) for(Method m : c.getMethods())
-			_accMethod(v, c, m);
+			_addField(enu, f);
+		for(Method m : c.getMethods())
+			_addMethod(enu, v, c, m);
 		value = v;
 	}
 	
@@ -56,44 +57,39 @@ public class cObjectMap extends cMap<String, Object> {
 	}
 	
 	
-	/* static method */
+	/* method */
 	/**
-	 * Add a normal-class field.
+	 * Add an access-class field.
 	 * @param f The field to add.
 	 */
-	private void _normField(Field f) {
-		enumerable.add(f.getName());
-		writable.add(f.getName());
-		super.put(f.getName(), f);
-	}
-	/**
-	 * Add a access-class field.
-	 * @param f The field to add.
-	 */
-	private void _accField(Field f) {
+	private void _addField(boolean enu, Field f) {
 		aAccess a = f.getAnnotation(aAccess.class);
-		if(a==null) return;
-		if(a.enumerable()) enumerable.add(f.getName());
-		if(a.writeable()) writable.add(f.getName());
-		super.put(f.getName(), f);
+		if(!enu && (a==null || a.value().length()==0)) return;
+		String name = (a==null? "." : a.value()).replace(".", f.getName());
+		if(a==null || a.enumerable()) enumerable.add(name);
+		if(a==null || a.writeable()) writable.add(name);
+		Object[] v = (Object[])super.get(name);
+		v = v==null? new Object[2] : v;
+		if(a==null || a.writeable()) v[1] = f;
+		v[0] = f;
+		super.put(name, v);
 	}
 	/**
-	 * Add a access-class method.
+	 * Add an access-class method.
 	 * @param o Object of this class.
 	 * @param c This class.
 	 * @param m Method to add.
 	 */
-	private void _accMethod(Object o, Class<?> c, Method m) {
+	private void _addMethod(boolean enu, Object o, Class<?> c, Method m) {
 		int ps = m.getParameterCount();
-		Object v = super.get(m.getName());
 		aAccess a = m.getAnnotation(aAccess.class);
-		if(a==null || (v!=null && !(v instanceof cMethod[])) || ps>1) return;
-		if(a.enumerable()) enumerable.add(m.getName());
-		if(a.writeable()) writable.add(m.getName());
-		cMethod mt = new cMethod(o, c, m);
-		cMethod[] mts = (cMethod[])v;
-		mts = mts!=null? mts : new cMethod[2];
-		mts[ps] = mt;
+		if(ps>1 || (!enu &&(a==null || a.value().length()==0))) return;
+		String name = (a==null? "." : a.value()).replace(".", m.getName());
+		Object[] v = (Object[])super.get(name);
+		if(a==null || a.enumerable()) enumerable.add(name);
+		if(a==null || (a.writeable() && ps==1)) writable.add(name);
+		v[ps] = new cMethod(o, c, m);
+		super.put(name, v);
 	}
 	
 	
