@@ -84,6 +84,7 @@ public class cObjectMap extends cMap<String, Object> {
 		if(ps>1 || (!enu &&(a==null || a.value().length()==0))) return;
 		String name = (a==null? "." : a.value()).replace(".", m.getName());
 		Object[] v = (Object[])super.get(name);
+		v = v==null? new Object[2] : v;
 		if(a==null || a.enumerable()) enumerable.add(name);
 		if(a==null || (a.writable() && ps==1)) writable.add(name);
 		v[ps] = new cMethod(o, c, m);

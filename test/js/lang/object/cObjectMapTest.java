@@ -2,6 +2,7 @@ package js.lang.object;
 import static org.junit.Assert.*;
 import org.junit.*;
 import java.util.*;
+import js.lang.object.support.*;
 
 /**
  * Test cObjectMap.
@@ -45,8 +46,10 @@ public class cObjectMapTest {
 	@Test
 	public void fget() {
 		System.out.println("# Get");
+		Map m = new cObjectMap(new cLevel0());
+		System.out.println(m);
 	}
-
+	
 	/**
 	 * Test of put method, of class cObjectMap.
 	 */
