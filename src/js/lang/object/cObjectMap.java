@@ -67,10 +67,10 @@ public class cObjectMap extends cMap<String, Object> {
 		if(!enu && (a==null || a.value().length()==0)) return;
 		String name = (a==null? "." : a.value()).replace(".", f.getName());
 		if(a==null || a.enumerable()) enumerable.add(name);
-		if(a==null || a.writeable()) writable.add(name);
+		if(a==null || a.writable()) writable.add(name);
 		Object[] v = (Object[])super.get(name);
 		v = v==null? new Object[2] : v;
-		if(a==null || a.writeable()) v[1] = f;
+		if(a==null || a.writable()) v[1] = f;
 		v[0] = f;
 		super.put(name, v);
 	}
@@ -87,7 +87,7 @@ public class cObjectMap extends cMap<String, Object> {
 		String name = (a==null? "." : a.value()).replace(".", m.getName());
 		Object[] v = (Object[])super.get(name);
 		if(a==null || a.enumerable()) enumerable.add(name);
-		if(a==null || (a.writeable() && ps==1)) writable.add(name);
+		if(a==null || (a.writable() && ps==1)) writable.add(name);
 		v[ps] = new cMethod(o, c, m);
 		super.put(name, v);
 	}

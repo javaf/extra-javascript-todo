@@ -18,7 +18,7 @@ public @interface aAccess {
 	 * Tells whether the element is writable.
 	 * @return Whether element can be written to.
 	 */
-	public boolean writeable() default true;
+	public boolean writable() default true;
 	/** Tells the name of the property for this element.
 	 * @return Name of the property this element represents. */
 	public String value() default ".";
