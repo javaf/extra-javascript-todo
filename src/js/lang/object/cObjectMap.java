@@ -37,23 +37,21 @@ public class cObjectMap extends cMap<String, Object> {
 	/* super property */
 	@Override
 	public Object get(Object k) {
-		Object o = super.get(k);
-		if(o==null) return null;
-		try { if(o instanceof Field) return ((Field)o).get(value); }
+		Object[] o = (Object[])super.get(k);
+		try { return o!=null && o[0]!=null? (o[0] instanceof Field? ((Field)o[0]).get(value) : ((iMethod)o[0]).run()) : null; }
 		catch(IllegalArgumentException | IllegalAccessException e) { throw new RuntimeException(e); }
-		cMethod[] m = (cMethod[])o;
-		return m[0]!=null? m[0].run() : null;
 	}
 	
 	@Override
 	public Object put(String k, Object v) {
-		Object o = super.get(k);
-		if(o==null || !writable.contains(k)) return null;
-		try { if(o instanceof Field) { ((Field)o).set(value, v); return v; } }
+		Object[] o = (Object[])super.get(k);
+		if(o==null || o[1]==null || !writable.contains(k)) return null;
+		try {
+			if(o[1] instanceof Field) ((Field)o[1]).set(value, v);
+			else ((iMethod)o[1]).run(v);
+			return v;
+		}
 		catch(IllegalArgumentException | IllegalAccessException e) { throw new RuntimeException(e); }
-		cMethod[] m = (cMethod[])o;
-		if(m[1]!=null) { m[1].run(v); return v; }
-		return null;
 	}
 	
 	

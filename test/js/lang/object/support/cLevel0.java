@@ -157,11 +157,6 @@ public class cLevel0 {
 	public String doe1w1v2 = "doe1w1v2";
 	
 	
-	/* constructor */
-	public cLevel0() {
-	}
-	
-	
 	/* static method */
 	@aAccess(enumerable=false,writable=false,value="")
 	public static int mspe0w0v0() { return dspe0w0v0; }
@@ -360,40 +355,20 @@ public class cLevel0 {
 	public void moe1w1v2(String v) { doe1w1v2=v; }
 
 	
-	@aAccess
-	public String name() {
-		return "cPokemon Name: "+name;
-	}
-	@aAccess
-	public void name(String val) {
-		name = val;
-	}
+	/* merged data and methods */
+	@aAccess(enumerable=true,writable=true,value=".")
+	public int mfpe1w1v1 = 0x111;
+	@aAccess(enumerable=true,writable=true,value=".")
+	public int mmpe1w1v1(int v) { return mfpe1w1v1=v; }
+	@aAccess(enumerable=true,writable=true,value="cLevel0_.")
+	public int mfpe1w1v2 = 0x112;
+	@aAccess(enumerable=true,writable=true,value="cLevel0_.")
+	public int mmpe1w1v2() { return mfpe1w1v2; }
 	
-	@aAccess
-	public String family() {
-		return "cPokemon Family: "+family;
-	}
-	@aAccess
-	public String family(String val) {
-		return (family = val);
-	}
 	
-	@aAccess
-	public float height() {
-		return height;
-	}
-	@aAccess
-	public String height(String val) {
-		height = Float.parseFloat(val);
-		return val;
-	}
-	
-	@aAccess
-	public float weight() {
-		return weight;
-	}
-	@aAccess
-	public float weight(String val) {
-		return (Float.parseFloat(val));
-	}
+	/* unspecified data and methods */
+	public int mfpu0 = 0x0;
+	public int mmpu0(int v) { return mfpu0=v; }
+	public int mfpu1 = 0x1;
+	public int mmpu1() { return mfpu1; }
 }
