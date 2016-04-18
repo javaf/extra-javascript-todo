@@ -5,6 +5,7 @@ import java.util.*;
 
 /**
  * Defines descriptors for special oObject properties.
+ * @param <T> Datatype of value.
  */
 public class cAccess<T> {
 	

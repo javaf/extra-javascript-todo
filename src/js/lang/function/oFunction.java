@@ -1,5 +1,6 @@
 package js.lang.function;
 import java.util.function.*;
+import java.lang.reflect.*;
 
 /**
  * The oFunction class represents generic functions.
@@ -64,6 +65,64 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 		super((iFunction2<TA, TB, TR>) (TA a, TB b) -> m.apply(a, b));
 	}
 	/**
+	 * Creates a callable oFunction object from a specific field reflectively..
+	 * @param thisArg The value to be passed as the this parameter to the target
+	 * function when the bound function is called.
+	 * @param clazz Class which contains the field.
+	 * @param field Field object of the field.
+	 * @param set If true, setter is used, otherwise getter is used.
+	 */
+	public oFunction(Object thisArg, Class<?> clazz, Field field, boolean set) {
+		super(thisArg, clazz, field, set);
+	}
+	/**
+	 * Creates a callable oFunction object from a specific field reflectively..
+	 * @param clazz Class which contains the field.
+	 * @param field Field object of the field.
+	 * @param set If true, setter is used, otherwise getter is used.
+	 */
+	public oFunction(Class<?> clazz, Field field, boolean set) {
+		this(null, clazz, field, set);
+	}
+	/**
+	 * Creates a callable oFunction object from a specific field reflectively..
+	 * @param thisArg The value to be passed as the this parameter to the target
+	 * function when the bound function is called.
+	 * @param clazz Class which contains the field.
+	 * @param field Name of the field.
+	 * @param set If true, setter is used, otherwise getter is used.
+	 */
+	public oFunction(Object thisArg, Class<?> clazz, String field, boolean set) {
+		this(thisArg, clazz, cMethod.field(clazz, field), set);
+	}
+	/**
+	 * Creates a callable oFunction object from a specific field reflectively..
+	 * @param clazz Class which contains the field.
+	 * @param field Name of the field.
+	 * @param set If true, setter is used, otherwise getter is used.
+	 */
+	public oFunction(Class<?> clazz, String field, boolean set) {
+		this(null, clazz, field, set);
+	}
+	/**
+	 * Creates a callable oFunction object from a specific method reflectively..
+	 * @param thisArg The value to be passed as the this parameter to the target
+	 * function when the bound function is called.
+	 * @param clazz Class which contains the method.
+	 * @param method Method object.
+	 */
+	public oFunction(Object thisArg, Class<?> clazz, Method method) {
+		super(thisArg, clazz, method);
+	}
+	/**
+	 * Creates a callable oFunction object from a specific method reflectively..
+	 * @param clazz Class which contains the method.
+	 * @param method Method object.
+	 */
+	public oFunction(Class<?> clazz, Method method) {
+		this(null, clazz, method);
+	}
+	/**
 	 * Creates a callable oFunction object from a specific method reflectively..
 	 * @param thisArg The value to be passed as the this parameter to the target
 	 * function when the bound function is called.
@@ -71,8 +130,8 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 	 * @param method Name of the method.
 	 * @param parameterTypes Parameter types of the method.
 	 */
-	public oFunction(Object thisArg, Class clazz, String method, Class... parameterTypes) {
-		super(thisArg, clazz, method, parameterTypes);
+	public oFunction(Object thisArg, Class<?> clazz, String method, Class<?>... parameterTypes) {
+		this(thisArg, clazz, cMethod.method(clazz, method, parameterTypes));
 	}
 	/**
 	 * Creates a callable oFunction object from a specific method reflectively.
@@ -82,8 +141,8 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 	 * @param method Name of the method.
 	 * @param parameterTypes Parameter types of the method.
 	 */
-	public oFunction(Class clazz, String method, Class... parameterTypes) {
-		super(null, clazz, method, parameterTypes);
+	public oFunction(Class<?> clazz, String method, Class<?>... parameterTypes) {
+		this(null, clazz, method, parameterTypes);
 	}
 	/**
 	 * Creates a callable oFunction object from a String specification of the function.
@@ -94,7 +153,7 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 	 * statements comprising the function definition.
 	 */
 	public oFunction(String... args) {
-		super(args);
+		super(args.length-1, args, args[args.length-1]);
 	}
 	/**
 	 * Super copy constructor

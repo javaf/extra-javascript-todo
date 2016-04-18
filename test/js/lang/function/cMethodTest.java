@@ -137,57 +137,59 @@ public class cMethodTest {
 	}
 
 	@Test
-	public void newObjClsMthd() {
-		System.out.println("# cMethod(Object, Class, Method, Parameter types)");
-		c0MathPi = new cMethod(this, cMethodTest.class, "c0MathPi");
-		c1StrRev = new cMethod(this, cMethodTest.class, "c1StrRev", String.class);
-		c2StrCat = new cMethod(this, cMethodTest.class, "c2StrCat", String.class, String.class);
-		c3MathMax = new cMethod(this, cMethodTest.class, "c3MathMax", double.class, double.class, double.class);
-		c4MathMin = new cMethod(this, cMethodTest.class, "c4MathMin", double.class, double.class, double.class, double.class);
-		c5ListAdd = new cMethod(this, cMethodTest.class, "c5ListAdd", double.class, double.class, double.class, double.class, double.class);
-		c6MapRemove = new cMethod(this, cMethodTest.class, "c6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class);
-		c7NumSort = new cMethod(this, cMethodTest.class, "c7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class);
-		f0MathPi = new cMethod(this, cMethodTest.class, "f0MathPi");
-		f1StrRev = new cMethod(this, cMethodTest.class, "f1StrRev", String.class);
-		f2StrCat = new cMethod(this, cMethodTest.class, "f2StrCat", String.class, String.class);
-		f3MathMax = new cMethod(this, cMethodTest.class, "f3MathMax", double.class, double.class, double.class);
-		f4MathMin = new cMethod(this, cMethodTest.class, "f4MathMin", double.class, double.class, double.class, double.class);
-		f5ListAdd = new cMethod(this, cMethodTest.class, "f5ListAdd", double.class, double.class, double.class, double.class, double.class);
-		f6MapRemove = new cMethod(this, cMethodTest.class, "f6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class);
-		f7NumSort = new cMethod(this, cMethodTest.class, "f7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class);
+	public void newObjClsMthd() throws NoSuchMethodException, SecurityException {
+		System.out.println("# cMethod(Object, Class, Method)");
+		Class<?> c = cMethodTest.class;
+		c0MathPi = new cMethod(this, c, c.getMethod("c0MathPi"));
+		c1StrRev = new cMethod(this, c, c.getMethod("c1StrRev", String.class));
+		c2StrCat = new cMethod(this, c, c.getMethod("c2StrCat", String.class, String.class));
+		c3MathMax = new cMethod(this, c, c.getMethod("c3MathMax", double.class, double.class, double.class));
+		c4MathMin = new cMethod(this, c, c.getMethod("c4MathMin", double.class, double.class, double.class, double.class));
+		c5ListAdd = new cMethod(this, c, c.getMethod("c5ListAdd", double.class, double.class, double.class, double.class, double.class));
+		c6MapRemove = new cMethod(this, c, c.getMethod("c6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class));
+		c7NumSort = new cMethod(this, c, c.getMethod("c7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class));
+		f0MathPi = new cMethod(this, c, c.getMethod("f0MathPi"));
+		f1StrRev = new cMethod(this, c, c.getMethod("f1StrRev", String.class));
+		f2StrCat = new cMethod(this, c, c.getMethod("f2StrCat", String.class, String.class));
+		f3MathMax = new cMethod(this, c, c.getMethod("f3MathMax", double.class, double.class, double.class));
+		f4MathMin = new cMethod(this, c, c.getMethod("f4MathMin", double.class, double.class, double.class, double.class));
+		f5ListAdd = new cMethod(this, c, c.getMethod("f5ListAdd", double.class, double.class, double.class, double.class, double.class));
+		f6MapRemove = new cMethod(this, c, c.getMethod("f6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class));
+		f7NumSort = new cMethod(this, c, c.getMethod("f7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class));
 		frun(); gcall(null); gapply(null);
 	}
 
 	@Test
-	public void newClsMthd() {
+	public void newClsMthd() throws NoSuchMethodException, SecurityException {
 		System.out.println("# cMethod(Class, Method, Parameter types)");
-		c0MathPi = new cMethod(null, cMethodTest.class, "c0MathPi");
-		c1StrRev = new cMethod(null, cMethodTest.class, "c1StrRev", String.class);
-		c2StrCat = new cMethod(null, cMethodTest.class, "c2StrCat", String.class, String.class);
-		c3MathMax = new cMethod(null, cMethodTest.class, "c3MathMax", double.class, double.class, double.class);
-		c4MathMin = new cMethod(null, cMethodTest.class, "c4MathMin", double.class, double.class, double.class, double.class);
-		c5ListAdd = new cMethod(null, cMethodTest.class, "c5ListAdd", double.class, double.class, double.class, double.class, double.class);
-		c6MapRemove = new cMethod(null, cMethodTest.class, "c6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class);
-		c7NumSort = new cMethod(null, cMethodTest.class, "c7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class);
-		f0MathPi = new cMethod(null, cMethodTest.class, "f0MathPi");
-		f1StrRev = new cMethod(null, cMethodTest.class, "f1StrRev", String.class);
-		f2StrCat = new cMethod(null, cMethodTest.class, "f2StrCat", String.class, String.class);
-		f3MathMax = new cMethod(null, cMethodTest.class, "f3MathMax", double.class, double.class, double.class);
-		f4MathMin = new cMethod(null, cMethodTest.class, "f4MathMin", double.class, double.class, double.class, double.class);
-		f5ListAdd = new cMethod(null, cMethodTest.class, "f5ListAdd", double.class, double.class, double.class, double.class, double.class);
-		f6MapRemove = new cMethod(null, cMethodTest.class, "f6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class);
-		f7NumSort = new cMethod(null, cMethodTest.class, "f7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class);
+		Class<?> c = cMethodTest.class;
+		c0MathPi = new cMethod(null, c, c.getMethod("c0MathPi"));
+		c1StrRev = new cMethod(null, c, c.getMethod("c1StrRev", String.class));
+		c2StrCat = new cMethod(null, c, c.getMethod("c2StrCat", String.class, String.class));
+		c3MathMax = new cMethod(null, c, c.getMethod("c3MathMax", double.class, double.class, double.class));
+		c4MathMin = new cMethod(null, c, c.getMethod("c4MathMin", double.class, double.class, double.class, double.class));
+		c5ListAdd = new cMethod(null, c, c.getMethod("c5ListAdd", double.class, double.class, double.class, double.class, double.class));
+		c6MapRemove = new cMethod(null, c, c.getMethod("c6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class));
+		c7NumSort = new cMethod(null, c, c.getMethod("c7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class));
+		f0MathPi = new cMethod(null, c, c.getMethod("f0MathPi"));
+		f1StrRev = new cMethod(null, c, c.getMethod("f1StrRev", String.class));
+		f2StrCat = new cMethod(null, c, c.getMethod("f2StrCat", String.class, String.class));
+		f3MathMax = new cMethod(null, c, c.getMethod("f3MathMax", double.class, double.class, double.class));
+		f4MathMin = new cMethod(null, c, c.getMethod("f4MathMin", double.class, double.class, double.class, double.class));
+		f5ListAdd = new cMethod(null, c, c.getMethod("f5ListAdd", double.class, double.class, double.class, double.class, double.class));
+		f6MapRemove = new cMethod(null, c, c.getMethod("f6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class));
+		f7NumSort = new cMethod(null, c, c.getMethod("f7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class));
 		gcall(this); gapply(this); bind(this); frun(); gcall(null); gapply(null);
 	}
 	
 	@Test
 	public void newStringFn() {
 		System.out.println("# cMethod(String...)");
-		f0MathPi = new cMethod("return Math.PI;");
-		f1StrRev = new cMethod("a", "return new StringBuilder((String)a).reverse().toString();");
-		f2StrCat = new cMethod("a", "b", "return (String)a+(String)b;");
-		f3MathMax = new cMethod("a", "b", "c", "return Math.max((double)a, Math.max((double)b, (double)c));");
-		f4MathMin = new cMethod("a", "b", "c", "d", "return Math.min((double)a, Math.min((double)b, Math.min((double)c, (double)d)));");
+		f0MathPi = new cMethod(0, new String[] {}, "return Math.PI;");
+		f1StrRev = new cMethod(1, new String[] {"a"}, "return new StringBuilder((String)a).reverse().toString();");
+		f2StrCat = new cMethod(2, new String[] {"a", "b"}, "return (String)a+(String)b;");
+		f3MathMax = new cMethod(3, new String[] {"a", "b", "c"}, "return Math.max((double)a, Math.max((double)b, (double)c));");
+		f4MathMin = new cMethod(4, new String[] {"a", "b", "c", "d"}, "return Math.min((double)a, Math.min((double)b, Math.min((double)c, (double)d)));");
 		frun(); gcall(null); gapply(null);
 	}
 	

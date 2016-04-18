@@ -35,7 +35,7 @@ public class cMethod implements iMethod {
 	
 	/* data */
 	/** Object implementing iMethod interface which can be called. */
-	private final iMethod method;
+	private final iMethod imethod;
 	/** MethodHandle factory that can be used to generate iMethod object. */
 	private final MethodHandle factory;
 	/** Name of the callable method. */
@@ -48,7 +48,7 @@ public class cMethod implements iMethod {
 	 * @param m iMethod implementing object.
 	 */
 	public cMethod(iMethod m) {
-		method = m;
+		imethod = m;
 		factory = null;
 		name = m.name();
 	}
@@ -57,61 +57,65 @@ public class cMethod implements iMethod {
 	 * @param obj Object bound to function. Can be null if method is static, or
 	 * binding is to be done later using bind().
 	 * @param cls Class which contains the method.
-	 * @param mthd Name of the method.
-	 * @param types Parameter types of the method.
+	 * @param f Field to be made callable.
+	 * @param set If true, setter is used, else getter is used.
 	 */
-	public cMethod(Object obj, Class<?> cls, String mthd, Class<?>... types) {
+	public cMethod(Object obj, Class<?> cls, Field f, boolean set) {
 		try {
-			Method m = cls.getMethod(mthd, types);
-			boolean isstatic = Modifier.isStatic(m.getModifiers());
-			factory = _factory(obj, cls, m, isstatic);
-			method = isstatic || obj!=null? (iMethod)factory.invoke() : null;
-			name = mthd;
+			factory = factory(obj, cls, f, set);
+			imethod = Modifier.isStatic(f.getModifiers()) || obj!=null? (iMethod)factory.invoke() : null;
+			name = f.getName();
 		}
 		catch(Throwable e) { throw new RuntimeException(e); }
 	}
+	/**
+	 * Create a callable Method object from class, method name, and parameter types.
+	 * @param obj Object bound to function. Can be null if method is static, or
+	 * binding is to be done later using bind().
+	 * @param cls Class which contains the method.
+	 * @param m Method to be made callable.
+	 */
 	public cMethod(Object obj, Class<?> cls, Method m) {
 		try {
-			boolean isstatic = Modifier.isStatic(m.getModifiers());
-			factory = _factory(obj, cls, m, isstatic);
-			method = isstatic || obj!=null? (iMethod)factory.invoke() : null;
+			factory = factory(obj, cls, m);
+			imethod = Modifier.isStatic(m.getModifiers()) || obj!=null? (iMethod)factory.invoke() : null;
 			name = m.getName();
 		}
 		catch(Throwable e) { throw new RuntimeException(e); }
 	}
 	/**
 	 * Creates a callable oFunction object from a String specification of the function.
-	 * @param args Names to be used by the function as formal argument names.
-	 * Each must be a string that corresponds to a valid Java identifier or a
-	 * list of such strings separated with a comma; for example "x", "theValue",
-	 * or "a,b". The last argument should be a string containing the Java
-	 * statements comprising the function definition.
+	 * @param argn Number of arguments to the function.
+	 * @param argv Names to be used by the function as formal argument names. Each must
+	 * be a string that corresponds to a valid Java identifier or a list of such strings
+	 * separated with a comma; for example "x", "theValue", or "a,b".
+	 * @param code A string containing the Java statements comprising the function definition.
 	 */
-	public cMethod(String... args) {
+	public cMethod(int argn, String[] argv, String code) {
 		name = "";
 		factory = null;
-		if(args.length==0) { method = (Object... a) -> null; return; }
-		String className = "c"+classNumber(), content = _dynamicFunction(className, args);
-		try { method = (iMethod)cJavaMemoryCompiler.compile("js.lang.function.dynamic."+className, content).newInstance(); }
+		if(code.length()==0) { imethod = (Object... a) -> null; return; }
+		String className = "c"+classNumber(), content = _methodContent(className, argn, argv, code);
+		try { imethod = (iMethod)cJavaMemoryCompiler.compile("js.lang.function.dynamic."+className, content).newInstance(); }
 		catch(Exception e) { throw new RuntimeException(e); }
 	}
 	/**
-	 * Internal. Direct field constructor.
+	 * Direct field constructor.
 	 * @param m iMethod object.
 	 * @param f MethodHandle factory.
 	 * @param n Method name.
 	 */
 	private cMethod(iMethod m, MethodHandle f, String n) {
-		method = m;
+		imethod = m;
 		factory = f;
 		name = n;
 	}
 	/**
-	 * Internal. Copy constructor.
+	 * Copy constructor.
 	 * @param o cMethod object
 	 */
 	protected cMethod(cMethod o) {
-		method = o.method;
+		imethod = o.imethod;
 		factory = o.factory;
 		name = o.name;
 	}
@@ -130,12 +134,109 @@ public class cMethod implements iMethod {
 	/* super property */
 	@Override
 	public int length() {
-		return method.length();
+		return imethod.length();
 	}
 	
 	@Override
 	public String name() {
 		return name;
+	}
+	
+	
+	/* static method */
+	/**
+	 * Get Lambda function factory from specified function. Invoking the returned factory
+	 * with object yields a functional interface which can be directly called.
+	 * @param obj Object which the interface object is to be bound to (can be null).
+	 * @param cls Class which the method belongs to.
+	 * @param m Reflected method object.
+	 * @return Method handle factory.
+	 * @throws LambdaConversionException When method to factory conversion error occurs.
+	 * @throws IllegalAccessException When method is not accessible.
+	 */
+	public final static MethodHandle factory(Object obj, Class<?> cls, Method m) throws LambdaConversionException, IllegalAccessException {
+		return _factory(Modifier.isStatic(m.getModifiers()), obj, cls, MethodHandles.lookup().unreflect(m),
+			m.getReturnType(), m.getParameterTypes());
+	}
+	/**
+	 * Get Lambda function factory from specified field. Invoking the returned factory
+	 * with object yields a functional interface which can be directly called.
+	 * @param obj Object which the interface object is to be bound to (can be null).
+	 * @param cls Class which the method belongs to.
+	 * @param f Reflected field object.
+	 * @param set If true, setter is returned, otherwise getter is returned.
+	 * @return Method handle factory.
+	 * @throws LambdaConversionException When field to factory conversion error occurs.
+	 * @throws IllegalAccessException When field is not accessible.
+	 */
+	public final static MethodHandle factory(Object obj, Class<?> cls, Field f, boolean set) throws LambdaConversionException, IllegalAccessException {
+		MethodHandles.Lookup l = MethodHandles.lookup();
+		return _factory(Modifier.isStatic(f.getModifiers()), obj, cls, set? l.unreflectSetter(f) : l.unreflectGetter(f),
+			set? void.class : f.getType(), set? new Class<?>[]{f.getType()} : new Class<?>[0]);
+	}
+	/**
+	 * Get Lambda function factory from specified method handle. Invoking the returned
+	 * factory with object yields an iMethod object which can be directly called.
+	 * @param stc Tells whether the method handle is static.
+	 * @param obj Object which the interface object is to be bound to (can be null).
+	 * @param cls Class which the method handle belongs to.
+	 * @param mh Unreflected method handle object.
+	 * @param tRet Return type of method handle.
+	 * @param types Parameter types of the method handle (excluding object).
+	 * @return Method handle factory.
+	 * @throws LambdaConversionException When field to factory conversion error occurs.
+	 */
+	private static MethodHandle _factory(boolean stc, Object obj, Class<?> cls, MethodHandle mh, Class<?> tRet, Class<?>[] types) throws LambdaConversionException {
+		int nArg = types.length;
+		MethodType sSig = MethodType.methodType(tRet, types);
+		Class<?> dCls = tRet==void.class? CONSUMER_INTERFACE[nArg] : FUNCTION_INTERFACE[nArg];
+		MethodType dSig = tRet==void.class? CONSUMER_SIGNATURE[nArg] : FUNCTION_SIGNATURE[nArg];
+		String dMthd = tRet==void.class? iConsumer.NAME : iFunction.NAME;
+		MethodType dType = stc? MethodType.methodType(dCls) : MethodType.methodType(dCls, cls);
+		MethodHandle fctry = LambdaMetafactory.metafactory(MethodHandles.lookup(), dMthd, dType, dSig, mh, sSig).getTarget();
+		return !stc && obj!=null? fctry.bindTo(obj) : fctry;
+	}
+	/**
+	 * Get a method object from class and its specified name. The returned method
+	 * object is obtained through reflection.
+	 * @param cls Class object which contains the method.
+	 * @param mn Name of the method.
+	 * @param types Parameter types of the method.
+	 * @return Field object.
+	 */
+	public final static Method method(Class<?> cls, String mn, Class<?>[] types) {
+		try { return cls.getMethod(mn, types); }
+		catch(NoSuchMethodException | SecurityException e) { throw new RuntimeException(e); }
+	}
+	/**
+	 * Get a field object from class and its specified name. The returned field
+	 * object is obtained through reflection.
+	 * @param cls Class object which contains the field.
+	 * @param fn Name of the field.
+	 * @return Field object.
+	 */
+	public final static Field field(Class<?> cls, String fn) {
+		try { return cls.getField(fn); }
+		catch(NoSuchFieldException | SecurityException e) { throw new RuntimeException(e); }
+	}
+	
+	/**
+	 * Generated dynamic function code from given class name, function arguments and code
+	 * @param className Name of the class.
+	 * @param args Function arguments (without type), and code (last).
+	 * @return Generated function code.
+	 */
+	private static String _methodContent(String className, int argn, String[] argv, String code) {
+		boolean isvoid = !code.contains("return") || code.replace(" ", "").contains("return;");
+		StringBuilder s = new StringBuilder("package js.lang.function.dynamic;");
+		s.append("public class ").append(className).append(" implements js.lang.function.");
+		s.append(isvoid? "iConsumer" : "iFunction").append(argv.length-1).append(" {");
+		s.append("public ").append(isvoid? "void "+iConsumer.NAME : "Object "+iFunction.NAME).append("(");
+		for(int i=0; i<argn; i++)
+			s.append("Object ").append(argv[i]).append(", ");
+		if(argv.length>1) s.delete(s.length()-2, s.length());
+		s.append(") {").append(code).append("} }");
+		return s.toString();
 	}
 	
 	
@@ -181,57 +282,16 @@ public class cMethod implements iMethod {
 		return thisArg!=null? bind(thisArg).run(args) : run(args);
 	}
 	
-	/**
-	 * Get method handle factory of specified method.
-	 * @param obj Object bound to function. Can be null if method is static, or
-	 * binding is to be done later using bind().
-	 * @param cls Class which contains the method.
-	 * @param m Method whose method handle factory is obtained.
-	 * @throws Exception Occurs when un-reflecting the method fails.
-	 */
-	private MethodHandle _factory(Object obj, Class<?> cls, Method m, boolean isstatic) throws Exception {
-			int nArg = m.getParameterCount();
-			Class<?> tRet = m.getReturnType();
-			Class<?> dCls = tRet==void.class? CONSUMER_INTERFACE[nArg] : FUNCTION_INTERFACE[nArg];
-			MethodType sSig = MethodType.methodType(tRet, m.getParameterTypes());
-			MethodType dSig = tRet==void.class? CONSUMER_SIGNATURE[nArg] : FUNCTION_SIGNATURE[nArg];
-			String dMthd = tRet==void.class? iConsumer.NAME : iFunction.NAME;
-			MethodHandles.Lookup lookup = MethodHandles.lookup();
-			MethodType dType = isstatic? MethodType.methodType(dCls) : MethodType.methodType(dCls, cls);
-			MethodHandle fctry = LambdaMetafactory.metafactory(lookup, dMthd, dType, dSig, lookup.unreflect(m), sSig).getTarget();
-			return !isstatic && obj!=null? fctry.bindTo(obj) : fctry;
-	}
-	
-	/**
-	 * Generated dynamic function code from given class name, function arguments and code
-	 * @param className Name of the class.
-	 * @param args Function arguments (without type), and code (last).
-	 * @return Generated function code.
-	 */
-	private String _dynamicFunction(String className, String[] args) {
-		String code = args[args.length-1];
-		boolean isvoid = !code.contains("return") || code.replace(" ", "").contains("return;");
-		StringBuilder s = new StringBuilder("package js.lang.function.dynamic;");
-		s.append("public class ").append(className).append(" implements js.lang.function.");
-		s.append(isvoid? "iConsumer" : "iFunction").append(args.length-1).append(" {");
-		s.append("public ").append(isvoid? "void "+iConsumer.NAME : "Object "+iFunction.NAME).append("(");
-		for(int i=0; i<args.length-1; i++)
-			s.append("Object ").append(args[i]).append(", ");
-		if(args.length>1) s.delete(s.length()-2, s.length());
-		s.append(") {").append(code).append("} }");
-		return s.toString();
-	}
-	
 	
 	/* super method */
 	@Override
 	public final Object run(Object... args) {
-		return method.run(args);
+		return imethod.run(args);
 	}
 	
 	@Override
 	public final String ztoString() {
-		return method.ztoString();
+		return imethod.ztoString();
 	}
 	
 	@Override
@@ -241,6 +301,6 @@ public class cMethod implements iMethod {
 	
 	// TODO:
 	public final Object valueOf() {
-		return method;
+		return imethod;
 	}
 }

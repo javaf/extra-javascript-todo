@@ -22,3 +22,4 @@ class {
 issues with object:
 - incorrectly includes fields not to be included in enumerable case
 - includes more functions than it should causing unexpected behavior.
+- fast access fields is a functionality that could be implemented in function
