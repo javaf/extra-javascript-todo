@@ -28,6 +28,26 @@ public class cMethodTest {
 	public cMethod f5ListAdd;
 	public cMethod f6MapRemove;
 	public cMethod f7NumSort;
+	public cMethod gdfsp0;
+	public cMethod sdfsp0;
+	public cMethod gdfso0;
+	public cMethod sdfso0;
+	public cMethod gdsp0;
+	public cMethod sdsp0;
+	public cMethod gdso0;
+	public cMethod sdso0;
+	public cMethod gdp0;
+	public cMethod sdp0;
+	public cMethod gdo0;
+	public cMethod sdo0;
+	
+	/* support data */
+	public final static int DFSP0 = 1;
+	public final static String DFSO0 = "DFSO0";
+	public static int dsp0 = 2;
+	public static String dso0 = "dso0";
+	public int dp0 = 3;
+	public String do0 = "do0";
 	
 	
 	/* constructor */
@@ -137,9 +157,9 @@ public class cMethodTest {
 		f7NumSort = new cMethod((iFunction7<Integer, Integer, Integer, Integer, Integer, Integer, Integer, int[]>)(a, b, c, d, e, f, g) -> f7NumSort((int)a, (int)b, (int)c, (int)d, (int)e, (int)f, (int)g));
 		frun(); gcall(null); gapply(null);
 	}
-
+	
 	@Test
-	public void newObjClsMthd() throws NoSuchMethodException, SecurityException {
+	public void newObjClsMthd() throws NoSuchMethodException, NoSuchFieldException, SecurityException {
 		System.out.println("# cMethod(Object, Class, Method)");
 		Class<?> c = cMethodTest.class;
 		c0MathPi = new cMethod(this, c, c.getMethod("c0MathPi"));
@@ -158,11 +178,23 @@ public class cMethodTest {
 		f5ListAdd = new cMethod(this, c, c.getMethod("f5ListAdd", double.class, double.class, double.class, double.class, double.class));
 		f6MapRemove = new cMethod(this, c, c.getMethod("f6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class));
 		f7NumSort = new cMethod(this, c, c.getMethod("f7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class));
+		// gdfsp0 = new cMethod(this, c, c.getField("DFSP0"), false);
+		// sdfsp0 = new cMethod(this, c, c.getField("DFSP0"), true);
+		// gdfso0 = new cMethod(this, c, c.getField("DFSO0"), false);
+		// sdfso0 = new cMethod(this, c, c.getField("DFSO0"), true);
+		// gdsp0 = new cMethod(this, c, c.getField("DSP0"), false);
+		// sdsp0 = new cMethod(this, c, c.getField("DSP0"), true);
+		// gdso0 = new cMethod(this, c, c.getField("DSO0"), false);
+		// sdso0 = new cMethod(this, c, c.getField("DSO0"), true);
+		// gdp0 = new cMethod(this, c, c.getField("DP0"), false);
+		// sdp0 = new cMethod(this, c, c.getField("DP0"), true);
+		gdo0 = new cMethod(this, c, c.getField("do0"), false);
+		sdo0 = new cMethod(this, c, c.getField("do0"), true);
 		frun(); gcall(null); gapply(null);
 	}
-
+	
 	@Test
-	public void newClsMthd() throws NoSuchMethodException, SecurityException {
+	public void newClsMthd() throws NoSuchMethodException, NoSuchFieldException, SecurityException {
 		System.out.println("# cMethod(Class, Method, Parameter types)");
 		Class<?> c = cMethodTest.class;
 		c0MathPi = new cMethod(null, c, c.getMethod("c0MathPi"));
@@ -181,6 +213,18 @@ public class cMethodTest {
 		f5ListAdd = new cMethod(null, c, c.getMethod("f5ListAdd", double.class, double.class, double.class, double.class, double.class));
 		f6MapRemove = new cMethod(null, c, c.getMethod("f6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class));
 		f7NumSort = new cMethod(null, c, c.getMethod("f7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class));
+		// gdfsp0 = new cMethod(null, c, c.getField("DFSP0"), false);
+		// sdfsp0 = new cMethod(null, c, c.getField("DFSP0"), true);
+		// gdfso0 = new cMethod(null, c, c.getField("DFSO0"), false);
+		// sdfso0 = new cMethod(null, c, c.getField("DFSO0"), true);
+		// gdsp0 = new cMethod(null, c, c.getField("DSP0"), false);
+		// sdsp0 = new cMethod(null, c, c.getField("DSP0"), true);
+		// gdso0 = new cMethod(null, c, c.getField("DSO0"), false);
+		// sdso0 = new cMethod(null, c, c.getField("DSO0"), true);
+		// gdp0 = new cMethod(null, c, c.getField("DP0"), false);
+		// sdp0 = new cMethod(null, c, c.getField("DP0"), true);
+		gdo0 = new cMethod(null, c, c.getField("do0"), false);
+		sdo0 = new cMethod(null, c, c.getField("do0"), true);
 		gcall(this); gapply(this); bind(this); frun(); gcall(null); gapply(null);
 	}
 	
@@ -276,6 +320,30 @@ public class cMethodTest {
 			ans = f7NumSort.run(4, 3, 5, 2, 0, 1, 6);
 			assertArrayEquals((int[])ans, new int[] {0, 1, 2, 3, 4, 5, 6});
 		}
+		if(sdfsp0!=null) {
+			assertEquals((int)gdfsp0.run(), 1);
+		}
+		if(sdfso0!=null) {
+			assertEquals((String)gdfso0.run(), "DFSO0");
+		}
+		if(sdsp0!=null) {
+			sdsp0.run(20);
+			assertEquals((int)gdsp0.run(), 20);
+			sdsp0.run(2);
+		}
+		if(sdso0!=null) {
+			sdso0.run("DDSO0DDSO0");
+			assertEquals((String)gdso0.run(), "DDSO0DDSO0");
+			sdso0.run("DDSO0");
+		}
+		if(sdp0!=null) {
+			sdp0.run(30);
+			assertEquals((int)gdp0.run(), 30);
+		}
+		if(sdo0!=null) {
+			sdo0.run("DDO0DDO0");
+			assertEquals((String)gdo0.run(), "DDO0DDO0");
+		}
 		System.out.println();
 	}
 	
@@ -358,6 +426,30 @@ public class cMethodTest {
 		if(f7NumSort!=null) {
 			ans = f7NumSort.call(null, 4, 3, 5, 2, 0, 1, 6);
 			assertArrayEquals((int[])ans, new int[] {0, 1, 2, 3, 4, 5, 6});
+		}
+		if(sdfsp0!=null) {
+			assertEquals((int)gdfsp0.call(null), 1);
+		}
+		if(sdfso0!=null) {
+			assertEquals((String)gdfso0.call(null), "DFSO0");
+		}
+		if(sdsp0!=null) {
+			sdsp0.call(null, 20);
+			assertEquals((int)gdsp0.call(null), 20);
+			sdsp0.call(null, 2);
+		}
+		if(sdso0!=null) {
+			sdso0.call(null, "DDSO0DDSO0");
+			assertEquals((String)gdso0.call(null), "DDSO0DDSO0");
+			sdso0.call(null, "DDSO0");
+		}
+		if(sdp0!=null) {
+			sdp0.call(t, 30);
+			assertEquals((int)gdp0.call(t), 30);
+		}
+		if(sdo0!=null) {
+			sdo0.call(t, "DDO0DDO0");
+			assertEquals((String)gdo0.call(t), "DDO0DDO0");
 		}
 		System.out.println();
 	}
@@ -442,6 +534,30 @@ public class cMethodTest {
 			ans = f7NumSort.apply(null, new Object[] {4, 3, 5, 2, 0, 1, 6});
 			assertArrayEquals((int[])ans, new int[] {0, 1, 2, 3, 4, 5, 6});
 		}
+		if(sdfsp0!=null) {
+			assertEquals((int)gdfsp0.apply(null, new Object[] {}), 1);
+		}
+		if(sdfso0!=null) {
+			assertEquals((String)gdfso0.apply(null, new Object[] {}), "DFSO0");
+		}
+		if(sdsp0!=null) {
+			sdsp0.apply(null, new Object[] {20});
+			assertEquals((int)gdsp0.apply(null, new Object[] {}), 20);
+			sdsp0.apply(null, new Object[] {2});
+		}
+		if(sdso0!=null) {
+			sdso0.apply(null, new Object[] {"DDSO0DDSO0"});
+			assertEquals((String)gdso0.apply(null, new Object[] {}), "DDSO0DDSO0");
+			sdso0.apply(null, new Object[] {"DDSO0"});
+		}
+		if(sdp0!=null) {
+			sdp0.apply(t, new Object[] {30});
+			assertEquals((int)gdp0.apply(t, new Object[] {}), 30);
+		}
+		if(sdo0!=null) {
+			sdo0.call(t, new Object[] {"DDO0DDO0"});
+			assertEquals((String)gdo0.call(t, new Object[] {}), "DDO0DDO0");
+		}
 		System.out.println();
 	}
 	
@@ -451,14 +567,18 @@ public class cMethodTest {
 	 */
 	public void bind(Object t) {
 		System.out.println("## bind");
-		c0MathPi = c0MathPi.bind(t);
-		c1StrRev = c1StrRev.bind(t);
-		c2StrCat = c2StrCat.bind(t);
-		c3MathMax = c3MathMax.bind(t);
-		c4MathMin = c4MathMin.bind(t);
-		c5ListAdd = c5ListAdd.bind(t);
-		c6MapRemove = c6MapRemove.bind(t);
-		c7NumSort = c7NumSort.bind(t);
+		if(c0MathPi!=null) c0MathPi = c0MathPi.bind(t);
+		if(c1StrRev!=null) c1StrRev = c1StrRev.bind(t);
+		if(c2StrCat!=null) c2StrCat = c2StrCat.bind(t);
+		if(c3MathMax!=null) c3MathMax = c3MathMax.bind(t);
+		if(c4MathMin!=null) c4MathMin = c4MathMin.bind(t);
+		if(c5ListAdd!=null) c5ListAdd = c5ListAdd.bind(t);
+		if(c6MapRemove!=null) c6MapRemove = c6MapRemove.bind(t);
+		if(c7NumSort!=null) c7NumSort = c7NumSort.bind(t);
+		if(gdp0!=null) gdp0 = gdp0.bind(t);
+		if(sdp0!=null) sdp0 = sdp0.bind(t);
+		if(gdo0!=null) gdo0 = gdo0.bind(t);
+		if(sdo0!=null) sdo0 = sdo0.bind(t);
 		System.out.println();
 	}
 	
