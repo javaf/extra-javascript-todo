@@ -8,8 +8,10 @@ import org.junit.*;
  */
 public class cMethodTest {
 	
+	/* static data */
+	public static Object ans;
+	
 	/* data */
-	public Object ans;
 	public cMethod c0MathPi;
 	public cMethod c1StrRev;
 	public cMethod c2StrCat;
@@ -111,14 +113,14 @@ public class cMethodTest {
 	@Test
 	public void newRefiFunction() {
 		System.out.println("# New Ref iFunction");
-		f0MathPi = new cMethod((iFunction0)this::f0MathPi);
-		f1StrRev = new cMethod((iFunction1<String, String>)this::f1StrRev);
-		f2StrCat = new cMethod((iFunction2<String, String, String>)this::f2StrCat);
-		f3MathMax = new cMethod((iFunction3<Double, Double, Double, Double>)this::f3MathMax);
-		f4MathMin = new cMethod((iFunction4<Double, Double, Double, Double, Double>)this::f4MathMin);
-		f5ListAdd = new cMethod((iFunction5<Double, Double, Double, Double, Double, List>)this::f5ListAdd);
-		f6MapRemove = new cMethod((iFunction6<Integer, Integer, Integer, Integer, Integer, Integer, Map>)this::f6MapRemove);
-		f7NumSort = new cMethod((iFunction7<Integer, Integer, Integer, Integer, Integer, Integer, Integer, int[]>)this::f7NumSort);
+		f0MathPi = new cMethod((iFunction0)cMethodTest::f0MathPi);
+		f1StrRev = new cMethod((iFunction1<String, String>)cMethodTest::f1StrRev);
+		f2StrCat = new cMethod((iFunction2<String, String, String>)cMethodTest::f2StrCat);
+		f3MathMax = new cMethod((iFunction3<Double, Double, Double, Double>)cMethodTest::f3MathMax);
+		f4MathMin = new cMethod((iFunction4<Double, Double, Double, Double, Double>)cMethodTest::f4MathMin);
+		f5ListAdd = new cMethod((iFunction5<Double, Double, Double, Double, Double, List>)cMethodTest::f5ListAdd);
+		f6MapRemove = new cMethod((iFunction6<Integer, Integer, Integer, Integer, Integer, Integer, Map>)cMethodTest::f6MapRemove);
+		f7NumSort = new cMethod((iFunction7<Integer, Integer, Integer, Integer, Integer, Integer, Integer, int[]>)cMethodTest::f7NumSort);
 		frun(); gcall(null); gapply(null);
 	}
 
@@ -321,28 +323,28 @@ public class cMethodTest {
 			assertArrayEquals((int[])ans, new int[] {0, 1, 2, 3, 4, 5, 6});
 		}
 		if(f0MathPi!=null) {
-			ans = f0MathPi.call(t);
+			ans = f0MathPi.call(null);
 			assertEquals((double)ans, Math.PI, 0.0);
 		}
 		if(f1StrRev!=null) {
-			ans = f1StrRev.call(t, "Splinter");
+			ans = f1StrRev.call(null, "Splinter");
 			assertEquals(ans, "retnilpS");
 		}
 		if(f2StrCat!=null) {
-			ans = f2StrCat.call(t, "Alpha", "bet");
+			ans = f2StrCat.call(null, "Alpha", "bet");
 			assertEquals(ans, "Alphabet");
 		}
 		if(f3MathMax!=null) {
-			ans = f3MathMax.call(t, 0.0, 1.0, 0.1);
+			ans = f3MathMax.call(null, 0.0, 1.0, 0.1);
 			assertEquals((double)ans, 1.0, 0.0);
 		}
 		if(f4MathMin!=null) {
-			ans = f4MathMin.call(t, 1.0, 1.1, 0.1, 0.11);
+			ans = f4MathMin.call(null, 1.0, 1.1, 0.1, 0.11);
 			assertEquals((double)ans, 0.1, 0.0);
 		}
 		if(f5ListAdd!=null) {
 			ans = new ArrayList();
-			ans = f5ListAdd.call(t, 0.1, 0.2, 0.3, 0.4, 0.5);
+			ans = f5ListAdd.call(null, 0.1, 0.2, 0.3, 0.4, 0.5);
 			assertEquals(ans, Arrays.asList(new Double[] {0.1, 0.2, 0.3, 0.4, 0.5}));
 		}
 		if(f6MapRemove!=null) {
@@ -350,11 +352,11 @@ public class cMethodTest {
 			for(int n : new int[] {0, 1, 2, 3, 4, 5})
 				p.put(n, ""+n);
 			ans = p;
-			ans = f6MapRemove.call(t, 0, 1, 2, 3, 4, 5);
+			ans = f6MapRemove.call(null, 0, 1, 2, 3, 4, 5);
 			assertEquals(p.size(), 0);
 		}
 		if(f7NumSort!=null) {
-			ans = f7NumSort.call(t, 4, 3, 5, 2, 0, 1, 6);
+			ans = f7NumSort.call(null, 4, 3, 5, 2, 0, 1, 6);
 			assertArrayEquals((int[])ans, new int[] {0, 1, 2, 3, 4, 5, 6});
 		}
 		System.out.println();
@@ -404,28 +406,28 @@ public class cMethodTest {
 			assertArrayEquals((int[])ans, new int[] {0, 1, 2, 3, 4, 5, 6});
 		}
 		if(f0MathPi!=null) {
-			ans = f0MathPi.apply(t, new Object[] {});
+			ans = f0MathPi.apply(null, new Object[] {});
 			assertEquals((double)ans, Math.PI, 0.0);
 		}
 		if(f1StrRev!=null) {
-			ans = f1StrRev.apply(t, new Object[] {"Splinter"});
+			ans = f1StrRev.apply(null, new Object[] {"Splinter"});
 			assertEquals(ans, "retnilpS");
 		}
 		if(f2StrCat!=null) {
-			ans = f2StrCat.apply(t, new Object[] {"Alpha", "bet"});
+			ans = f2StrCat.apply(null, new Object[] {"Alpha", "bet"});
 			assertEquals(ans, "Alphabet");
 		}
 		if(f3MathMax!=null) {
-			ans = f3MathMax.apply(t, new Object[] {0.0, 1.0, 0.1});
+			ans = f3MathMax.apply(null, new Object[] {0.0, 1.0, 0.1});
 			assertEquals((double)ans, 1.0, 0.0);
 		}
 		if(f4MathMin!=null) {
-			ans = f4MathMin.apply(t, new Object[] {1.0, 1.1, 0.1, 0.11});
+			ans = f4MathMin.apply(null, new Object[] {1.0, 1.1, 0.1, 0.11});
 			assertEquals((double)ans, 0.1, 0.0);
 		}
 		if(f5ListAdd!=null) {
 			ans = new ArrayList();
-			ans = f5ListAdd.apply(t, new Object[] {0.1, 0.2, 0.3, 0.4, 0.5});
+			ans = f5ListAdd.apply(null, new Object[] {0.1, 0.2, 0.3, 0.4, 0.5});
 			assertEquals(ans, Arrays.asList(new Double[] {0.1, 0.2, 0.3, 0.4, 0.5}));
 		}
 		if(f6MapRemove!=null) {
@@ -433,11 +435,11 @@ public class cMethodTest {
 			for(int n : new int[] {0, 1, 2, 3, 4, 5})
 				p.put(n, ""+n);
 			ans = p;
-			ans = f6MapRemove.apply(t, new Object[] {0, 1, 2, 3, 4, 5});
+			ans = f6MapRemove.apply(null, new Object[] {0, 1, 2, 3, 4, 5});
 			assertEquals(p.size(), 0);
 		}
 		if(f7NumSort!=null) {
-			ans = f7NumSort.apply(t, new Object[] {4, 3, 5, 2, 0, 1, 6});
+			ans = f7NumSort.apply(null, new Object[] {4, 3, 5, 2, 0, 1, 6});
 			assertArrayEquals((int[])ans, new int[] {0, 1, 2, 3, 4, 5, 6});
 		}
 		System.out.println();
@@ -457,14 +459,6 @@ public class cMethodTest {
 		c5ListAdd = c5ListAdd.bind(t);
 		c6MapRemove = c6MapRemove.bind(t);
 		c7NumSort = c7NumSort.bind(t);
-		f0MathPi = f0MathPi.bind(t);
-		f1StrRev = f1StrRev.bind(t);
-		f2StrCat = f2StrCat.bind(t);
-		f3MathMax = f3MathMax.bind(t);
-		f4MathMin = f4MathMin.bind(t);
-		f5ListAdd = f5ListAdd.bind(t);
-		f6MapRemove = f6MapRemove.bind(t);
-		f7NumSort = f7NumSort.bind(t);
 		System.out.println();
 	}
 	
@@ -510,39 +504,39 @@ public class cMethodTest {
 		ans = f7NumSort(a, b, c, d, e, f, g);
 	}
 	
-	public double f0MathPi() {
+	public static double f0MathPi() {
 		System.out.print("f0MathPi.");
 		return Math.PI;
 	}
 	
-	public String f1StrRev(String a) {
+	public static String f1StrRev(String a) {
 		System.out.print("f1StrRev.");
 		return new StringBuilder(a).reverse().toString();
 	}
 	
-	public String f2StrCat(String a, String b) {
+	public static String f2StrCat(String a, String b) {
 		System.out.print("f2StrCat.");
 		return a+b;
 	}
 	
-	public double f3MathMax(double a, double b, double c) {
+	public static double f3MathMax(double a, double b, double c) {
 		System.out.print("f3MathMax.");
 		return Math.max(a, Math.max(b, c));
 	}
 	
-	public double f4MathMin(double a, double b, double c, double d) {
+	public static double f4MathMin(double a, double b, double c, double d) {
 		System.out.print("f4MathMin.");
 		return Math.min(a, Math.min(b, Math.min(c, d)));
 	}
 	
-	public List f5ListAdd(double a, double b, double c, double d, double e) {
+	public static List f5ListAdd(double a, double b, double c, double d, double e) {
 		System.out.print("f5ListAdd.");
 		List p = (List)ans;
 		p.addAll(Arrays.asList(a, b, c, d, e));
 		return p;
 	}
 	
-	public Map f6MapRemove(int a, int b, int c, int d, int e, int f) {
+	public static Map f6MapRemove(int a, int b, int c, int d, int e, int f) {
 		System.out.print("f6MapRemove.");
 		Map p = (Map)ans;
 		for(int n : new int[] {a, b, c, d, e, f})
@@ -550,7 +544,7 @@ public class cMethodTest {
 		return p;
 	}
 	
-	public int[] f7NumSort(int a, int b, int c, int d, int e, int f, int g) {
+	public static int[] f7NumSort(int a, int b, int c, int d, int e, int f, int g) {
 		System.out.print("f7NumSort.");
 		int[] p = new int[] {a, b, c, d, e, f, g};
 		Arrays.sort(p);

@@ -230,11 +230,11 @@ public class cMethod implements iMethod {
 		boolean isvoid = !code.contains("return") || code.replace(" ", "").contains("return;");
 		StringBuilder s = new StringBuilder("package js.lang.function.dynamic;");
 		s.append("public class ").append(className).append(" implements js.lang.function.");
-		s.append(isvoid? "iConsumer" : "iFunction").append(argv.length-1).append(" {");
+		s.append(isvoid? "iConsumer" : "iFunction").append(argn).append(" {");
 		s.append("public ").append(isvoid? "void "+iConsumer.NAME : "Object "+iFunction.NAME).append("(");
 		for(int i=0; i<argn; i++)
 			s.append("Object ").append(argv[i]).append(", ");
-		if(argv.length>1) s.delete(s.length()-2, s.length());
+		if(argn>0) s.delete(s.length()-2, s.length());
 		s.append(") {").append(code).append("} }");
 		return s.toString();
 	}
