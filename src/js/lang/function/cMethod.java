@@ -36,7 +36,7 @@ public class cMethod implements iMethod {
 	/* data */
 	/** Object implementing iMethod interface which can be called. */
 	private final iMethod imethod;
-	/** MethodHandle factory that can be used to generate iMethod object. */
+	/** MethodHandle methodHandle that can be used to generate iMethod object. */
 	private final MethodHandle factory;
 	/** Name of the callable method. */
 	private final String name;
@@ -62,7 +62,7 @@ public class cMethod implements iMethod {
 	 */
 	public cMethod(Object obj, Class<?> cls, Field f, boolean set) {
 		try {
-			factory = factory(obj, cls, f, set);
+			factory = methodHandle(obj, f, set);
 			imethod = Modifier.isStatic(f.getModifiers()) || obj!=null? (iMethod)factory.invoke() : null;
 			name = f.getName();
 		}
@@ -102,7 +102,7 @@ public class cMethod implements iMethod {
 	/**
 	 * Direct field constructor.
 	 * @param m iMethod object.
-	 * @param f MethodHandle factory.
+	 * @param f MethodHandle methodHandle.
 	 * @param n Method name.
 	 */
 	private cMethod(iMethod m, MethodHandle f, String n) {
@@ -145,46 +145,29 @@ public class cMethod implements iMethod {
 	
 	/* static method */
 	/**
-	 * Get Lambda function factory from specified function. Invoking the returned factory
-	 * with object yields a functional interface which can be directly called.
+	 * Get Lambda function methodHandle from specified function. Invoking the returned methodHandle
+ with object yields a functional interface which can be directly called.
 	 * @param obj Object which the interface object is to be bound to (can be null).
 	 * @param cls Class which the method belongs to.
 	 * @param m Reflected method object.
-	 * @return Method handle factory.
-	 * @throws LambdaConversionException When method to factory conversion error occurs.
+	 * @return Method handle methodHandle.
+	 * @throws LambdaConversionException When method to methodHandle conversion error occurs.
 	 * @throws IllegalAccessException When method is not accessible.
 	 */
 	public final static MethodHandle factory(Object obj, Class<?> cls, Method m) throws LambdaConversionException, IllegalAccessException {
-		return _factory(Modifier.isStatic(m.getModifiers()), obj, cls, MethodHandles.lookup().unreflect(m),
-			m.getReturnType(), m.getParameterTypes());
+		return _factory(Modifier.isStatic(m.getModifiers()), obj, cls, MethodHandles.lookup().unreflect(m),	m.getReturnType(), m.getParameterTypes());
 	}
 	/**
-	 * Get Lambda function factory from specified field. Invoking the returned factory
-	 * with object yields a functional interface which can be directly called.
-	 * @param obj Object which the interface object is to be bound to (can be null).
-	 * @param cls Class which the method belongs to.
-	 * @param f Reflected field object.
-	 * @param set If true, setter is returned, otherwise getter is returned.
-	 * @return Method handle factory.
-	 * @throws LambdaConversionException When field to factory conversion error occurs.
-	 * @throws IllegalAccessException When field is not accessible.
-	 */
-	public final static MethodHandle factory(Object obj, Class<?> cls, Field f, boolean set) throws IllegalAccessException {
-		MethodHandles.Lookup l = MethodHandles.lookup();
-		MethodHandle fctry = set? l.unreflectSetter(f) : l.unreflectSetter(f);
-		return Modifier.isStatic(f.getModifiers()) || obj==null? fctry : fctry.bindTo(obj);
-	}
-	/**
-	 * Get Lambda function factory from specified method handle. Invoking the returned
-	 * factory with object yields an iMethod object which can be directly called.
+	 * Get Lambda function methodHandle from specified method handle. Invoking the returned
+ methodHandle with object yields an iMethod object which can be directly called.
 	 * @param stc Tells whether the method handle is static.
 	 * @param obj Object which the interface object is to be bound to (can be null).
 	 * @param cls Class which the method handle belongs to.
 	 * @param mh Unreflected method handle object.
 	 * @param tRet Return type of method handle.
 	 * @param types Parameter types of the method handle (excluding object).
-	 * @return Method handle factory.
-	 * @throws LambdaConversionException When field to factory conversion error occurs.
+	 * @return Method handle methodHandle.
+	 * @throws LambdaConversionException When field to methodHandle conversion error occurs.
 	 */
 	private static MethodHandle _factory(boolean stc, Object obj, Class<?> cls, MethodHandle mh, Class<?> tRet, Class<?>[] types) throws LambdaConversionException {
 		int nArg = types.length;
@@ -195,6 +178,30 @@ public class cMethod implements iMethod {
 		MethodType dType = stc? MethodType.methodType(dCls) : MethodType.methodType(dCls, cls);
 		MethodHandle fctry = LambdaMetafactory.metafactory(MethodHandles.lookup(), dMthd, dType, dSig, mh, sSig).getTarget();
 		return !stc && obj!=null? fctry.bindTo(obj) : fctry;
+	}
+	/**
+	 * Get unreflected method handle of specified method.
+	 * @param obj Object which the interface object is to be bound to (can be null).
+	 * @param m Reflected method object.
+	 * @return Method handle of method.
+	 * @throws IllegalAccessException When method is not accessible.
+	 */
+	public final static MethodHandle methodHandle(Object obj, Method m) throws IllegalAccessException {
+		MethodHandle fctry = MethodHandles.lookup().unreflect(m);
+		return Modifier.isStatic(m.getModifiers()) || obj==null? fctry : fctry.bindTo(obj);
+	}
+	/**
+	 * Get unreflected method handle of specified field.
+	 * @param obj Object which the method handle is to be bound to (can be null).
+	 * @param f Reflected field object.
+	 * @param set If true, setter is returned, otherwise getter is returned.
+	 * @return Method handle of field.
+	 * @throws IllegalAccessException When field is not accessible.
+	 */
+	public final static MethodHandle methodHandle(Object obj, Field f, boolean set) throws IllegalAccessException {
+		MethodHandles.Lookup l = MethodHandles.lookup();
+		MethodHandle fctry = set? l.unreflectSetter(f) : l.unreflectSetter(f);
+		return Modifier.isStatic(f.getModifiers()) || obj==null? fctry : fctry.bindTo(obj);
 	}
 	/**
 	 * Get a method object from class and its specified name. The returned method
