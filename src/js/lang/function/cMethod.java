@@ -169,10 +169,10 @@ public class cMethod implements iMethod {
 	 * @throws LambdaConversionException When field to factory conversion error occurs.
 	 * @throws IllegalAccessException When field is not accessible.
 	 */
-	public final static MethodHandle factory(Object obj, Class<?> cls, Field f, boolean set) throws LambdaConversionException, IllegalAccessException {
+	public final static MethodHandle factory(Object obj, Class<?> cls, Field f, boolean set) throws IllegalAccessException {
 		MethodHandles.Lookup l = MethodHandles.lookup();
-		return _factory(Modifier.isStatic(f.getModifiers()), obj, cls, set? l.unreflectSetter(f) : l.unreflectGetter(f),
-			set? void.class : f.getType(), set? new Class<?>[]{f.getType()} : new Class<?>[0]);
+		MethodHandle fctry = set? l.unreflectSetter(f) : l.unreflectSetter(f);
+		return Modifier.isStatic(f.getModifiers()) || obj==null? fctry : fctry.bindTo(obj);
 	}
 	/**
 	 * Get Lambda function factory from specified method handle. Invoking the returned
