@@ -72,8 +72,8 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 	 * @param field Field object of the field.
 	 * @param set If true, setter is used, otherwise getter is used.
 	 */
-	public oFunction(Object thisArg, Class<?> clazz, Field field, boolean set) {
-		super(thisArg, clazz, field, set);
+	public oFunction(Object thisArg, Field field, boolean set) {
+		super(thisArg, field, set);
 	}
 	/**
 	 * Creates a callable oFunction object from a specific field reflectively..
@@ -81,8 +81,8 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 	 * @param field Field object of the field.
 	 * @param set If true, setter is used, otherwise getter is used.
 	 */
-	public oFunction(Class<?> clazz, Field field, boolean set) {
-		this(null, clazz, field, set);
+	public oFunction(Field field, boolean set) {
+		this(null, field, set);
 	}
 	/**
 	 * Creates a callable oFunction object from a specific field reflectively..
@@ -93,7 +93,7 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 	 * @param set If true, setter is used, otherwise getter is used.
 	 */
 	public oFunction(Object thisArg, Class<?> clazz, String field, boolean set) {
-		this(thisArg, clazz, cMethod.field(clazz, field), set);
+		this(thisArg, cMethod.field(clazz, field), set);
 	}
 	/**
 	 * Creates a callable oFunction object from a specific field reflectively..
@@ -111,16 +111,16 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 	 * @param clazz Class which contains the method.
 	 * @param method Method object.
 	 */
-	public oFunction(Object thisArg, Class<?> clazz, Method method) {
-		super(thisArg, clazz, method);
+	public oFunction(Object thisArg, Method method) {
+		super(thisArg, method);
 	}
 	/**
 	 * Creates a callable oFunction object from a specific method reflectively..
 	 * @param clazz Class which contains the method.
 	 * @param method Method object.
 	 */
-	public oFunction(Class<?> clazz, Method method) {
-		this(null, clazz, method);
+	public oFunction(Method method) {
+		this(null, method);
 	}
 	/**
 	 * Creates a callable oFunction object from a specific method reflectively..
@@ -131,7 +131,7 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 	 * @param parameterTypes Parameter types of the method.
 	 */
 	public oFunction(Object thisArg, Class<?> clazz, String method, Class<?>... parameterTypes) {
-		this(thisArg, clazz, cMethod.method(clazz, method, parameterTypes));
+		this(thisArg, cMethod.method(clazz, method, parameterTypes));
 	}
 	/**
 	 * Creates a callable oFunction object from a specific method reflectively.

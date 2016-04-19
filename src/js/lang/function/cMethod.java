@@ -37,9 +37,7 @@ public class cMethod implements iMethod {
 	/** Object implementing iMethod interface which can be called. */
 	private final iMethod imethod;
 	/** MethodHandle methodHandle that can be used to generate iMethod object. */
-	private final MethodHandle factory;
-	/** Name of the callable method. */
-	private final String name;
+	private final MethodHandle handle;
 	
 	
 	/* constructor */
@@ -49,8 +47,7 @@ public class cMethod implements iMethod {
 	 */
 	public cMethod(iMethod m) {
 		imethod = m;
-		factory = null;
-		name = m.name();
+		handle = null;
 	}
 	/**
 	 * Create a callable Method object from class, method name, and parameter types.
@@ -60,11 +57,11 @@ public class cMethod implements iMethod {
 	 * @param f Field to be made callable.
 	 * @param set If true, setter is used, else getter is used.
 	 */
-	public cMethod(Object obj, Class<?> cls, Field f, boolean set) {
+	public cMethod(Object obj, Field f, boolean set) {
 		try {
-			factory = methodHandle(obj, f, set);
-			imethod = Modifier.isStatic(f.getModifiers()) || obj!=null? (iMethod)factory.invoke() : null;
-			name = f.getName();
+			handle = methodHandle(obj, f, set);
+			if(set) imethod = (iConsumer1)(v) -> { try { handle.invokeExact(v); } catch(Throwable e) { throw new RuntimeException(e); } };
+			else imethod = (iFunction0)() -> { try { return handle.invokeExact(); } catch(Throwable e) { throw new RuntimeException(e); } };
 		}
 		catch(Throwable e) { throw new RuntimeException(e); }
 	}
@@ -75,11 +72,10 @@ public class cMethod implements iMethod {
 	 * @param cls Class which contains the method.
 	 * @param m Method to be made callable.
 	 */
-	public cMethod(Object obj, Class<?> cls, Method m) {
+	public cMethod(Object obj, Method m) {
 		try {
-			factory = factory(obj, cls, m);
-			imethod = Modifier.isStatic(m.getModifiers()) || obj!=null? (iMethod)factory.invoke() : null;
-			name = m.getName();
+			handle = _factory(obj, m);
+			imethod = Modifier.isStatic(m.getModifiers()) || obj!=null? (iMethod)handle.invoke() : null;
 		}
 		catch(Throwable e) { throw new RuntimeException(e); }
 	}
@@ -92,8 +88,7 @@ public class cMethod implements iMethod {
 	 * @param code A string containing the Java statements comprising the function definition.
 	 */
 	public cMethod(int argn, String[] argv, String code) {
-		name = "";
-		factory = null;
+		handle = null;
 		if(code.length()==0) { imethod = (Object... a) -> null; return; }
 		String className = "c"+classNumber(), content = _methodContent(className, argn, argv, code);
 		try { imethod = (iMethod)cJavaMemoryCompiler.compile("js.lang.function.dynamic."+className, content).newInstance(); }
@@ -105,10 +100,9 @@ public class cMethod implements iMethod {
 	 * @param f MethodHandle methodHandle.
 	 * @param n Method name.
 	 */
-	private cMethod(iMethod m, MethodHandle f, String n) {
+	private cMethod(iMethod m, MethodHandle f) {
 		imethod = m;
-		factory = f;
-		name = n;
+		handle = f;
 	}
 	/**
 	 * Copy constructor.
@@ -116,8 +110,7 @@ public class cMethod implements iMethod {
 	 */
 	protected cMethod(cMethod o) {
 		imethod = o.imethod;
-		factory = o.factory;
-		name = o.name;
+		handle = o.handle;
 	}
 	
 	
@@ -139,46 +132,11 @@ public class cMethod implements iMethod {
 	
 	@Override
 	public String name() {
-		return name;
+		return imethod.name();
 	}
 	
 	
 	/* static method */
-	/**
-	 * Get Lambda function methodHandle from specified function. Invoking the returned methodHandle
- with object yields a functional interface which can be directly called.
-	 * @param obj Object which the interface object is to be bound to (can be null).
-	 * @param cls Class which the method belongs to.
-	 * @param m Reflected method object.
-	 * @return Method handle methodHandle.
-	 * @throws LambdaConversionException When method to methodHandle conversion error occurs.
-	 * @throws IllegalAccessException When method is not accessible.
-	 */
-	public final static MethodHandle factory(Object obj, Class<?> cls, Method m) throws LambdaConversionException, IllegalAccessException {
-		return _factory(Modifier.isStatic(m.getModifiers()), obj, cls, MethodHandles.lookup().unreflect(m),	m.getReturnType(), m.getParameterTypes());
-	}
-	/**
-	 * Get Lambda function methodHandle from specified method handle. Invoking the returned
- methodHandle with object yields an iMethod object which can be directly called.
-	 * @param stc Tells whether the method handle is static.
-	 * @param obj Object which the interface object is to be bound to (can be null).
-	 * @param cls Class which the method handle belongs to.
-	 * @param mh Unreflected method handle object.
-	 * @param tRet Return type of method handle.
-	 * @param types Parameter types of the method handle (excluding object).
-	 * @return Method handle methodHandle.
-	 * @throws LambdaConversionException When field to methodHandle conversion error occurs.
-	 */
-	private static MethodHandle _factory(boolean stc, Object obj, Class<?> cls, MethodHandle mh, Class<?> tRet, Class<?>[] types) throws LambdaConversionException {
-		int nArg = types.length;
-		MethodType sSig = MethodType.methodType(tRet, types);
-		Class<?> dCls = tRet==void.class? CONSUMER_INTERFACE[nArg] : FUNCTION_INTERFACE[nArg];
-		MethodType dSig = tRet==void.class? CONSUMER_SIGNATURE[nArg] : FUNCTION_SIGNATURE[nArg];
-		String dMthd = tRet==void.class? iConsumer.NAME : iFunction.NAME;
-		MethodType dType = stc? MethodType.methodType(dCls) : MethodType.methodType(dCls, cls);
-		MethodHandle fctry = LambdaMetafactory.metafactory(MethodHandles.lookup(), dMthd, dType, dSig, mh, sSig).getTarget();
-		return !stc && obj!=null? fctry.bindTo(obj) : fctry;
-	}
 	/**
 	 * Get unreflected method handle of specified method.
 	 * @param obj Object which the interface object is to be bound to (can be null).
@@ -187,8 +145,8 @@ public class cMethod implements iMethod {
 	 * @throws IllegalAccessException When method is not accessible.
 	 */
 	public final static MethodHandle methodHandle(Object obj, Method m) throws IllegalAccessException {
-		MethodHandle fctry = MethodHandles.lookup().unreflect(m);
-		return Modifier.isStatic(m.getModifiers()) || obj==null? fctry : fctry.bindTo(obj);
+		MethodHandle mh = MethodHandles.lookup().unreflect(m);
+		return Modifier.isStatic(m.getModifiers()) || obj==null? mh : mh.bindTo(obj);
 	}
 	/**
 	 * Get unreflected method handle of specified field.
@@ -200,9 +158,10 @@ public class cMethod implements iMethod {
 	 */
 	public final static MethodHandle methodHandle(Object obj, Field f, boolean set) throws IllegalAccessException {
 		MethodHandles.Lookup l = MethodHandles.lookup();
-		MethodHandle fctry = set? l.unreflectSetter(f) : l.unreflectSetter(f);
-		return Modifier.isStatic(f.getModifiers()) || obj==null? fctry : fctry.bindTo(obj);
+		MethodHandle mh = set? l.unreflectSetter(f) : l.unreflectSetter(f);
+		return Modifier.isStatic(f.getModifiers()) || obj==null? mh : mh.bindTo(obj);
 	}
+	
 	/**
 	 * Get a method object from class and its specified name. The returned method
 	 * object is obtained through reflection.
@@ -215,6 +174,7 @@ public class cMethod implements iMethod {
 		try { return cls.getMethod(mn, types); }
 		catch(NoSuchMethodException | SecurityException e) { throw new RuntimeException(e); }
 	}
+	
 	/**
 	 * Get a field object from class and its specified name. The returned field
 	 * object is obtained through reflection.
@@ -225,6 +185,29 @@ public class cMethod implements iMethod {
 	public final static Field field(Class<?> cls, String fn) {
 		try { return cls.getField(fn); }
 		catch(NoSuchFieldException | SecurityException e) { throw new RuntimeException(e); }
+	}
+	
+	/**
+	 * Get Lambda function factory from specified method handle. Invoking the returned
+	 * factory with object yields an iMethod object which can be directly called.
+	 * @param o Object which the interface object is to be bound to (can be null).
+	 * @param m Reflected method object.
+	 * @return Method handle factory.
+	 * @throws LambdaConversionException When conversion to iMethod fails.
+	 * @throws IllegalAccessException When method is not accessible.
+	 */
+	private static MethodHandle _factory(Object o, Method m) throws LambdaConversionException, IllegalAccessException {
+		int n = m.getParameterCount();
+		Class<?> tRet = m.getReturnType();
+		MethodHandles.Lookup l = MethodHandles.lookup();
+		boolean stc = Modifier.isStatic(m.getModifiers());
+		MethodType sSig = MethodType.methodType(tRet, m.getParameterTypes());
+		Class<?> dCls = tRet==void.class? CONSUMER_INTERFACE[n] : FUNCTION_INTERFACE[n];
+		MethodType dSig = tRet==void.class? CONSUMER_SIGNATURE[n] : FUNCTION_SIGNATURE[n];
+		String dMthd = tRet==void.class? iConsumer.NAME : iFunction.NAME;
+		MethodType dType = stc? MethodType.methodType(dCls) : MethodType.methodType(dCls, m.getClass());
+		MethodHandle fctry = LambdaMetafactory.metafactory(l, dMthd, dType, dSig, l.unreflect(m), sSig).getTarget();
+		return !stc && o!=null? fctry.bindTo(o) : fctry;
 	}
 	
 	/**
@@ -271,9 +254,9 @@ public class cMethod implements iMethod {
 	 */
 	public cMethod bind(Object thisArg, Object... args) {
 		try {
-			MethodHandle fctry = factory.bindTo(thisArg);
+			MethodHandle fctry = handle.bindTo(thisArg);
 			MethodHandles.insertArguments(fctry, 0, args);
-			return new cMethod((iMethod)fctry.invoke(), fctry, name);
+			return new cMethod((iMethod)fctry.invoke(), fctry);
 		}
 		catch(Throwable e) { throw new RuntimeException(e); }
 	}
