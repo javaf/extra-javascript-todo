@@ -53,23 +53,23 @@ public class cMethod implements iMethod {
 	 * Create a callable Method object from class, method name, and parameter types.
 	 * @param obj Object bound to function. Can be null if method is static, or
 	 * binding is to be done later using bind().
-	 * @param cls Class which contains the method.
 	 * @param f Field to be made callable.
 	 * @param set If true, setter is used, else getter is used.
 	 */
 	public cMethod(Object obj, Field f, boolean set) {
 		try {
-			handle = methodHandle(obj, f, set);
+			MethodHandles.Lookup l = MethodHandles.lookup();
+			MethodHandle mh = set? l.unreflectSetter(f) : l.unreflectSetter(f);
+			handle = Modifier.isStatic(f.getModifiers()) || obj==null? mh : mh.bindTo(obj);
 			if(set) imethod = (iConsumer1)(v) -> { try { handle.invokeExact(v); } catch(Throwable e) { throw new RuntimeException(e); } };
 			else imethod = (iFunction0)() -> { try { return handle.invokeExact(); } catch(Throwable e) { throw new RuntimeException(e); } };
 		}
-		catch(Throwable e) { throw new RuntimeException(e); }
+		catch(IllegalAccessException e) { throw new RuntimeException(e); }
 	}
 	/**
 	 * Create a callable Method object from class, method name, and parameter types.
 	 * @param obj Object bound to function. Can be null if method is static, or
 	 * binding is to be done later using bind().
-	 * @param cls Class which contains the method.
 	 * @param m Method to be made callable.
 	 */
 	public cMethod(Object obj, Method m) {
@@ -137,31 +137,6 @@ public class cMethod implements iMethod {
 	
 	
 	/* static method */
-	/**
-	 * Get unreflected method handle of specified method.
-	 * @param obj Object which the interface object is to be bound to (can be null).
-	 * @param m Reflected method object.
-	 * @return Method handle of method.
-	 * @throws IllegalAccessException When method is not accessible.
-	 */
-	public final static MethodHandle methodHandle(Object obj, Method m) throws IllegalAccessException {
-		MethodHandle mh = MethodHandles.lookup().unreflect(m);
-		return Modifier.isStatic(m.getModifiers()) || obj==null? mh : mh.bindTo(obj);
-	}
-	/**
-	 * Get unreflected method handle of specified field.
-	 * @param obj Object which the method handle is to be bound to (can be null).
-	 * @param f Reflected field object.
-	 * @param set If true, setter is returned, otherwise getter is returned.
-	 * @return Method handle of field.
-	 * @throws IllegalAccessException When field is not accessible.
-	 */
-	public final static MethodHandle methodHandle(Object obj, Field f, boolean set) throws IllegalAccessException {
-		MethodHandles.Lookup l = MethodHandles.lookup();
-		MethodHandle mh = set? l.unreflectSetter(f) : l.unreflectSetter(f);
-		return Modifier.isStatic(f.getModifiers()) || obj==null? mh : mh.bindTo(obj);
-	}
-	
 	/**
 	 * Get a method object from class and its specified name. The returned method
 	 * object is obtained through reflection.
