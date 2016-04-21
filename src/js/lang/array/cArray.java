@@ -1,5 +1,6 @@
 package js.lang.array;
 import java.nio.*;
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class cArray<T> implements Iterable<T> {
@@ -8,6 +9,11 @@ public class cArray<T> implements Iterable<T> {
 	ByteBuffer buffer;
 	Object array;
 	
+	
+	public static <T> T[] fill(T[] dst, T value) {
+		Arrays.fill(dst, value);
+		return dst;
+	}
 	
 	
 	@Override
