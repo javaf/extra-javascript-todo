@@ -88,7 +88,7 @@ public class cObjectMap implements iMap<String, Object> {
 		Object[] v = map.get(name);
 		v = v==null? new Object[2] : v;
 		if(a.enumerable()) enumerable.add(name);
-		v[ps] = new cMethod(o, c, m);
+		v[ps] = new cMethod(o, m);
 		map.put(name, v);
 	}
 	

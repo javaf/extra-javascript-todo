@@ -38,6 +38,7 @@ public class cMethod implements iMethod {
 	private final iMethod method;
 	/** Original method handle that can be used to generate iMethod object after binding. */
 	private final MethodHandle handle;
+
 	
 	/* constructor */
 	/**
