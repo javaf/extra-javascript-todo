@@ -1,5 +1,6 @@
 package js.lang.function;
 import java.lang.invoke.*;
+import js.lang.array.*;
 
 /**
  * Represents a no-output and 4 input method that can be called.
@@ -12,7 +13,7 @@ public interface iConsumer4<TA, TB, TC, TD> extends iConsumer {
 	
 	/* static data */
 	/** Method signature of this interface. */
-	static MethodType SIGNATURE = MethodType.methodType(void.class, Object.class, Object.class, Object.class, Object.class);
+	static MethodType SIGNATURE = MethodType.methodType(void.class, cArray.fill(new Class<?>[4], Object.class));
 	
 	
 	/* super property */
