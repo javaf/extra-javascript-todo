@@ -1,5 +1,6 @@
 package js.lang.function;
 import java.lang.invoke.*;
+import js.lang.array.*;
 
 /**
  * Represents a single output and 1-input method that can be called.
@@ -12,7 +13,7 @@ public interface iFunction3<TA, TB, TC, TR> extends iFunction {
 	
 	/* static data */
 	/** Method signature of this interface. */
-	static MethodType SIGNATURE = MethodType.methodType(Object.class, Object.class, Object.class, Object.class);
+	static MethodType SIGNATURE = MethodType.methodType(Object.class, cArray.fill(new Class<?>[3], Object.class));
 	
 	
 	/* super property */
