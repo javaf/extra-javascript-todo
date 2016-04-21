@@ -1,45 +1,41 @@
 package js.lang.function;
+import java.util.function.*;
 import java.lang.invoke.*;
-import js.lang.array.*;
 
 /**
- * Represents a single output and 1-input method that can be called.
+ * Represents a no input function that can be called.
  * @param <TA> Input argument 1 type.
  * @param <TB> Input argument 2 type.
  * @param <TR> Return type.
  */
-public interface iFn2<TA, TB, TR> extends iFn {
+public interface iFn2<TA, TB, TR> extends iProc, BiFunction<TA, TB, TR> {
 	
 	/* static data */
-	/** Method signature of this interface. */
-	static MethodType SIGNATURE = MethodType.methodType(Object.class, cArray.fill(new Class<?>[2], Object.class));
+	/** Signature of this function. */
+	static MethodType TYPE = MethodType.genericMethodType(2);
 	
 	
 	/* super property */
 	@Override
-	default int length() {
-		return 2;
+	default MethodType type() {
+		return TYPE;
 	}
 	
 	
 	/* method */
 	/**
-	 * Represents then method to the called when "call" is called.
+	 * Represents the function to be defined.
 	 * @param a Input argument 1.
 	 * @param b Input argument 2.
-	 * @return The output value of method.
+	 * @return The output value of function.
 	 */
+	@Override
 	TR apply(TA a, TB b);
 	
 	
 	/* super method */
 	@Override
-	default Object call(Object... args) {
-		return apply((TA)args[0], (TB)args[1]);
-	}
-	
-	@Override
-	default String z_toString() {
-		return "TR "+name()+"(TA a, TB b) { [native code] }";
+	default Object call(Object... a) {
+		return apply((TA)a[0], (TB)a[1]);
 	}
 }

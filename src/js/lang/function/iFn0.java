@@ -1,34 +1,41 @@
 package js.lang.function;
+import java.util.function.*;
 import java.lang.invoke.*;
-import js.lang.array.*;
 
 /**
- * Represents a single output and no-input method that can be called.
+ * Represents a no input function that can be called.
  * @param <TR> Return type.
  */
-public interface iFn0<TR> extends iFn {
+public interface iFn0<TR> extends iProc, Supplier<TR> {
 	
 	/* static data */
-	/** Method signature of this interface. */
-	static MethodType SIGNATURE = MethodType.methodType(Object.class, cArray.fill(new Class<?>[0], Object.class));
-
+	/** Signature of this function. */
+	static MethodType TYPE = MethodType.genericMethodType(0);
+	
+	
+	/* super property */
+	@Override
+	default MethodType type() {
+		return TYPE;
+	}
+	
 	
 	/* method */
 	/**
-	 * Represents then method to the called when "call" is called.
-	 * @return The output value of method.
+	 * Represents the function to be defined.
+	 * @return The output value of function.
 	 */
 	TR apply();
 	
 	
 	/* super method */
 	@Override
-	default Object call(Object... args) {
+	default TR get() {
 		return apply();
 	}
 	
 	@Override
-	default String z_toString() {
-		return "TR "+name()+"() { [native code] }";
+	default Object call(Object... a) {
+		return apply();
 	}
 }

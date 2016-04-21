@@ -26,7 +26,7 @@ public class cMethod implements iProc {
 	};
 	/** Array defining all iFn method signatures in order of input parameters */
 	private static final MethodType[] FUNCTION_SIGNATURE = new MethodType[] {
-		iFn0.SIGNATURE, iFn1.SIGNATURE, iFn2.SIGNATURE, iFn3.SIGNATURE,
+		iFn0.TYPE, iFn1.SIGNATURE, iFn2.SIGNATURE, iFn3.SIGNATURE,
 		iFn4.SIGNATURE, iFn5.SIGNATURE, iFn6.SIGNATURE, iFn7.SIGNATURE
 	};
 	/** Indicates the number of dynamically generated classes. */
