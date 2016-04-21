@@ -83,28 +83,28 @@ public class iConsumerTest {
 	public void frun() {
 		System.out.println("## run");
 		if(c0MathPi!=null) {
-			c0MathPi.run();
+			c0MathPi.call();
 			assertEquals((double)ans, Math.PI, 0.0);
 		}
 		if(c1StrRev!=null) {
-			c1StrRev.run("Splinter");
+			c1StrRev.call("Splinter");
 			assertEquals(ans, "retnilpS");
 		}
 		if(c2StrCat!=null) {
-			c2StrCat.run("Alpha", "bet");
+			c2StrCat.call("Alpha", "bet");
 			assertEquals(ans, "Alphabet");
 		}
 		if(c3MathMax!=null) {
-			c3MathMax.run(0.0, 1.0, 0.1);
+			c3MathMax.call(0.0, 1.0, 0.1);
 			assertEquals((double)ans, 1.0, 0.0);
 		}
 		if(c4MathMin!=null) {
-			c4MathMin.run(1.0, 1.1, 0.1, 0.11);
+			c4MathMin.call(1.0, 1.1, 0.1, 0.11);
 			assertEquals((double)ans, 0.1, 0.0);
 		}
 		if(c5ListAdd!=null) {
 			ans = new ArrayList();
-			c5ListAdd.run(0.1, 0.2, 0.3, 0.4, 0.5);
+			c5ListAdd.call(0.1, 0.2, 0.3, 0.4, 0.5);
 			assertEquals(ans, Arrays.asList(new Double[] {0.1, 0.2, 0.3, 0.4, 0.5}));
 		}
 		if(c6MapRemove!=null) {
@@ -112,11 +112,11 @@ public class iConsumerTest {
 			for(int n : new int[] {0, 1, 2, 3, 4, 5})
 				p.put(n, ""+n);
 			ans = p;
-			c6MapRemove.run(0, 1, 2, 3, 4, 5);
+			c6MapRemove.call(0, 1, 2, 3, 4, 5);
 			assertEquals(p.size(), 0);
 		}
 		if(c7NumSort!=null) {
-			c7NumSort.run(4, 3, 5, 2, 0, 1, 6);
+			c7NumSort.call(4, 3, 5, 2, 0, 1, 6);
 			assertArrayEquals((int[])ans, new int[] {0, 1, 2, 3, 4, 5, 6});
 		}
 		System.out.println();

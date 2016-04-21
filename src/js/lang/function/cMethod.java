@@ -161,10 +161,6 @@ public class cMethod implements iMethod {
 		try { return clazz.getField(field); }
 		catch(NoSuchFieldException | SecurityException e) { throw new RuntimeException(e); }
 	}
-	public final static iMethod imethod(MethodHandle mh, Object o, Object... a) {
-		
-		return null;
-	}
 	
 	/**
 	 * Get Lambda function factory from specified method handle. Invoking the returned
@@ -248,14 +244,14 @@ public class cMethod implements iMethod {
 	 * @return Return value of function.
 	 */
 	public final Object call(Object thisArg, Object... args) {
-		return thisArg!=null? bind(thisArg).run(args) : run(args);
+		return thisArg!=null? bind(thisArg).call(args) : call(args);
 	}
 	
 	
 	/* super method */
 	@Override
-	public final Object run(Object... args) {
-		return method.run(args);
+	public final Object call(Object... args) {
+		return method.call(args);
 	}
 	
 	@Override

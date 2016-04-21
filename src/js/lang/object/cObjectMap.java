@@ -39,7 +39,7 @@ public class cObjectMap implements iMap<String, Object> {
 	@Override
 	public Object get(Object k) {
 		Object[] o = map.get(k);
-		try { return o!=null && o[0]!=null? (o[0] instanceof Field? ((Field)o[0]).get(value) : ((iMethod)o[0]).run()) : null; }
+		try { return o!=null && o[0]!=null? (o[0] instanceof Field? ((Field)o[0]).get(value) : ((iMethod)o[0]).call()) : null; }
 		catch(IllegalArgumentException | IllegalAccessException e) { throw new RuntimeException(e); }
 	}
 	
@@ -49,7 +49,7 @@ public class cObjectMap implements iMap<String, Object> {
 		if(o==null || o[1]==null) return null;
 		try {
 			if(o[1] instanceof Field) ((Field)o[1]).set(value, v);
-			else ((iMethod)o[1]).run(v);
+			else ((iMethod)o[1]).call(v);
 			return v;
 		}
 		catch(IllegalArgumentException | IllegalAccessException e) { throw new RuntimeException(e); }

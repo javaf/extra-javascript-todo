@@ -25,7 +25,7 @@ public interface iConsumer4<TA, TB, TC, TD> extends iConsumer {
 	
 	/* method */
 	/**
-	 * Represents then method to the called when "run" is called.
+	 * Represents then method to the called when "call" is called.
 	 * @param a Input argument 1.
 	 * @param b Input argument 2.
 	 * @param c Input argument 3.
@@ -36,7 +36,7 @@ public interface iConsumer4<TA, TB, TC, TD> extends iConsumer {
 	
 	/* super method */
 	@Override
-	default Object run(Object... args) {
+	default Object call(Object... args) {
 		accept((TA)args[0], (TB)args[1], (TC)args[2], (TD)args[3]);
 		return null;
 	}

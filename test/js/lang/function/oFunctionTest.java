@@ -310,33 +310,33 @@ public class oFunctionTest {
 	}
 	
 	/**
-	 * Test of run method, of class oFunction.
+	 * Test of call method, of class oFunction.
 	 */
 	public void run() {
 		System.out.println("## run");
 		if(c0MathPi!=null) {
-			c0MathPi.run();
+			c0MathPi.call();
 			assertEquals((double)ans, Math.PI, 0.0);
 		}
 		if(c1StrRev!=null) {
-			c1StrRev.run("Splinter");
+			c1StrRev.call("Splinter");
 			assertEquals(ans, "retnilpS");
 		}
 		if(c2StrCat!=null) {
-			c2StrCat.run("Alpha", "bet");
+			c2StrCat.call("Alpha", "bet");
 			assertEquals(ans, "Alphabet");
 		}
 		if(c3MathMax!=null) {
-			c3MathMax.run(0.0, 1.0, 0.1);
+			c3MathMax.call(0.0, 1.0, 0.1);
 			assertEquals((double)ans, 1.0, 0.0);
 		}
 		if(c4MathMin!=null) {
-			c4MathMin.run(1.0, 1.1, 0.1, 0.11);
+			c4MathMin.call(1.0, 1.1, 0.1, 0.11);
 			assertEquals((double)ans, 0.1, 0.0);
 		}
 		if(c5ListAdd!=null) {
 			ans = new ArrayList();
-			c5ListAdd.run(0.1, 0.2, 0.3, 0.4, 0.5);
+			c5ListAdd.call(0.1, 0.2, 0.3, 0.4, 0.5);
 			assertEquals(ans, Arrays.asList(new Double[] {0.1, 0.2, 0.3, 0.4, 0.5}));
 		}
 		if(c6MapRemove!=null) {
@@ -344,36 +344,36 @@ public class oFunctionTest {
 			for(int n : new int[] {0, 1, 2, 3, 4, 5})
 				p.put(n, ""+n);
 			ans = p;
-			c6MapRemove.run(0, 1, 2, 3, 4, 5);
+			c6MapRemove.call(0, 1, 2, 3, 4, 5);
 			assertEquals(p.size(), 0);
 		}
 		if(c7NumSort!=null) {
-			c7NumSort.run(4, 3, 5, 2, 0, 1, 6);
+			c7NumSort.call(4, 3, 5, 2, 0, 1, 6);
 			assertArrayEquals((int[])ans, new int[] {0, 1, 2, 3, 4, 5, 6});
 		}
 		if(f0MathPi!=null) {
-			ans = f0MathPi.run();
+			ans = f0MathPi.call();
 			assertEquals((double)ans, Math.PI, 0.0);
 		}
 		if(f1StrRev!=null) {
-			ans = f1StrRev.run("Splinter");
+			ans = f1StrRev.call("Splinter");
 			assertEquals(ans, "retnilpS");
 		}
 		if(f2StrCat!=null) {
-			ans = f2StrCat.run("Alpha", "bet");
+			ans = f2StrCat.call("Alpha", "bet");
 			assertEquals(ans, "Alphabet");
 		}
 		if(f3MathMax!=null) {
-			ans = f3MathMax.run(0.0, 1.0, 0.1);
+			ans = f3MathMax.call(0.0, 1.0, 0.1);
 			assertEquals((double)ans, 1.0, 0.0);
 		}
 		if(f4MathMin!=null) {
-			ans = f4MathMin.run(1.0, 1.1, 0.1, 0.11);
+			ans = f4MathMin.call(1.0, 1.1, 0.1, 0.11);
 			assertEquals((double)ans, 0.1, 0.0);
 		}
 		if(f5ListAdd!=null) {
 			ans = new ArrayList();
-			ans = f5ListAdd.run(0.1, 0.2, 0.3, 0.4, 0.5);
+			ans = f5ListAdd.call(0.1, 0.2, 0.3, 0.4, 0.5);
 			assertEquals(ans, Arrays.asList(new Double[] {0.1, 0.2, 0.3, 0.4, 0.5}));
 		}
 		if(f6MapRemove!=null) {
@@ -381,11 +381,11 @@ public class oFunctionTest {
 			for(int n : new int[] {0, 1, 2, 3, 4, 5})
 				p.put(n, ""+n);
 			ans = p;
-			ans = f6MapRemove.run(0, 1, 2, 3, 4, 5);
+			ans = f6MapRemove.call(0, 1, 2, 3, 4, 5);
 			assertEquals(p.size(), 0);
 		}
 		if(f7NumSort!=null) {
-			ans = f7NumSort.run(4, 3, 5, 2, 0, 1, 6);
+			ans = f7NumSort.call(4, 3, 5, 2, 0, 1, 6);
 			assertArrayEquals((int[])ans, new int[] {0, 1, 2, 3, 4, 5, 6});
 		}
 	}

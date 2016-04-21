@@ -247,28 +247,28 @@ public class cMethodTest {
 	public void frun() {
 		System.out.println("## run");
 		if(c0MathPi!=null) {
-			c0MathPi.run();
+			c0MathPi.call();
 			assertEquals((double)ans, Math.PI, 0.0);
 		}
 		if(c1StrRev!=null) {
-			c1StrRev.run("Splinter");
+			c1StrRev.call("Splinter");
 			assertEquals(ans, "retnilpS");
 		}
 		if(c2StrCat!=null) {
-			c2StrCat.run("Alpha", "bet");
+			c2StrCat.call("Alpha", "bet");
 			assertEquals(ans, "Alphabet");
 		}
 		if(c3MathMax!=null) {
-			c3MathMax.run(0.0, 1.0, 0.1);
+			c3MathMax.call(0.0, 1.0, 0.1);
 			assertEquals((double)ans, 1.0, 0.0);
 		}
 		if(c4MathMin!=null) {
-			c4MathMin.run(1.0, 1.1, 0.1, 0.11);
+			c4MathMin.call(1.0, 1.1, 0.1, 0.11);
 			assertEquals((double)ans, 0.1, 0.0);
 		}
 		if(c5ListAdd!=null) {
 			ans = new ArrayList();
-			c5ListAdd.run(0.1, 0.2, 0.3, 0.4, 0.5);
+			c5ListAdd.call(0.1, 0.2, 0.3, 0.4, 0.5);
 			assertEquals(ans, Arrays.asList(new Double[] {0.1, 0.2, 0.3, 0.4, 0.5}));
 		}
 		if(c6MapRemove!=null) {
@@ -276,36 +276,36 @@ public class cMethodTest {
 			for(int n : new int[] {0, 1, 2, 3, 4, 5})
 				p.put(n, ""+n);
 			ans = p;
-			c6MapRemove.run(0, 1, 2, 3, 4, 5);
+			c6MapRemove.call(0, 1, 2, 3, 4, 5);
 			assertEquals(p.size(), 0);
 		}
 		if(c7NumSort!=null) {
-			c7NumSort.run(4, 3, 5, 2, 0, 1, 6);
+			c7NumSort.call(4, 3, 5, 2, 0, 1, 6);
 			assertArrayEquals((int[])ans, new int[] {0, 1, 2, 3, 4, 5, 6});
 		}
 		if(f0MathPi!=null) {
-			ans = f0MathPi.run();
+			ans = f0MathPi.call();
 			assertEquals((double)ans, Math.PI, 0.0);
 		}
 		if(f1StrRev!=null) {
-			ans = f1StrRev.run("Splinter");
+			ans = f1StrRev.call("Splinter");
 			assertEquals(ans, "retnilpS");
 		}
 		if(f2StrCat!=null) {
-			ans = f2StrCat.run("Alpha", "bet");
+			ans = f2StrCat.call("Alpha", "bet");
 			assertEquals(ans, "Alphabet");
 		}
 		if(f3MathMax!=null) {
-			ans = f3MathMax.run(0.0, 1.0, 0.1);
+			ans = f3MathMax.call(0.0, 1.0, 0.1);
 			assertEquals((double)ans, 1.0, 0.0);
 		}
 		if(f4MathMin!=null) {
-			ans = f4MathMin.run(1.0, 1.1, 0.1, 0.11);
+			ans = f4MathMin.call(1.0, 1.1, 0.1, 0.11);
 			assertEquals((double)ans, 0.1, 0.0);
 		}
 		if(f5ListAdd!=null) {
 			ans = new ArrayList();
-			ans = f5ListAdd.run(0.1, 0.2, 0.3, 0.4, 0.5);
+			ans = f5ListAdd.call(0.1, 0.2, 0.3, 0.4, 0.5);
 			assertEquals(ans, Arrays.asList(new Double[] {0.1, 0.2, 0.3, 0.4, 0.5}));
 		}
 		if(f6MapRemove!=null) {
@@ -313,36 +313,36 @@ public class cMethodTest {
 			for(int n : new int[] {0, 1, 2, 3, 4, 5})
 				p.put(n, ""+n);
 			ans = p;
-			ans = f6MapRemove.run(0, 1, 2, 3, 4, 5);
+			ans = f6MapRemove.call(0, 1, 2, 3, 4, 5);
 			assertEquals(p.size(), 0);
 		}
 		if(f7NumSort!=null) {
-			ans = f7NumSort.run(4, 3, 5, 2, 0, 1, 6);
+			ans = f7NumSort.call(4, 3, 5, 2, 0, 1, 6);
 			assertArrayEquals((int[])ans, new int[] {0, 1, 2, 3, 4, 5, 6});
 		}
 		if(sdfsp0!=null) {
-			assertEquals((int)gdfsp0.run(), 1);
+			assertEquals((int)gdfsp0.call(), 1);
 		}
 		if(sdfso0!=null) {
-			assertEquals((String)gdfso0.run(), "DFSO0");
+			assertEquals((String)gdfso0.call(), "DFSO0");
 		}
 		if(sdsp0!=null) {
-			sdsp0.run(20);
-			assertEquals((int)gdsp0.run(), 20);
-			sdsp0.run(2);
+			sdsp0.call(20);
+			assertEquals((int)gdsp0.call(), 20);
+			sdsp0.call(2);
 		}
 		if(sdso0!=null) {
-			sdso0.run("DDSO0DDSO0");
-			assertEquals((String)gdso0.run(), "DDSO0DDSO0");
-			sdso0.run("DDSO0");
+			sdso0.call("DDSO0DDSO0");
+			assertEquals((String)gdso0.call(), "DDSO0DDSO0");
+			sdso0.call("DDSO0");
 		}
 		if(sdp0!=null) {
-			sdp0.run(30);
-			assertEquals((int)gdp0.run(), 30);
+			sdp0.call(30);
+			assertEquals((int)gdp0.call(), 30);
 		}
 		if(sdo0!=null) {
-			sdo0.run("DDO0DDO0");
-			assertEquals((String)gdo0.run(), "DDO0DDO0");
+			sdo0.call("DDO0DDO0");
+			assertEquals((String)gdo0.call(), "DDO0DDO0");
 		}
 		System.out.println();
 	}

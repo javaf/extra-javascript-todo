@@ -29,7 +29,7 @@ public interface iFunction7<TA, TB, TC, TD, TE, TF, TG, TR> extends iFunction {
 	
 	/* method */
 	/**
-	 * Represents then method to the called when "run" is called.
+	 * Represents then method to the called when "call" is called.
 	 * @param a Input argument 1.
 	 * @param b Input argument 2.
 	 * @param c Input argument 3.
@@ -44,7 +44,7 @@ public interface iFunction7<TA, TB, TC, TD, TE, TF, TG, TR> extends iFunction {
 	
 	/* super method */
 	@Override
-	default Object run(Object... args) {
+	default Object call(Object... args) {
 		return apply((TA)args[0], (TB)args[1], (TC)args[2], (TD)args[3], (TE)args[4], (TF)args[5], (TG)args[6]);
 	}
 	

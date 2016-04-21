@@ -31,7 +31,7 @@ public interface iMethod {
 	 * @param args The input arguments to pass to the function.
 	 * @return The output value.
 	 */
-	Object run(Object... args);
+	Object call(Object... args);
 	
 	/**
 	 * Returns string representation of the method.

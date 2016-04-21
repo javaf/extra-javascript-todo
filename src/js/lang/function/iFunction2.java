@@ -24,7 +24,7 @@ public interface iFunction2<TA, TB, TR> extends iFunction {
 	
 	/* method */
 	/**
-	 * Represents then method to the called when "run" is called.
+	 * Represents then method to the called when "call" is called.
 	 * @param a Input argument 1.
 	 * @param b Input argument 2.
 	 * @return The output value of method.
@@ -34,7 +34,7 @@ public interface iFunction2<TA, TB, TR> extends iFunction {
 	
 	/* super method */
 	@Override
-	default Object run(Object... args) {
+	default Object call(Object... args) {
 		return apply((TA)args[0], (TB)args[1]);
 	}
 	

@@ -217,46 +217,46 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 
 	@Override
 	public final TR apply() {
-		return (TR)((iMethod)valueOf()).run();
+		return (TR)((iMethod)valueOf()).call();
 	}
 
 	@Override
 	public final TR apply(TA a) {
-		return (TR)((iMethod)valueOf()).run(a);
+		return (TR)((iMethod)valueOf()).call(a);
 	}
 
 	@Override
 	public final TR apply(TA a, TB b) {
-		return (TR)((iMethod)valueOf()).run(a, b);
+		return (TR)((iMethod)valueOf()).call(a, b);
 	}
 
 	@Override
 	public final TR apply(TA a, TB b, TC c) {
-		return (TR)((iMethod)valueOf()).run(a, b, c);
+		return (TR)((iMethod)valueOf()).call(a, b, c);
 	}
 
 	@Override
 	public final TR apply(TA a, TB b, TC c, TD d) {
-		return (TR)((iMethod)valueOf()).run(a, b, c, d);
+		return (TR)((iMethod)valueOf()).call(a, b, c, d);
 	}
 
 	@Override
 	public final TR apply(TA a, TB b, TC c, TD d, TE e) {
-		return (TR)((iMethod)valueOf()).run(a, b, c, d, e);
+		return (TR)((iMethod)valueOf()).call(a, b, c, d, e);
 	}
 
 	@Override
 	public final TR apply(TA a, TB b, TC c, TD d, TE e, TF f) {
-		return (TR)((iMethod)valueOf()).run(a, b, c, d, e, f);
+		return (TR)((iMethod)valueOf()).call(a, b, c, d, e, f);
 	}
 
 	@Override
 	public final TR apply(TA a, TB b, TC c, TD d, TE e, TF f, TG g) {
-		return (TR)((iMethod)valueOf()).run(a, b, c, d, e, f, g);
+		return (TR)((iMethod)valueOf()).call(a, b, c, d, e, f, g);
 	}
 	
 	@Override
 	public final <TV> oFunction<TA, TB, TC, TD, TE, TF, TG, TV> andThen(Function<? super TR, ? extends TV> after) {
-		return new oFunction<>((iMethod)(Object... args) -> after.apply((TR)((iMethod)valueOf()).run(args)));
+		return new oFunction<>((iMethod)(Object... args) -> after.apply((TR)((iMethod)valueOf()).call(args)));
 	}
 }

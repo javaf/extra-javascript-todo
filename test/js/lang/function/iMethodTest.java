@@ -45,7 +45,7 @@ public class iMethodTest implements iMethod {
 	public void refMethod() {
 		System.out.println("# Ref Method");
 		strCat = this::strCatVararg;
-		assertEquals(strCat.run("Mum", "my"), "Mummy");
+		assertEquals(strCat.call("Mum", "my"), "Mummy");
 		assertEquals(strCat.name(), "");
 		assertEquals(strCat.length(), 0);
 		assertEquals(strCat.ztoString(), "? (...) { [native code] }");
@@ -56,7 +56,7 @@ public class iMethodTest implements iMethod {
 	public void lambdaMethod() {
 		System.out.println("# Lambda Method");
 		strCat = (Object... a) -> strCatDirect((String)a[0], (String)a[1]);
-		assertEquals(strCat.run("Mum", "my"), "Mummy");
+		assertEquals(strCat.call("Mum", "my"), "Mummy");
 		assertEquals(strCat.name(), "");
 		assertEquals(strCat.length(), 0);
 		assertEquals(strCat.ztoString(), "? (...) { [native code] }");
@@ -67,7 +67,7 @@ public class iMethodTest implements iMethod {
 	public void classMethod() {
 		System.out.println("# Class Method");
 		strCat = this;
-		assertEquals(strCat.run("Mum", "my"), "Mummy");
+		assertEquals(strCat.call("Mum", "my"), "Mummy");
 		assertEquals(strCat.name(), "strCat");
 		assertEquals(strCat.length(), 2);
 		assertEquals(strCat.toString(), "String (String a, String b) { ... }");
@@ -94,7 +94,7 @@ public class iMethodTest implements iMethod {
 			}
 			
 			@Override
-			public Object run(Object... a) {
+			public Object call(Object... a) {
 				return strCatDirect((String)a[0], (String)a[1]);
 			}
 			
@@ -103,7 +103,7 @@ public class iMethodTest implements iMethod {
 				return ztoString();
 			}
 		};
-		assertEquals(strCat.run("Mum", "my"), "Mummy");
+		assertEquals(strCat.call("Mum", "my"), "Mummy");
 		assertEquals(strCat.name(), "strCat");
 		assertEquals(strCat.length(), 2);
 		assertEquals(strCat.toString(), "String (String a, String b) { ... }");
@@ -123,7 +123,7 @@ public class iMethodTest implements iMethod {
 	}
 	
 	@Override
-	public Object run(Object... a) {
+	public Object call(Object... a) {
 		System.out.print("run.");
 		return strCatVararg(a);
 	}

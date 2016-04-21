@@ -15,7 +15,7 @@ public interface iFunction0<TR> extends iFunction {
 	
 	/* method */
 	/**
-	 * Represents then method to the called when "run" is called.
+	 * Represents then method to the called when "call" is called.
 	 * @return The output value of method.
 	 */
 	TR apply();
@@ -23,7 +23,7 @@ public interface iFunction0<TR> extends iFunction {
 	
 	/* super method */
 	@Override
-	default Object run(Object... args) {
+	default Object call(Object... args) {
 		return apply();
 	}
 	

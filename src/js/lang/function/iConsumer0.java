@@ -14,14 +14,14 @@ public interface iConsumer0 extends iConsumer {
 	
 	/* method */
 	/**
-	 * Represents then method to the called when "run" is called.
+	 * Represents then method to the called when "call" is called.
 	 */
 	void accept();
 	
 	
 	/* super method */
 	@Override
-	default Object run(Object... args) {
+	default Object call(Object... args) {
 		accept();
 		return null;
 	}
