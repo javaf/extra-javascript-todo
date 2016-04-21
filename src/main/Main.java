@@ -14,12 +14,11 @@ public class Main {
 	public static void main(String[] args) throws Throwable {
 		MethodHandles.Lookup l = MethodHandles.lookup();
 		Method m = Main.class.getMethod("add", int.class, int.class);
-		MethodHandle mh = MethodHandles.lookup().unreflect(m);
+		MethodHandle mh = l.unreflectGetter(Main.class.getField("a"));
 		System.out.println(mh.type());
-		mh = LambdaMetafactory.metafactory(l, "apply", MethodType.methodType(BiFunction.class, Main.class), MethodType.methodType(Object.class, Object.class, Object.class), mh, MethodType.methodType(int.class, int.class, int.class)).getTarget();
+		mh = LambdaMetafactory.metafactory(l, "get", MethodType.methodType(Supplier.class), MethodType.methodType(Object.class), mh, MethodType.methodType(int.class)).getTarget();
 		System.out.println(mh.type());
-		System.out.println(l.unreflectGetter(Main.class.getField("a")).type());
-		BiFunction f = (BiFunction)mh.invoke(new Main());
-		System.out.println(f.apply(1, 2));
+		Supplier f = (Supplier)mh.invoke();
+		System.out.println(f.get());
 	}
 }
