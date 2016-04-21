@@ -5,7 +5,7 @@ import js.lang.array.*;
 /**
  * Represents a no-output and no-input method that can be called.
  */
-public interface iConsumer0 extends iConsumer {
+public interface iSub0 extends iSub {
 	
 	/* static data */
 	/** Method signature of this interface. */
@@ -27,7 +27,7 @@ public interface iConsumer0 extends iConsumer {
 	}
 	
 	@Override
-	default String ztoString() {
+	default String z_toString() {
 		return "void "+name()+"() { [native code] }";
 	}
 }

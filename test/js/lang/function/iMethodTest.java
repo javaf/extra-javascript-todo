@@ -3,12 +3,12 @@ import static org.junit.Assert.*;
 import org.junit.*;
 
 /**
- * Test iMethod.
+ * Test iProc.
  */
-public class iMethodTest implements iMethod {
+public class iMethodTest implements iProc {
 	
 	/* data */
-	public iMethod strCat;
+	public iProc strCat;
 	
 	
 	/* constructor */
@@ -48,7 +48,7 @@ public class iMethodTest implements iMethod {
 		assertEquals(strCat.call("Mum", "my"), "Mummy");
 		assertEquals(strCat.name(), "");
 		assertEquals(strCat.length(), 0);
-		assertEquals(strCat.ztoString(), "? (...) { [native code] }");
+		assertEquals(strCat.z_toString(), "? (...) { [native code] }");
 		System.out.println();
 	}
 	
@@ -59,7 +59,7 @@ public class iMethodTest implements iMethod {
 		assertEquals(strCat.call("Mum", "my"), "Mummy");
 		assertEquals(strCat.name(), "");
 		assertEquals(strCat.length(), 0);
-		assertEquals(strCat.ztoString(), "? (...) { [native code] }");
+		assertEquals(strCat.z_toString(), "? (...) { [native code] }");
 		System.out.println();
 	}
 	
@@ -77,7 +77,7 @@ public class iMethodTest implements iMethod {
 	@Test
 	public void implMethod() {
 		System.out.println("# Impl Method");
-		strCat = new iMethod() {
+		strCat = new iProc() {
 			@Override
 			public int length() {
 				return 2;
@@ -89,7 +89,7 @@ public class iMethodTest implements iMethod {
 			}
 			
 			@Override
-			public String ztoString() {
+			public String z_toString() {
 				return "String (String a, String b) { ... }";
 			}
 			
@@ -100,7 +100,7 @@ public class iMethodTest implements iMethod {
 			
 			@Override
 			public String toString() {
-				return ztoString();
+				return z_toString();
 			}
 		};
 		assertEquals(strCat.call("Mum", "my"), "Mummy");
@@ -141,7 +141,7 @@ public class iMethodTest implements iMethod {
 	}
 	
 	@Override
-	public String ztoString() {
+	public String z_toString() {
 		System.out.print("ztoString.");
 		return "String (String a, String b) { ... }";
 	}
@@ -149,6 +149,6 @@ public class iMethodTest implements iMethod {
 	@Override
 	public String toString() {
 		System.out.print("toString.");
-		return ztoString();
+		return z_toString();
 	}
 }

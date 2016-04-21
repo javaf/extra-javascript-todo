@@ -9,7 +9,7 @@ import js.lang.array.*;
  * @param <TC> Input Argument 3 type.
  * @param <TD> Input Argument 4 type.
  */
-public interface iConsumer4<TA, TB, TC, TD> extends iConsumer {
+public interface iSub4<TA, TB, TC, TD> extends iSub {
 	
 	/* static data */
 	/** Method signature of this interface. */
@@ -42,7 +42,7 @@ public interface iConsumer4<TA, TB, TC, TD> extends iConsumer {
 	}
 	
 	@Override
-	default String ztoString() {
+	default String z_toString() {
 		return "void "+name()+"(TA a, TB b, TC c, TD d) { [native code] }";
 	}
 }

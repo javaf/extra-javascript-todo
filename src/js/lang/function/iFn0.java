@@ -6,7 +6,7 @@ import js.lang.array.*;
  * Represents a single output and no-input method that can be called.
  * @param <TR> Return type.
  */
-public interface iFunction0<TR> extends iFunction {
+public interface iFn0<TR> extends iFn {
 	
 	/* static data */
 	/** Method signature of this interface. */
@@ -28,7 +28,7 @@ public interface iFunction0<TR> extends iFunction {
 	}
 	
 	@Override
-	default String ztoString() {
+	default String z_toString() {
 		return "TR "+name()+"() { [native code] }";
 	}
 }

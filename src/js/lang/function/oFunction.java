@@ -15,18 +15,18 @@ import java.lang.reflect.*;
  * @author Didier L, wolfram77
  */
 public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implements
-	iConsumer0, iConsumer1<TA>, iConsumer2<TA, TB>, iConsumer3<TA, TB, TC>, iConsumer4<TA, TB, TC, TD>,
-	iConsumer5<TA, TB, TC, TD, TE>, iConsumer6<TA, TB, TC, TD, TE, TF>, iConsumer7<TA, TB, TC, TD, TE, TF, TG>,
-	iFunction0<TR>, iFunction1<TA, TR>, iFunction2<TA, TB, TR>, iFunction3<TA, TB, TC, TR>, iFunction4<TA, TB, TC, TD, TR>,
-	iFunction5<TA, TB, TC, TD, TE, TR>, iFunction6<TA, TB, TC, TD, TE, TF, TR>, iFunction7<TA, TB, TC, TD, TE, TF, TG, TR>,
+	iSub0, iSub1<TA>, iSub2<TA, TB>, iSub3<TA, TB, TC>, iSub4<TA, TB, TC, TD>,
+	iSub5<TA, TB, TC, TD, TE>, iSub6<TA, TB, TC, TD, TE, TF>, iSub7<TA, TB, TC, TD, TE, TF, TG>,
+	iFn0<TR>, iFn1<TA, TR>, iFn2<TA, TB, TR>, iFn3<TA, TB, TC, TR>, iFn4<TA, TB, TC, TD, TR>,
+	iFn5<TA, TB, TC, TD, TE, TR>, iFn6<TA, TB, TC, TD, TE, TF, TR>, iFn7<TA, TB, TC, TD, TE, TF, TG, TR>,
 	Consumer<TA>, BiConsumer<TA, TB>, Supplier<TR>, Function<TA, TR>, BiFunction<TA, TB, TR> {
 	
 	/* constructor */
 	/**
-	 * Create a callable oFunction object from object implementing iMethod interface.
+	 * Create a callable oFunction object from object implementing iProc interface.
 	 * @param function Function as lambda expression or object.
 	 */
-	public oFunction(iMethod function) {
+	public oFunction(iProc function) {
 		super(function);
 	}
 	/**
@@ -34,35 +34,35 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 	 * @param m Consumer implementing object.
 	 */
 	public oFunction(Consumer<TA> m) {
-		super((iConsumer1<TA>) (TA a) -> m.accept(a));
+		super((iSub1<TA>) (TA a) -> m.accept(a));
 	}
 	/**
 	 * Create a callable oFunction object from object implementing BiConsumer interface.
 	 * @param m BiConsumer implementing object.
 	 */
 	public oFunction(BiConsumer<TA, TB> m) {
-		super((iConsumer2<TA, TB>) (TA a, TB b) -> m.accept(a, b));
+		super((iSub2<TA, TB>) (TA a, TB b) -> m.accept(a, b));
 	}
 	/**
 	 * Create a callable oFunction object from object implementing Supplier interface.
 	 * @param m Supplier implementing object.
 	 */
 	public oFunction(Supplier<TR> m) {
-		super((iFunction0<TR>) () -> m.get());
+		super((iFn0<TR>) () -> m.get());
 	}
 	/**
 	 * Create a callable oFunction object from object implementing Function interface.
 	 * @param m Function implementing object.
 	 */
 	public oFunction(Function<TA, TR> m) {
-		super((iFunction1<TA, TR>) (TA a) -> m.apply(a));
+		super((iFn1<TA, TR>) (TA a) -> m.apply(a));
 	}
 	/**
 	 * Create a callable oFunction object from object implementing BiFunction interface.
 	 * @param m BiFunction implementing object.
 	 */
 	public oFunction(BiFunction<TA, TB, TR> m) {
-		super((iFunction2<TA, TB, TR>) (TA a, TB b) -> m.apply(a, b));
+		super((iFn2<TA, TB, TR>) (TA a, TB b) -> m.apply(a, b));
 	}
 	/**
 	 * Creates a callable oFunction object from a specific field reflectively..
@@ -217,46 +217,46 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 
 	@Override
 	public final TR apply() {
-		return (TR)((iMethod)valueOf()).call();
+		return (TR)((iProc)valueOf()).call();
 	}
 
 	@Override
 	public final TR apply(TA a) {
-		return (TR)((iMethod)valueOf()).call(a);
+		return (TR)((iProc)valueOf()).call(a);
 	}
 
 	@Override
 	public final TR apply(TA a, TB b) {
-		return (TR)((iMethod)valueOf()).call(a, b);
+		return (TR)((iProc)valueOf()).call(a, b);
 	}
 
 	@Override
 	public final TR apply(TA a, TB b, TC c) {
-		return (TR)((iMethod)valueOf()).call(a, b, c);
+		return (TR)((iProc)valueOf()).call(a, b, c);
 	}
 
 	@Override
 	public final TR apply(TA a, TB b, TC c, TD d) {
-		return (TR)((iMethod)valueOf()).call(a, b, c, d);
+		return (TR)((iProc)valueOf()).call(a, b, c, d);
 	}
 
 	@Override
 	public final TR apply(TA a, TB b, TC c, TD d, TE e) {
-		return (TR)((iMethod)valueOf()).call(a, b, c, d, e);
+		return (TR)((iProc)valueOf()).call(a, b, c, d, e);
 	}
 
 	@Override
 	public final TR apply(TA a, TB b, TC c, TD d, TE e, TF f) {
-		return (TR)((iMethod)valueOf()).call(a, b, c, d, e, f);
+		return (TR)((iProc)valueOf()).call(a, b, c, d, e, f);
 	}
 
 	@Override
 	public final TR apply(TA a, TB b, TC c, TD d, TE e, TF f, TG g) {
-		return (TR)((iMethod)valueOf()).call(a, b, c, d, e, f, g);
+		return (TR)((iProc)valueOf()).call(a, b, c, d, e, f, g);
 	}
 	
 	@Override
 	public final <TV> oFunction<TA, TB, TC, TD, TE, TF, TG, TV> andThen(Function<? super TR, ? extends TV> after) {
-		return new oFunction<>((iMethod)(Object... args) -> after.apply((TR)((iMethod)valueOf()).call(args)));
+		return new oFunction<>((iProc)(Object... args) -> after.apply((TR)((iProc)valueOf()).call(args)));
 	}
 }

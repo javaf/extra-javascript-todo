@@ -4,20 +4,20 @@ import org.junit.*;
 import java.util.*;
 
 /**
- * Test iMethod.
+ * Test iProc.
  */
 public class iConsumerTest {
 	
 	/* data */
 	public Object ans;
-	public iMethod c0MathPi;
-	public iMethod c1StrRev;
-	public iMethod c2StrCat;
-	public iMethod c3MathMax;
-	public iMethod c4MathMin;
-	public iMethod c5ListAdd;
-	public iMethod c6MapRemove;
-	public iMethod c7NumSort;
+	public iProc c0MathPi;
+	public iProc c1StrRev;
+	public iProc c2StrCat;
+	public iProc c3MathMax;
+	public iProc c4MathMin;
+	public iProc c5ListAdd;
+	public iProc c6MapRemove;
+	public iProc c7NumSort;
 	
 	
 	/* constructor */
@@ -53,28 +53,28 @@ public class iConsumerTest {
 	@Test
 	public void refMethod() {
 		System.out.println("# Ref Method");
-		c0MathPi = (iConsumer0)this::c0MathPi;
-		c1StrRev = (iConsumer1<String>)this::c1StrRev;
-		c2StrCat = (iConsumer2<String, String>)this::c2StrCat;
-		c3MathMax = (iConsumer3<Double ,Double, Double>)this::c3MathMax;
-		c4MathMin = (iConsumer4<Double, Double, Double, Double>)this::c4MathMin;
-		c5ListAdd = (iConsumer5<Double, Double, Double, Double, Double>)this::c5ListAdd;
-		c6MapRemove = (iConsumer6<Integer, Integer, Integer, Integer, Integer, Integer>)this::c6MapRemove;
-		c7NumSort = (iConsumer7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>)this::c7NumSort;
+		c0MathPi = (iSub0)this::c0MathPi;
+		c1StrRev = (iSub1<String>)this::c1StrRev;
+		c2StrCat = (iSub2<String, String>)this::c2StrCat;
+		c3MathMax = (iSub3<Double ,Double, Double>)this::c3MathMax;
+		c4MathMin = (iSub4<Double, Double, Double, Double>)this::c4MathMin;
+		c5ListAdd = (iSub5<Double, Double, Double, Double, Double>)this::c5ListAdd;
+		c6MapRemove = (iSub6<Integer, Integer, Integer, Integer, Integer, Integer>)this::c6MapRemove;
+		c7NumSort = (iSub7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>)this::c7NumSort;
 		frun(); faccept(); flength();
 	}
 	
 	@Test
 	public void lambdaMethod() {
 		System.out.println("# Lambda Method");
-		c0MathPi = (iConsumer0)() -> { c0MathPi(); };
-		c1StrRev = (iConsumer1<String>)(a) -> { c1StrRev(a); };
-		c2StrCat = (iConsumer2<String, String>)(a, b) -> { c2StrCat(a, b); };
-		c3MathMax = (iConsumer3<Double ,Double, Double>)(a, b, c) -> { c3MathMax(a, b, c); };
-		c4MathMin = (iConsumer4<Double, Double, Double, Double>)(a, b, c, d) -> { c4MathMin(a, b, c, d); };
-		c5ListAdd = (iConsumer5<Double, Double, Double, Double, Double>)(a, b, c, d, e) -> { c5ListAdd(a, b, c, d, e); };
-		c6MapRemove = (iConsumer6<Integer, Integer, Integer, Integer, Integer, Integer>)(a, b, c, d, e, f) -> { c6MapRemove(a, b, c, d, e, f); };
-		c7NumSort = (iConsumer7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>)(a, b, c, d, e, f, g) -> { c7NumSort(a, b, c, d, e, f, g); };
+		c0MathPi = (iSub0)() -> { c0MathPi(); };
+		c1StrRev = (iSub1<String>)(a) -> { c1StrRev(a); };
+		c2StrCat = (iSub2<String, String>)(a, b) -> { c2StrCat(a, b); };
+		c3MathMax = (iSub3<Double ,Double, Double>)(a, b, c) -> { c3MathMax(a, b, c); };
+		c4MathMin = (iSub4<Double, Double, Double, Double>)(a, b, c, d) -> { c4MathMin(a, b, c, d); };
+		c5ListAdd = (iSub5<Double, Double, Double, Double, Double>)(a, b, c, d, e) -> { c5ListAdd(a, b, c, d, e); };
+		c6MapRemove = (iSub6<Integer, Integer, Integer, Integer, Integer, Integer>)(a, b, c, d, e, f) -> { c6MapRemove(a, b, c, d, e, f); };
+		c7NumSort = (iSub7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>)(a, b, c, d, e, f, g) -> { c7NumSort(a, b, c, d, e, f, g); };
 		frun(); faccept(); flength();
 	}
 	
@@ -125,28 +125,28 @@ public class iConsumerTest {
 	public void faccept() {
 		System.out.println("## accept");
 		if(c0MathPi!=null) {
-			((iConsumer0)c0MathPi).accept();
+			((iSub0)c0MathPi).accept();
 			assertEquals((double)ans, Math.PI, 0.0);
 		}
 		if(c1StrRev!=null) {
-			((iConsumer1)c1StrRev).accept("Splinter");
+			((iSub1)c1StrRev).accept("Splinter");
 			assertEquals(ans, "retnilpS");
 		}
 		if(c2StrCat!=null) {
-			((iConsumer2)c2StrCat).accept("Alpha", "bet");
+			((iSub2)c2StrCat).accept("Alpha", "bet");
 			assertEquals(ans, "Alphabet");
 		}
 		if(c3MathMax!=null) {
-			((iConsumer3)c3MathMax).accept(0.0, 1.0, 0.1);
+			((iSub3)c3MathMax).accept(0.0, 1.0, 0.1);
 			assertEquals((double)ans, 1.0, 0.0);
 		}
 		if(c4MathMin!=null) {
-			((iConsumer4)c4MathMin).accept(1.0, 1.1, 0.1, 0.11);
+			((iSub4)c4MathMin).accept(1.0, 1.1, 0.1, 0.11);
 			assertEquals((double)ans, 0.1, 0.0);
 		}
 		if(c5ListAdd!=null) {
 			ans = new ArrayList();
-			((iConsumer5)c5ListAdd).accept(0.1, 0.2, 0.3, 0.4, 0.5);
+			((iSub5)c5ListAdd).accept(0.1, 0.2, 0.3, 0.4, 0.5);
 			assertEquals(ans, Arrays.asList(new Double[] {0.1, 0.2, 0.3, 0.4, 0.5}));
 		}
 		if(c6MapRemove!=null) {
@@ -154,11 +154,11 @@ public class iConsumerTest {
 			for(int n : new int[] {0, 1, 2, 3, 4, 5})
 				p.put(n, ""+n);
 			ans = p;
-			((iConsumer6)c6MapRemove).accept(0, 1, 2, 3, 4, 5);
+			((iSub6)c6MapRemove).accept(0, 1, 2, 3, 4, 5);
 			assertEquals(p.size(), 0);
 		}
 		if(c7NumSort!=null) {
-			((iConsumer7)c7NumSort).accept(4, 3, 5, 2, 0, 1, 6);
+			((iSub7)c7NumSort).accept(4, 3, 5, 2, 0, 1, 6);
 			assertArrayEquals((int[])ans, new int[] {0, 1, 2, 3, 4, 5, 6});
 		}
 		System.out.println();

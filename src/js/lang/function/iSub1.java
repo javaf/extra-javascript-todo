@@ -6,7 +6,7 @@ import js.lang.array.*;
  * Represents a no-output and 1 input method that can be called.
  * @param <TA> Input Argument 1 type.
  */
-public interface iConsumer1<TA> extends iConsumer {
+public interface iSub1<TA> extends iSub {
 	
 	/* static data */
 	/** Method signature of this interface. */
@@ -36,7 +36,7 @@ public interface iConsumer1<TA> extends iConsumer {
 	}
 	
 	@Override
-	default String ztoString() {
+	default String z_toString() {
 		return "void "+name()+"(TA a) { [native code] }";
 	}
 }

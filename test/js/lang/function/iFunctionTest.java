@@ -4,20 +4,20 @@ import org.junit.*;
 import java.util.*;
 
 /**
- * Test iMethod.
+ * Test iProc.
  */
 public class iFunctionTest {
 	
 	/* data */
 	public Object ans;
-	public iMethod f0MathPi;
-	public iMethod f1StrRev;
-	public iMethod f2StrCat;
-	public iMethod f3MathMax;
-	public iMethod f4MathMin;
-	public iMethod f5ListAdd;
-	public iMethod f6MapRemove;
-	public iMethod f7NumSort;
+	public iProc f0MathPi;
+	public iProc f1StrRev;
+	public iProc f2StrCat;
+	public iProc f3MathMax;
+	public iProc f4MathMin;
+	public iProc f5ListAdd;
+	public iProc f6MapRemove;
+	public iProc f7NumSort;
 	
 	
 	/* constructor */
@@ -53,28 +53,28 @@ public class iFunctionTest {
 	@Test
 	public void refMethod() {
 		System.out.println("# Ref Method");
-		f0MathPi = (iFunction0<Double>)this::f0MathPi;
-		f1StrRev = (iFunction1<String, String>)this::f1StrRev;
-		f2StrCat = (iFunction2<String, String, String>)this::f2StrCat;
-		f3MathMax = (iFunction3<Double ,Double, Double, Double>)this::f3MathMax;
-		f4MathMin = (iFunction4<Double, Double, Double, Double, Double>)this::f4MathMin;
-		f5ListAdd = (iFunction5<Double, Double, Double, Double, Double, List>)this::f5ListAdd;
-		f6MapRemove = (iFunction6<Integer, Integer, Integer, Integer, Integer, Integer, Map>)this::f6MapRemove;
-		f7NumSort = (iFunction7<Integer, Integer, Integer, Integer, Integer, Integer, Integer, int[]>)this::f7NumSort;
+		f0MathPi = (iFn0<Double>)this::f0MathPi;
+		f1StrRev = (iFn1<String, String>)this::f1StrRev;
+		f2StrCat = (iFn2<String, String, String>)this::f2StrCat;
+		f3MathMax = (iFn3<Double ,Double, Double, Double>)this::f3MathMax;
+		f4MathMin = (iFn4<Double, Double, Double, Double, Double>)this::f4MathMin;
+		f5ListAdd = (iFn5<Double, Double, Double, Double, Double, List>)this::f5ListAdd;
+		f6MapRemove = (iFn6<Integer, Integer, Integer, Integer, Integer, Integer, Map>)this::f6MapRemove;
+		f7NumSort = (iFn7<Integer, Integer, Integer, Integer, Integer, Integer, Integer, int[]>)this::f7NumSort;
 		frun(); fapply(); flength();
 	}
 	
 	@Test
 	public void lambdaMethod() {
 		System.out.println("# Lambda Method");
-		f0MathPi = (iFunction0<Double>)() -> f0MathPi();
-		f1StrRev = (iFunction1<String, String>)(a) -> f1StrRev(a);
-		f2StrCat = (iFunction2<String, String, String>)(a, b) -> f2StrCat(a, b);
-		f3MathMax = (iFunction3<Double ,Double, Double, Double>)(a, b, c) -> f3MathMax(a, b, c);
-		f4MathMin = (iFunction4<Double, Double, Double, Double, Double>)(a, b, c, d) -> f4MathMin(a, b, c, d);
-		f5ListAdd = (iFunction5<Double, Double, Double, Double, Double, List>)(a, b, c, d, e) -> f5ListAdd(a, b, c, d, e);
-		f6MapRemove = (iFunction6<Integer, Integer, Integer, Integer, Integer, Integer, Map>)(a, b, c, d, e, f) -> f6MapRemove(a, b, c, d, e, f);
-		f7NumSort = (iFunction7<Integer, Integer, Integer, Integer, Integer, Integer, Integer, int[]>)(a, b, c, d, e, f, g) -> f7NumSort(a, b, c, d, e, f, g);
+		f0MathPi = (iFn0<Double>)() -> f0MathPi();
+		f1StrRev = (iFn1<String, String>)(a) -> f1StrRev(a);
+		f2StrCat = (iFn2<String, String, String>)(a, b) -> f2StrCat(a, b);
+		f3MathMax = (iFn3<Double ,Double, Double, Double>)(a, b, c) -> f3MathMax(a, b, c);
+		f4MathMin = (iFn4<Double, Double, Double, Double, Double>)(a, b, c, d) -> f4MathMin(a, b, c, d);
+		f5ListAdd = (iFn5<Double, Double, Double, Double, Double, List>)(a, b, c, d, e) -> f5ListAdd(a, b, c, d, e);
+		f6MapRemove = (iFn6<Integer, Integer, Integer, Integer, Integer, Integer, Map>)(a, b, c, d, e, f) -> f6MapRemove(a, b, c, d, e, f);
+		f7NumSort = (iFn7<Integer, Integer, Integer, Integer, Integer, Integer, Integer, int[]>)(a, b, c, d, e, f, g) -> f7NumSort(a, b, c, d, e, f, g);
 		frun(); fapply(); flength();
 	}
 	
@@ -125,28 +125,28 @@ public class iFunctionTest {
 	public void fapply() {
 		System.out.println("## accept");
 		if(f0MathPi!=null) {
-			ans = ((iFunction0)f0MathPi).apply();
+			ans = ((iFn0)f0MathPi).apply();
 			assertEquals((double)ans, Math.PI, 0.0);
 		}
 		if(f1StrRev!=null) {
-			ans = ((iFunction1)f1StrRev).apply("Splinter");
+			ans = ((iFn1)f1StrRev).apply("Splinter");
 			assertEquals(ans, "retnilpS");
 		}
 		if(f2StrCat!=null) {
-			ans = ((iFunction2)f2StrCat).apply("Alpha", "bet");
+			ans = ((iFn2)f2StrCat).apply("Alpha", "bet");
 			assertEquals(ans, "Alphabet");
 		}
 		if(f3MathMax!=null) {
-			ans = ((iFunction3)f3MathMax).apply(0.0, 1.0, 0.1);
+			ans = ((iFn3)f3MathMax).apply(0.0, 1.0, 0.1);
 			assertEquals((double)ans, 1.0, 0.0);
 		}
 		if(f4MathMin!=null) {
-			ans = ((iFunction4)f4MathMin).apply(1.0, 1.1, 0.1, 0.11);
+			ans = ((iFn4)f4MathMin).apply(1.0, 1.1, 0.1, 0.11);
 			assertEquals((double)ans, 0.1, 0.0);
 		}
 		if(f5ListAdd!=null) {
 			ans = new ArrayList();
-			ans = ((iFunction5)f5ListAdd).apply(0.1, 0.2, 0.3, 0.4, 0.5);
+			ans = ((iFn5)f5ListAdd).apply(0.1, 0.2, 0.3, 0.4, 0.5);
 			assertEquals(ans, Arrays.asList(new Double[] {0.1, 0.2, 0.3, 0.4, 0.5}));
 		}
 		if(f6MapRemove!=null) {
@@ -154,11 +154,11 @@ public class iFunctionTest {
 			for(int n : new int[] {0, 1, 2, 3, 4, 5})
 				p.put(n, ""+n);
 			ans = p;
-			ans = ((iFunction6)f6MapRemove).apply(0, 1, 2, 3, 4, 5);
+			ans = ((iFn6)f6MapRemove).apply(0, 1, 2, 3, 4, 5);
 			assertEquals(p.size(), 0);
 		}
 		if(f7NumSort!=null) {
-			ans = ((iFunction7)f7NumSort).apply(4, 3, 5, 2, 0, 1, 6);
+			ans = ((iFn7)f7NumSort).apply(4, 3, 5, 2, 0, 1, 6);
 			assertArrayEquals((int[])ans, new int[] {0, 1, 2, 3, 4, 5, 6});
 		}
 		System.out.println();

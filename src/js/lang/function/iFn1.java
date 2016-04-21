@@ -5,20 +5,19 @@ import js.lang.array.*;
 /**
  * Represents a single output and 1-input method that can be called.
  * @param <TA> Input argument 1 type.
- * @param <TB> Input argument 2 type.
  * @param <TR> Return type.
  */
-public interface iFunction2<TA, TB, TR> extends iFunction {
+public interface iFn1<TA, TR> extends iFn {
 	
 	/* static data */
 	/** Method signature of this interface. */
-	static MethodType SIGNATURE = MethodType.methodType(Object.class, cArray.fill(new Class<?>[2], Object.class));
-	
+	static MethodType SIGNATURE = MethodType.methodType(Object.class, cArray.fill(new Class<?>[1], Object.class));
+
 	
 	/* super property */
 	@Override
 	default int length() {
-		return 2;
+		return 1;
 	}
 	
 	
@@ -26,20 +25,19 @@ public interface iFunction2<TA, TB, TR> extends iFunction {
 	/**
 	 * Represents then method to the called when "call" is called.
 	 * @param a Input argument 1.
-	 * @param b Input argument 2.
 	 * @return The output value of method.
 	 */
-	TR apply(TA a, TB b);
+	TR apply(TA a);
 	
 	
 	/* super method */
 	@Override
 	default Object call(Object... args) {
-		return apply((TA)args[0], (TB)args[1]);
+		return apply((TA)args[0]);
 	}
 	
 	@Override
-	default String ztoString() {
-		return "TR "+name()+"(TA a, TB b) { [native code] }";
+	default String z_toString() {
+		return "TR "+name()+"(TA a) { [native code] }";
 	}
 }

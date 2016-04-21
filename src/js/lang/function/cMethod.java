@@ -6,46 +6,46 @@ import java.lang.invoke.*;
 /**
  * Defines a method which can be called.
  */
-public class cMethod implements iMethod {
+public class cMethod implements iProc {
 	
 	/* static data */
-	/** Array defining all iConsumer interfaces in order of input parameters */
+	/** Array defining all iSub interfaces in order of input parameters */
 	private static final Class<?>[] CONSUMER_INTERFACE = new Class<?>[] {
-		iConsumer0.class, iConsumer1.class, iConsumer2.class, iConsumer3.class,
-		iConsumer4.class, iConsumer5.class, iConsumer6.class, iConsumer7.class
+		iSub0.class, iSub1.class, iSub2.class, iSub3.class,
+		iSub4.class, iSub5.class, iSub6.class, iSub7.class
 	};
-	/** Array defining all iFunction interfaces in order of input parameters */
+	/** Array defining all iFn interfaces in order of input parameters */
 	private static final Class<?>[] FUNCTION_INTERFACE = new Class<?>[] {
-		iFunction0.class, iFunction1.class, iFunction2.class, iFunction3.class,
-		iFunction4.class, iFunction5.class, iFunction6.class, iFunction7.class
+		iFn0.class, iFn1.class, iFn2.class, iFn3.class,
+		iFn4.class, iFn5.class, iFn6.class, iFn7.class
 	};
-	/** Array defining all iConsumer method signatures in order of input parameters */
+	/** Array defining all iSub method signatures in order of input parameters */
 	private static final MethodType[] CONSUMER_SIGNATURE = new MethodType[] {
-		iConsumer0.SIGNATURE, iConsumer1.SIGNATURE, iConsumer2.SIGNATURE, iConsumer3.SIGNATURE,
-		iConsumer4.SIGNATURE, iConsumer5.SIGNATURE, iConsumer6.SIGNATURE, iConsumer7.SIGNATURE
+		iSub0.SIGNATURE, iSub1.SIGNATURE, iSub2.SIGNATURE, iSub3.SIGNATURE,
+		iSub4.SIGNATURE, iSub5.SIGNATURE, iSub6.SIGNATURE, iSub7.SIGNATURE
 	};
-	/** Array defining all iFunction method signatures in order of input parameters */
+	/** Array defining all iFn method signatures in order of input parameters */
 	private static final MethodType[] FUNCTION_SIGNATURE = new MethodType[] {
-		iFunction0.SIGNATURE, iFunction1.SIGNATURE, iFunction2.SIGNATURE, iFunction3.SIGNATURE,
-		iFunction4.SIGNATURE, iFunction5.SIGNATURE, iFunction6.SIGNATURE, iFunction7.SIGNATURE
+		iFn0.SIGNATURE, iFn1.SIGNATURE, iFn2.SIGNATURE, iFn3.SIGNATURE,
+		iFn4.SIGNATURE, iFn5.SIGNATURE, iFn6.SIGNATURE, iFn7.SIGNATURE
 	};
 	/** Indicates the number of dynamically generated classes. */
 	public static long classNumber;
 	
 	
 	/* data */
-	/** Object implementing iMethod interface which can be called. */
-	private final iMethod method;
-	/** Original method handle that can be used to generate iMethod object after binding. */
+	/** Object implementing iProc interface which can be called. */
+	private final iProc method;
+	/** Original method handle that can be used to generate iProc object after binding. */
 	private final MethodHandle handle;
 	
 	
 	/* constructor */
 	/**
-	 * Create a callable Method object from object implementing iMethod interface.
-	 * @param m iMethod implementing object.
+	 * Create a callable Method object from object implementing iProc interface.
+	 * @param m iProc implementing object.
 	 */
-	public cMethod(iMethod m) {
+	public cMethod(iProc m) {
 		method = m;
 		handle = null;
 	}
@@ -61,8 +61,8 @@ public class cMethod implements iMethod {
 			MethodHandles.Lookup l = MethodHandles.lookup();
 			MethodHandle mh = set? l.unreflectSetter(f) : l.unreflectSetter(f);
 			handle = Modifier.isStatic(f.getModifiers()) || obj==null? mh : mh.bindTo(obj);
-			if(set) method = (iConsumer1)(v) -> { try { handle.invokeExact(v); } catch(Throwable e) { throw new RuntimeException(e); } };
-			else method = (iFunction0)() -> { try { return handle.invokeExact(); } catch(Throwable e) { throw new RuntimeException(e); } };
+			if(set) method = (iSub1)(v) -> { try { handle.invokeExact(v); } catch(Throwable e) { throw new RuntimeException(e); } };
+			else method = (iFn0)() -> { try { return handle.invokeExact(); } catch(Throwable e) { throw new RuntimeException(e); } };
 		}
 		catch(IllegalAccessException e) { throw new RuntimeException(e); }
 	}
@@ -75,7 +75,7 @@ public class cMethod implements iMethod {
 	public cMethod(Object obj, Method m) {
 		try {
 			handle = _factory(obj, m);
-			method = Modifier.isStatic(m.getModifiers()) || obj!=null? (iMethod)handle.invoke() : null;
+			method = Modifier.isStatic(m.getModifiers()) || obj!=null? (iProc)handle.invoke() : null;
 		}
 		catch(Throwable e) { throw new RuntimeException(e); }
 	}
@@ -91,16 +91,16 @@ public class cMethod implements iMethod {
 		handle = null;
 		if(code.length()==0) { method = (Object... a) -> null; return; }
 		String className = "c"+classNumber(), content = _methodContent(className, argn, argv, code);
-		try { method = (iMethod)cJavaMemoryCompiler.compile("js.lang.function.dynamic."+className, content).newInstance(); }
+		try { method = (iProc)cJavaMemoryCompiler.compile("js.lang.function.dynamic."+className, content).newInstance(); }
 		catch(Exception e) { throw new RuntimeException(e); }
 	}
 	/**
 	 * Direct field constructor.
-	 * @param m iMethod object.
+	 * @param m iProc object.
 	 * @param f MethodHandle methodHandle.
 	 * @param n Method name.
 	 */
-	private cMethod(iMethod m, MethodHandle f) {
+	private cMethod(iProc m, MethodHandle f) {
 		method = m;
 		handle = f;
 	}
@@ -164,11 +164,11 @@ public class cMethod implements iMethod {
 	
 	/**
 	 * Get Lambda function factory from specified method handle. Invoking the returned
-	 * factory with object yields an iMethod object which can be directly called.
+ factory with object yields an iProc object which can be directly called.
 	 * @param o Object which the interface object is to be bound to (can be null).
 	 * @param m Reflected method object.
 	 * @return Method handle factory.
-	 * @throws LambdaConversionException When conversion to iMethod fails.
+	 * @throws LambdaConversionException When conversion to iProc fails.
 	 * @throws IllegalAccessException When method is not accessible.
 	 */
 	private static MethodHandle _factory(Object o, Method m) throws LambdaConversionException, IllegalAccessException {
@@ -179,7 +179,7 @@ public class cMethod implements iMethod {
 		MethodType sSig = MethodType.methodType(tRet, m.getParameterTypes());
 		Class<?> dCls = tRet==void.class? CONSUMER_INTERFACE[n] : FUNCTION_INTERFACE[n];
 		MethodType dSig = tRet==void.class? CONSUMER_SIGNATURE[n] : FUNCTION_SIGNATURE[n];
-		String dMthd = tRet==void.class? iConsumer.NAME : iFunction.NAME;
+		String dMthd = tRet==void.class? iSub.NAME : iFn.NAME;
 		MethodType dType = stc? MethodType.methodType(dCls) : MethodType.methodType(dCls, m.getClass());
 		MethodHandle fctry = LambdaMetafactory.metafactory(l, dMthd, dType, dSig, l.unreflect(m), sSig).getTarget();
 		return !stc && o!=null? fctry.bindTo(o) : fctry;
@@ -196,7 +196,7 @@ public class cMethod implements iMethod {
 		StringBuilder s = new StringBuilder("package js.lang.function.dynamic;");
 		s.append("public class ").append(className).append(" implements js.lang.function.");
 		s.append(isvoid? "iConsumer" : "iFunction").append(argn).append(" {");
-		s.append("public ").append(isvoid? "void "+iConsumer.NAME : "Object "+iFunction.NAME).append("(");
+		s.append("public ").append(isvoid? "void "+iSub.NAME : "Object "+iFn.NAME).append("(");
 		for(int i=0; i<argn; i++)
 			s.append("Object ").append(argv[i]).append(", ");
 		if(argn>0) s.delete(s.length()-2, s.length());
@@ -231,20 +231,9 @@ public class cMethod implements iMethod {
 		try {
 			MethodHandle fctry = handle.bindTo(thisArg);
 			MethodHandles.insertArguments(fctry, 0, args);
-			return new cMethod((iMethod)fctry.invoke(), fctry);
+			return new cMethod((iProc)fctry.invoke(), fctry);
 		}
 		catch(Throwable e) { throw new RuntimeException(e); }
-	}
-	
-	/**
-	 * Calls a function with a given this value and arguments provided
-	 * individually.
-	 * @param thisArg The value of this provided for the call to function.
-	 * @param args Arguments for the object.
-	 * @return Return value of function.
-	 */
-	public final Object call(Object thisArg, Object... args) {
-		return thisArg!=null? bind(thisArg).call(args) : call(args);
 	}
 	
 	
@@ -255,13 +244,13 @@ public class cMethod implements iMethod {
 	}
 	
 	@Override
-	public final String ztoString() {
-		return method.ztoString();
+	public final String z_toString() {
+		return method.z_toString();
 	}
 	
 	@Override
 	public final String toString() {
-		return ztoString();
+		return z_toString();
 	}
 	
 	// TODO:

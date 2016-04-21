@@ -11,7 +11,7 @@ import js.lang.array.*;
  * @param <TE> Input Argument 5 type.
  * @param <TF> Input Argument 6 type.
  */
-public interface iConsumer6<TA, TB, TC, TD, TE, TF> extends iConsumer {
+public interface iSub6<TA, TB, TC, TD, TE, TF> extends iSub {
 	
 	/* static data */
 	/** Method signature of this interface. */
@@ -46,7 +46,7 @@ public interface iConsumer6<TA, TB, TC, TD, TE, TF> extends iConsumer {
 	}
 	
 	@Override
-	default String ztoString() {
+	default String z_toString() {
 		return "void "+name()+"(TA a, TB b, TC c, TD d, TE e, TF f) { [native code] }";
 	}
 }

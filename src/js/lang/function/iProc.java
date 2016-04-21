@@ -1,23 +1,24 @@
 package js.lang.function;
+import js.lang.object.*;
 
 /**
- * Represents a method which can be called with variable arguments, and it
- * returns a value.
+ * Represents a procedure which can be called with variable arguments, and it
+ * returns a value or null.
  */
-public interface iMethod {
-	
+public interface iProc extends iToString {
+
 	/* property */
 	/**
-	 * Specifies the number of arguments expected by the function.
-	 * @return Number of function arguments.
+	 * Specifies the number of arguments expected by the procedure.
+	 * @return Number of input arguments.
 	 */
 	default int length() {
 		return 0;
 	}
 	
 	/**
-	 * Returns the name of the function.
-	 * @return Function name.
+	 * Returns the name of the procedure.
+	 * @return Procedure name.
 	 */
 	default String name() {
 		return "";
@@ -37,7 +38,8 @@ public interface iMethod {
 	 * Returns string representation of the method.
 	 * @return String representation of method.
 	 */
-	default String ztoString() {
+	@Override
+	default String z_toString() {
 		return "? "+name()+"(...) { [native code] }";
 	}
 }
