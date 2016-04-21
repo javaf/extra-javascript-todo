@@ -35,10 +35,9 @@ public class cMethod implements iMethod {
 	
 	/* data */
 	/** Object implementing iMethod interface which can be called. */
-	private final iMethod imethod;
-	/** MethodHandle methodHandle that can be used to generate iMethod object. */
+	private final iMethod method;
+	/** Original method handle that can be used to generate iMethod object after binding. */
 	private final MethodHandle handle;
-	
 	
 	/* constructor */
 	/**
@@ -46,7 +45,7 @@ public class cMethod implements iMethod {
 	 * @param m iMethod implementing object.
 	 */
 	public cMethod(iMethod m) {
-		imethod = m;
+		method = m;
 		handle = null;
 	}
 	/**
@@ -61,8 +60,8 @@ public class cMethod implements iMethod {
 			MethodHandles.Lookup l = MethodHandles.lookup();
 			MethodHandle mh = set? l.unreflectSetter(f) : l.unreflectSetter(f);
 			handle = Modifier.isStatic(f.getModifiers()) || obj==null? mh : mh.bindTo(obj);
-			if(set) imethod = (iConsumer1)(v) -> { try { handle.invokeExact(v); } catch(Throwable e) { throw new RuntimeException(e); } };
-			else imethod = (iFunction0)() -> { try { return handle.invokeExact(); } catch(Throwable e) { throw new RuntimeException(e); } };
+			if(set) method = (iConsumer1)(v) -> { try { handle.invokeExact(v); } catch(Throwable e) { throw new RuntimeException(e); } };
+			else method = (iFunction0)() -> { try { return handle.invokeExact(); } catch(Throwable e) { throw new RuntimeException(e); } };
 		}
 		catch(IllegalAccessException e) { throw new RuntimeException(e); }
 	}
@@ -75,7 +74,7 @@ public class cMethod implements iMethod {
 	public cMethod(Object obj, Method m) {
 		try {
 			handle = _factory(obj, m);
-			imethod = Modifier.isStatic(m.getModifiers()) || obj!=null? (iMethod)handle.invoke() : null;
+			method = Modifier.isStatic(m.getModifiers()) || obj!=null? (iMethod)handle.invoke() : null;
 		}
 		catch(Throwable e) { throw new RuntimeException(e); }
 	}
@@ -89,9 +88,9 @@ public class cMethod implements iMethod {
 	 */
 	public cMethod(int argn, String[] argv, String code) {
 		handle = null;
-		if(code.length()==0) { imethod = (Object... a) -> null; return; }
+		if(code.length()==0) { method = (Object... a) -> null; return; }
 		String className = "c"+classNumber(), content = _methodContent(className, argn, argv, code);
-		try { imethod = (iMethod)cJavaMemoryCompiler.compile("js.lang.function.dynamic."+className, content).newInstance(); }
+		try { method = (iMethod)cJavaMemoryCompiler.compile("js.lang.function.dynamic."+className, content).newInstance(); }
 		catch(Exception e) { throw new RuntimeException(e); }
 	}
 	/**
@@ -101,7 +100,7 @@ public class cMethod implements iMethod {
 	 * @param n Method name.
 	 */
 	private cMethod(iMethod m, MethodHandle f) {
-		imethod = m;
+		method = m;
 		handle = f;
 	}
 	/**
@@ -109,7 +108,7 @@ public class cMethod implements iMethod {
 	 * @param o cMethod object
 	 */
 	protected cMethod(cMethod o) {
-		imethod = o.imethod;
+		method = o.method;
 		handle = o.handle;
 	}
 	
@@ -127,12 +126,12 @@ public class cMethod implements iMethod {
 	/* super property */
 	@Override
 	public int length() {
-		return imethod.length();
+		return method.length();
 	}
 	
 	@Override
 	public String name() {
-		return imethod.name();
+		return method.name();
 	}
 	
 	
@@ -251,12 +250,12 @@ public class cMethod implements iMethod {
 	/* super method */
 	@Override
 	public final Object run(Object... args) {
-		return imethod.run(args);
+		return method.run(args);
 	}
 	
 	@Override
 	public final String ztoString() {
-		return imethod.ztoString();
+		return method.ztoString();
 	}
 	
 	@Override
@@ -266,6 +265,6 @@ public class cMethod implements iMethod {
 	
 	// TODO:
 	public final Object valueOf() {
-		return imethod;
+		return method;
 	}
 }
