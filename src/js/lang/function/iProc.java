@@ -1,4 +1,5 @@
 package js.lang.function;
+import java.lang.invoke.*;
 import js.lang.object.*;
 
 /**
@@ -9,37 +10,36 @@ public interface iProc extends iToString {
 
 	/* property */
 	/**
-	 * Specifies the number of arguments expected by the procedure.
-	 * @return Number of input arguments.
+	 * Specifies the method type of the functional method.
+	 * @return Method type.
 	 */
-	default int length() {
-		return 0;
-	}
-	
-	/**
-	 * Returns the name of the procedure.
-	 * @return Procedure name.
-	 */
-	default String name() {
-		return "";
+	default MethodType type() {
+		return null;
 	}
 	
 	
 	/* method */
 	/**
-	 * Calls the (main) method of this object defined in a class, which implements
+	 * Calls the (main) procedure of this object defined in a class, which implements
 	 * a super-interface to this interface.
-	 * @param args The input arguments to pass to the function.
+	 * @param args The input arguments to pass to the procedure.
 	 * @return The output value.
 	 */
 	Object call(Object... args);
 	
 	/**
-	 * Returns string representation of the method.
-	 * @return String representation of method.
+	 * Returns string representation of the procedure.
+	 * @return String representation of procedure.
 	 */
 	@Override
 	default String z_toString() {
-		return "? "+name()+"(...) { [native code] }";
+		MethodType t = type();
+		StringBuilder s = new StringBuilder();
+		s.append(t==null? "?" : t.returnType()).append(" (");
+		if(t==null) s.append("Object... args");
+		else for(int i=0; i<t.parameterCount(); i++)
+			s.append(t.parameterType(i)).append(' ').append((char)('a'+i)).append(", ");
+		if(t!=null && t.parameterCount()>0) s.delete(s.length()-2, s.length());
+		return s.append(") { [native code] }").toString();
 	}
 }
