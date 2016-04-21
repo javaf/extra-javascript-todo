@@ -38,7 +38,7 @@ public class cMethod implements iMethod {
 	private final iMethod method;
 	/** Original method handle that can be used to generate iMethod object after binding. */
 	private final MethodHandle handle;
-
+	
 	
 	/* constructor */
 	/**
@@ -140,26 +140,30 @@ public class cMethod implements iMethod {
 	/**
 	 * Get a method object from class and its specified name. The returned method
 	 * object is obtained through reflection.
-	 * @param cls Class object which contains the method.
-	 * @param mn Name of the method.
-	 * @param types Parameter types of the method.
+	 * @param clazz Class object which contains the method.
+	 * @param method Name of the method.
+	 * @param parameterTypes Parameter types of the method.
 	 * @return Field object.
 	 */
-	public final static Method method(Class<?> cls, String mn, Class<?>[] types) {
-		try { return cls.getMethod(mn, types); }
+	public final static Method method(Class<?> clazz, String method, Class<?>[] parameterTypes) {
+		try { return clazz.getMethod(method, parameterTypes); }
 		catch(NoSuchMethodException | SecurityException e) { throw new RuntimeException(e); }
 	}
 	
 	/**
 	 * Get a field object from class and its specified name. The returned field
 	 * object is obtained through reflection.
-	 * @param cls Class object which contains the field.
-	 * @param fn Name of the field.
+	 * @param clazz Class object which contains the field.
+	 * @param field Name of the field.
 	 * @return Field object.
 	 */
-	public final static Field field(Class<?> cls, String fn) {
-		try { return cls.getField(fn); }
+	public final static Field field(Class<?> clazz, String field) {
+		try { return clazz.getField(field); }
 		catch(NoSuchFieldException | SecurityException e) { throw new RuntimeException(e); }
+	}
+	public final static iMethod imethod(MethodHandle mh, Object o, Object... a) {
+		
+		return null;
 	}
 	
 	/**
