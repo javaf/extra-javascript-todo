@@ -5,32 +5,33 @@ import java.lang.invoke.*;
 
 /**
  * Defines a method which can be called.
+ * @param <TR> Return type of method.
  */
-public class cMethod implements iProc {
+public class cMethodProc<TR> implements iProc<TR> {
 	
 	/* static data */
 	/** Array defining all iSub interfaces in order of input parameters */
-	private static final Class<?>[] CONSUMER_INTERFACE = new Class<?>[] {
+	private static final Class<?>[] SUB_CLASS = new Class<?>[] {
 		iSub0.class, iSub1.class, iSub2.class, iSub3.class,
 		iSub4.class, iSub5.class, iSub6.class, iSub7.class
 	};
 	/** Array defining all iFn interfaces in order of input parameters */
-	private static final Class<?>[] FUNCTION_INTERFACE = new Class<?>[] {
+	private static final Class<?>[] FN_CLASS = new Class<?>[] {
 		iFn0.class, iFn1.class, iFn2.class, iFn3.class,
 		iFn4.class, iFn5.class, iFn6.class, iFn7.class
 	};
 	/** Array defining all iSub method signatures in order of input parameters */
-	private static final MethodType[] CONSUMER_SIGNATURE = new MethodType[] {
+	private static final MethodType[] SUB_TYPE = new MethodType[] {
 		iSub0.TYPE, iSub1.TYPE, iSub2.TYPE, iSub3.TYPE,
 		iSub4.TYPE, iSub5.TYPE, iSub6.TYPE, iSub7.TYPE
 	};
 	/** Array defining all iFn method signatures in order of input parameters */
-	private static final MethodType[] FUNCTION_SIGNATURE = new MethodType[] {
+	private static final MethodType[] FN_TYPE = new MethodType[] {
 		iFn0.TYPE, iFn1.TYPE, iFn2.TYPE, iFn3.TYPE,
 		iFn4.TYPE, iFn5.TYPE, iFn6.TYPE, iFn7.TYPE
 	};
 	/** Indicates the number of dynamically generated classes. */
-	public static long classNumber;
+	private static long classNo;
 	
 	
 	/* data */
@@ -42,37 +43,12 @@ public class cMethod implements iProc {
 	
 	/* constructor */
 	/**
-	 * Create a callable Method object from object implementing iProc interface.
-	 * @param m iProc implementing object.
-	 */
-	public cMethod(iProc m) {
-		method = m;
-		handle = null;
-	}
-	/**
-	 * Create a callable Method object from class, method name, and parameter types.
-	 * @param obj Object bound to function. Can be null if method is static, or
-	 * binding is to be done later using bind().
-	 * @param f Field to be made callable.
-	 * @param set If true, setter is used, else getter is used.
-	 */
-	public cMethod(Object obj, Field f, boolean set) {
-		try {
-			MethodHandles.Lookup l = MethodHandles.lookup();
-			MethodHandle mh = set? l.unreflectSetter(f) : l.unreflectSetter(f);
-			handle = Modifier.isStatic(f.getModifiers()) || obj==null? mh : mh.bindTo(obj);
-			if(set) method = (iSub1)(v) -> { try { handle.invokeExact(v); } catch(Throwable e) { throw new RuntimeException(e); } };
-			else method = (iFn0)() -> { try { return handle.invokeExact(); } catch(Throwable e) { throw new RuntimeException(e); } };
-		}
-		catch(IllegalAccessException e) { throw new RuntimeException(e); }
-	}
-	/**
 	 * Create a callable Method object from class, method name, and parameter types.
 	 * @param obj Object bound to function. Can be null if method is static, or
 	 * binding is to be done later using bind().
 	 * @param m Method to be made callable.
 	 */
-	public cMethod(Object obj, Method m) {
+	public cMethodProc(Method m, Object obj) {
 		try {
 			handle = _factory(obj, m);
 			method = Modifier.isStatic(m.getModifiers()) || obj!=null? (iProc)handle.invoke() : null;
@@ -87,7 +63,7 @@ public class cMethod implements iProc {
 	 * separated with a comma; for example "x", "theValue", or "a,b".
 	 * @param code A string containing the Java statements comprising the function definition.
 	 */
-	public cMethod(int argn, String[] argv, String code) {
+	public cMethodProc(int argn, String[] argv, String code) {
 		handle = null;
 		if(code.length()==0) { method = (Object... a) -> null; return; }
 		String className = "c"+classNumber(), content = _methodContent(className, argn, argv, code);
@@ -100,7 +76,7 @@ public class cMethod implements iProc {
 	 * @param f MethodHandle methodHandle.
 	 * @param n Method name.
 	 */
-	private cMethod(iProc m, MethodHandle f) {
+	private cMethodProc(iProc m, MethodHandle f) {
 		method = m;
 		handle = f;
 	}
@@ -108,7 +84,7 @@ public class cMethod implements iProc {
 	 * Copy constructor.
 	 * @param o cMethod object
 	 */
-	protected cMethod(cMethod o) {
+	protected cMethodProc(cMethodProc o) {
 		method = o.method;
 		handle = o.handle;
 	}
@@ -120,7 +96,7 @@ public class cMethod implements iProc {
 	 * @return Number of dynamically generated classes.
 	 */
 	private static synchronized long classNumber() {
-		return classNumber++;
+		return classNo++;
 	}
 	
 	
@@ -172,8 +148,8 @@ public class cMethod implements iProc {
 		MethodHandles.Lookup l = MethodHandles.lookup();
 		boolean stc = Modifier.isStatic(m.getModifiers());
 		MethodType sSig = MethodType.methodType(tRet, m.getParameterTypes());
-		Class<?> dCls = tRet==void.class? CONSUMER_INTERFACE[n] : FUNCTION_INTERFACE[n];
-		MethodType dSig = tRet==void.class? CONSUMER_SIGNATURE[n] : FUNCTION_SIGNATURE[n];
+		Class<?> dCls = tRet==void.class? SUB_CLASS[n] : FN_CLASS[n];
+		MethodType dSig = tRet==void.class? SUB_TYPE[n] : FN_TYPE[n];
 		String dMthd = tRet==void.class? "accept" : "apply";
 		MethodType dType = stc? MethodType.methodType(dCls) : MethodType.methodType(dCls, m.getClass());
 		MethodHandle fctry = LambdaMetafactory.metafactory(l, dMthd, dType, dSig, l.unreflect(m), sSig).getTarget();
@@ -222,11 +198,11 @@ public class cMethod implements iProc {
 	 * function when invoking the target function.
 	 * @return Function with bound "this" and any arguments.
 	 */
-	public cMethod bind(Object thisArg, Object... args) {
+	public cMethodProc bind(Object thisArg, Object... args) {
 		try {
 			MethodHandle fctry = handle.bindTo(thisArg);
 			MethodHandles.insertArguments(fctry, 0, args);
-			return new cMethod((iProc)fctry.invoke(), fctry);
+			return new cMethodProc((iProc)fctry.invoke(), fctry);
 		}
 		catch(Throwable e) { throw new RuntimeException(e); }
 	}
@@ -234,8 +210,8 @@ public class cMethod implements iProc {
 	
 	/* super method */
 	@Override
-	public final Object call(Object... args) {
-		return method.call(args);
+	public final TR call(Object... a) {
+		return (TR)method.call(a);
 	}
 	
 	@Override
@@ -248,7 +224,7 @@ public class cMethod implements iProc {
 		return z_toString();
 	}
 	
-	// TODO:
+	@Override
 	public final Object valueOf() {
 		return method;
 	}

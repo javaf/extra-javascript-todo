@@ -14,7 +14,7 @@ import java.lang.reflect.*;
  * @param <TR> Return type.
  * @author Didier L, wolfram77
  */
-public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implements
+public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethodProc implements
 	iSub0, iSub1<TA>, iSub2<TA, TB>, iSub3<TA, TB, TC>, iSub4<TA, TB, TC, TD>,
 	iSub5<TA, TB, TC, TD, TE>, iSub6<TA, TB, TC, TD, TE, TF>, iSub7<TA, TB, TC, TD, TE, TF, TG>,
 	iFn0<TR>, iFn1<TA, TR>, iFn2<TA, TB, TR>, iFn3<TA, TB, TC, TR>, iFn4<TA, TB, TC, TD, TR>,
@@ -93,7 +93,7 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 	 * @param set If true, setter is used, otherwise getter is used.
 	 */
 	public oFunction(Object thisArg, Class<?> clazz, String field, boolean set) {
-		this(thisArg, cMethod.field(clazz, field), set);
+		this(thisArg, cMethodProc.field(clazz, field), set);
 	}
 	/**
 	 * Creates a callable oFunction object from a specific field reflectively..
@@ -131,7 +131,7 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 	 * @param parameterTypes Parameter types of the method.
 	 */
 	public oFunction(Object thisArg, Class<?> clazz, String method, Class<?>... parameterTypes) {
-		this(thisArg, cMethod.method(clazz, method, parameterTypes));
+		this(thisArg, cMethodProc.method(clazz, method, parameterTypes));
 	}
 	/**
 	 * Creates a callable oFunction object from a specific method reflectively.
@@ -157,9 +157,9 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethod implement
 	}
 	/**
 	 * Super copy constructor
-	 * @param o cMethod object.
+	 * @param o cMethodProc object.
 	 */
-	private oFunction(cMethod o) {
+	private oFunction(cMethodProc o) {
 		super(o);
 	}
 	

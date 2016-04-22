@@ -4,7 +4,7 @@ import java.util.*;
 import org.junit.*;
 
 /**
- * Test cMethod.
+ * Test cMethodProc.
  */
 public class cMethodTest {
 	
@@ -12,34 +12,34 @@ public class cMethodTest {
 	public static Object ans;
 	
 	/* data */
-	public cMethod c0MathPi;
-	public cMethod c1StrRev;
-	public cMethod c2StrCat;
-	public cMethod c3MathMax;
-	public cMethod c4MathMin;
-	public cMethod c5ListAdd;
-	public cMethod c6MapRemove;
-	public cMethod c7NumSort;
-	public cMethod f0MathPi;
-	public cMethod f1StrRev;
-	public cMethod f2StrCat;
-	public cMethod f3MathMax;
-	public cMethod f4MathMin;
-	public cMethod f5ListAdd;
-	public cMethod f6MapRemove;
-	public cMethod f7NumSort;
-	public cMethod gdfsp0;
-	public cMethod sdfsp0;
-	public cMethod gdfso0;
-	public cMethod sdfso0;
-	public cMethod gdsp0;
-	public cMethod sdsp0;
-	public cMethod gdso0;
-	public cMethod sdso0;
-	public cMethod gdp0;
-	public cMethod sdp0;
-	public cMethod gdo0;
-	public cMethod sdo0;
+	public cMethodProc c0MathPi;
+	public cMethodProc c1StrRev;
+	public cMethodProc c2StrCat;
+	public cMethodProc c3MathMax;
+	public cMethodProc c4MathMin;
+	public cMethodProc c5ListAdd;
+	public cMethodProc c6MapRemove;
+	public cMethodProc c7NumSort;
+	public cMethodProc f0MathPi;
+	public cMethodProc f1StrRev;
+	public cMethodProc f2StrCat;
+	public cMethodProc f3MathMax;
+	public cMethodProc f4MathMin;
+	public cMethodProc f5ListAdd;
+	public cMethodProc f6MapRemove;
+	public cMethodProc f7NumSort;
+	public cMethodProc gdfsp0;
+	public cMethodProc sdfsp0;
+	public cMethodProc gdfso0;
+	public cMethodProc sdfso0;
+	public cMethodProc gdsp0;
+	public cMethodProc sdsp0;
+	public cMethodProc gdso0;
+	public cMethodProc sdso0;
+	public cMethodProc gdp0;
+	public cMethodProc sdp0;
+	public cMethodProc gdo0;
+	public cMethodProc sdo0;
 	
 	/* support data */
 	public final static int DFSP0 = 1;
@@ -83,78 +83,78 @@ public class cMethodTest {
 	@Test
 	public void newLambdaiMethod() {
 		System.out.println("# New Lambda iMethod");
-		c0MathPi = new cMethod((iProc)(Object... a) -> { c0MathPi(); return null; });
-		c1StrRev = new cMethod((iProc)(Object... a) -> { c1StrRev((String)a[0]); return null; });
-		c2StrCat = new cMethod((iProc)(Object... a) -> { c2StrCat((String)a[0], (String)a[1]); return null; });
-		c3MathMax = new cMethod((iProc)(Object... a) -> { c3MathMax((double)a[0], (double)a[1], (double)a[2]); return null; });
-		c4MathMin = new cMethod((iProc)(Object... a) -> { c4MathMin((double)a[0], (double)a[1], (double)a[2], (double)a[3]); return null; });
-		c5ListAdd = new cMethod((iProc)(Object... a) -> { c5ListAdd((double)a[0], (double)a[1], (double)a[2], (double)a[3], (double)a[4]); return null; });
-		c6MapRemove = new cMethod((iProc)(Object... a) -> { c6MapRemove((int)a[0], (int)a[1], (int)a[2], (int)a[3], (int)a[4], (int)a[5]); return null; });
-		c7NumSort = new cMethod((iProc)(Object... a) -> { c7NumSort((int)a[0], (int)a[1], (int)a[2], (int)a[3], (int)a[4], (int)a[5], (int)a[6]); return null; });
-		f0MathPi = new cMethod((iProc)(Object... a) -> f0MathPi());
-		f1StrRev = new cMethod((iProc)(Object... a) -> f1StrRev((String)a[0]));
-		f2StrCat = new cMethod((iProc)(Object... a) -> f2StrCat((String)a[0], (String)a[1]));
-		f3MathMax = new cMethod((iProc)(Object... a) -> f3MathMax((double)a[0], (double)a[1], (double)a[2]));
-		f4MathMin = new cMethod((iProc)(Object... a) -> f4MathMin((double)a[0], (double)a[1], (double)a[2], (double)a[3]));
-		f5ListAdd = new cMethod((iProc)(Object... a) -> f5ListAdd((double)a[0], (double)a[1], (double)a[2], (double)a[3], (double)a[4]));
-		f6MapRemove = new cMethod((iProc)(Object... a) -> f6MapRemove((int)a[0], (int)a[1], (int)a[2], (int)a[3], (int)a[4], (int)a[5]));
-		f7NumSort = new cMethod((iProc)(Object... a) -> f7NumSort((int)a[0], (int)a[1], (int)a[2], (int)a[3], (int)a[4], (int)a[5], (int)a[6]));
+		c0MathPi = new cMethodProc((iProc)(Object... a) -> { c0MathPi(); return null; });
+		c1StrRev = new cMethodProc((iProc)(Object... a) -> { c1StrRev((String)a[0]); return null; });
+		c2StrCat = new cMethodProc((iProc)(Object... a) -> { c2StrCat((String)a[0], (String)a[1]); return null; });
+		c3MathMax = new cMethodProc((iProc)(Object... a) -> { c3MathMax((double)a[0], (double)a[1], (double)a[2]); return null; });
+		c4MathMin = new cMethodProc((iProc)(Object... a) -> { c4MathMin((double)a[0], (double)a[1], (double)a[2], (double)a[3]); return null; });
+		c5ListAdd = new cMethodProc((iProc)(Object... a) -> { c5ListAdd((double)a[0], (double)a[1], (double)a[2], (double)a[3], (double)a[4]); return null; });
+		c6MapRemove = new cMethodProc((iProc)(Object... a) -> { c6MapRemove((int)a[0], (int)a[1], (int)a[2], (int)a[3], (int)a[4], (int)a[5]); return null; });
+		c7NumSort = new cMethodProc((iProc)(Object... a) -> { c7NumSort((int)a[0], (int)a[1], (int)a[2], (int)a[3], (int)a[4], (int)a[5], (int)a[6]); return null; });
+		f0MathPi = new cMethodProc((iProc)(Object... a) -> f0MathPi());
+		f1StrRev = new cMethodProc((iProc)(Object... a) -> f1StrRev((String)a[0]));
+		f2StrCat = new cMethodProc((iProc)(Object... a) -> f2StrCat((String)a[0], (String)a[1]));
+		f3MathMax = new cMethodProc((iProc)(Object... a) -> f3MathMax((double)a[0], (double)a[1], (double)a[2]));
+		f4MathMin = new cMethodProc((iProc)(Object... a) -> f4MathMin((double)a[0], (double)a[1], (double)a[2], (double)a[3]));
+		f5ListAdd = new cMethodProc((iProc)(Object... a) -> f5ListAdd((double)a[0], (double)a[1], (double)a[2], (double)a[3], (double)a[4]));
+		f6MapRemove = new cMethodProc((iProc)(Object... a) -> f6MapRemove((int)a[0], (int)a[1], (int)a[2], (int)a[3], (int)a[4], (int)a[5]));
+		f7NumSort = new cMethodProc((iProc)(Object... a) -> f7NumSort((int)a[0], (int)a[1], (int)a[2], (int)a[3], (int)a[4], (int)a[5], (int)a[6]));
 		frun(); gcall(null); gapply(null);
 	}
 	
 	@Test
 	public void newRefiConsumer() {
 		System.out.println("# New Ref iConsumer");
-		c0MathPi = new cMethod((iSub0)this::c0MathPi);
-		c1StrRev = new cMethod((iSub1<String>)this::c1StrRev);
-		c2StrCat = new cMethod((iSub2<String, String>)this::c2StrCat);
-		c3MathMax = new cMethod((iSub3<Double, Double, Double>)this::c3MathMax);
-		c4MathMin = new cMethod((iSub4<Double, Double, Double, Double>)this::c4MathMin);
-		c5ListAdd = new cMethod((iSub5<Double, Double, Double, Double, Double>)this::c5ListAdd);
-		c6MapRemove = new cMethod((iSub6<Integer, Integer, Integer, Integer, Integer, Integer>)this::c6MapRemove);
-		c7NumSort = new cMethod((iSub7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>)this::c7NumSort);
+		c0MathPi = new cMethodProc((iSub0)this::c0MathPi);
+		c1StrRev = new cMethodProc((iSub1<String>)this::c1StrRev);
+		c2StrCat = new cMethodProc((iSub2<String, String>)this::c2StrCat);
+		c3MathMax = new cMethodProc((iSub3<Double, Double, Double>)this::c3MathMax);
+		c4MathMin = new cMethodProc((iSub4<Double, Double, Double, Double>)this::c4MathMin);
+		c5ListAdd = new cMethodProc((iSub5<Double, Double, Double, Double, Double>)this::c5ListAdd);
+		c6MapRemove = new cMethodProc((iSub6<Integer, Integer, Integer, Integer, Integer, Integer>)this::c6MapRemove);
+		c7NumSort = new cMethodProc((iSub7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>)this::c7NumSort);
 		frun(); gcall(null); gapply(null);
 	}
 	
 	@Test
 	public void newLambdaiConsumer() {
 		System.out.println("# New Lambda iConsumer");
-		c0MathPi = new cMethod((iSub0)() -> { c0MathPi(); });
-		c1StrRev = new cMethod((iSub1<String>)(a) -> { c1StrRev(a); });
-		c2StrCat = new cMethod((iSub2<String, String>)(a, b) -> { c2StrCat(a, b); });
-		c3MathMax = new cMethod((iSub3<Double, Double, Double>)(a, b, c) -> { c3MathMax((double)a, (double)b, (double)c); });
-		c4MathMin = new cMethod((iSub4<Double, Double, Double, Double>)(a, b, c, d) -> { c4MathMin((double)a, (double)b, (double)c, (double)d); });
-		c5ListAdd = new cMethod((iSub5<Double, Double, Double, Double, Double>)(a, b, c, d, e) -> { c5ListAdd((double)a, (double)b, (double)c, (double)d, (double)e); });
-		c6MapRemove = new cMethod((iSub6<Integer, Integer, Integer, Integer, Integer, Integer>)(a, b, c, d, e, f) -> { c6MapRemove((int)a, (int)b, (int)c, (int)d, (int)e, (int)f); });
-		c7NumSort = new cMethod((iSub7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>)(a, b, c, d, e, f, g) -> { c7NumSort((int)a, (int)b, (int)c, (int)d, (int)e, (int)f, (int)g); });
+		c0MathPi = new cMethodProc((iSub0)() -> { c0MathPi(); });
+		c1StrRev = new cMethodProc((iSub1<String>)(a) -> { c1StrRev(a); });
+		c2StrCat = new cMethodProc((iSub2<String, String>)(a, b) -> { c2StrCat(a, b); });
+		c3MathMax = new cMethodProc((iSub3<Double, Double, Double>)(a, b, c) -> { c3MathMax((double)a, (double)b, (double)c); });
+		c4MathMin = new cMethodProc((iSub4<Double, Double, Double, Double>)(a, b, c, d) -> { c4MathMin((double)a, (double)b, (double)c, (double)d); });
+		c5ListAdd = new cMethodProc((iSub5<Double, Double, Double, Double, Double>)(a, b, c, d, e) -> { c5ListAdd((double)a, (double)b, (double)c, (double)d, (double)e); });
+		c6MapRemove = new cMethodProc((iSub6<Integer, Integer, Integer, Integer, Integer, Integer>)(a, b, c, d, e, f) -> { c6MapRemove((int)a, (int)b, (int)c, (int)d, (int)e, (int)f); });
+		c7NumSort = new cMethodProc((iSub7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>)(a, b, c, d, e, f, g) -> { c7NumSort((int)a, (int)b, (int)c, (int)d, (int)e, (int)f, (int)g); });
 		frun(); gcall(null); gapply(null);
 	}
 
 	@Test
 	public void newRefiFunction() {
 		System.out.println("# New Ref iFunction");
-		f0MathPi = new cMethod((iFn0)cMethodTest::f0MathPi);
-		f1StrRev = new cMethod((iFn1<String, String>)cMethodTest::f1StrRev);
-		f2StrCat = new cMethod((iFn2<String, String, String>)cMethodTest::f2StrCat);
-		f3MathMax = new cMethod((iFn3<Double, Double, Double, Double>)cMethodTest::f3MathMax);
-		f4MathMin = new cMethod((iFn4<Double, Double, Double, Double, Double>)cMethodTest::f4MathMin);
-		f5ListAdd = new cMethod((iFn5<Double, Double, Double, Double, Double, List>)cMethodTest::f5ListAdd);
-		f6MapRemove = new cMethod((iFn6<Integer, Integer, Integer, Integer, Integer, Integer, Map>)cMethodTest::f6MapRemove);
-		f7NumSort = new cMethod((iFn7<Integer, Integer, Integer, Integer, Integer, Integer, Integer, int[]>)cMethodTest::f7NumSort);
+		f0MathPi = new cMethodProc((iFn0)cMethodTest::f0MathPi);
+		f1StrRev = new cMethodProc((iFn1<String, String>)cMethodTest::f1StrRev);
+		f2StrCat = new cMethodProc((iFn2<String, String, String>)cMethodTest::f2StrCat);
+		f3MathMax = new cMethodProc((iFn3<Double, Double, Double, Double>)cMethodTest::f3MathMax);
+		f4MathMin = new cMethodProc((iFn4<Double, Double, Double, Double, Double>)cMethodTest::f4MathMin);
+		f5ListAdd = new cMethodProc((iFn5<Double, Double, Double, Double, Double, List>)cMethodTest::f5ListAdd);
+		f6MapRemove = new cMethodProc((iFn6<Integer, Integer, Integer, Integer, Integer, Integer, Map>)cMethodTest::f6MapRemove);
+		f7NumSort = new cMethodProc((iFn7<Integer, Integer, Integer, Integer, Integer, Integer, Integer, int[]>)cMethodTest::f7NumSort);
 		frun(); gcall(null); gapply(null);
 	}
 
 	@Test
 	public void newLambdaiFunction() {
 		System.out.println("# New Lambda iFunction");
-		f0MathPi = new cMethod((iFn0<Double>)() -> f0MathPi());
-		f1StrRev = new cMethod((iFn1<String, String>)(a) -> f1StrRev(a));
-		f2StrCat = new cMethod((iFn2<String, String, String>)(a, b) -> f2StrCat(a, b));
-		f3MathMax = new cMethod((iFn3<Double, Double, Double, Double>)(a, b, c) -> f3MathMax((double)a, (double)b, (double)c));
-		f4MathMin = new cMethod((iFn4<Double, Double, Double, Double, Double>)(a, b, c, d) -> f4MathMin((double)a, (double)b, (double)c, (double)d));
-		f5ListAdd = new cMethod((iFn5<Double, Double, Double, Double, Double, List>)(a, b, c, d, e) -> f5ListAdd((double)a, (double)b, (double)c, (double)d, (double)e));
-		f6MapRemove = new cMethod((iFn6<Integer, Integer, Integer, Integer, Integer, Integer, Map>)(a, b, c, d, e, f) -> f6MapRemove((int)a, (int)b, (int)c, (int)d, (int)e, (int)f));
-		f7NumSort = new cMethod((iFn7<Integer, Integer, Integer, Integer, Integer, Integer, Integer, int[]>)(a, b, c, d, e, f, g) -> f7NumSort((int)a, (int)b, (int)c, (int)d, (int)e, (int)f, (int)g));
+		f0MathPi = new cMethodProc((iFn0<Double>)() -> f0MathPi());
+		f1StrRev = new cMethodProc((iFn1<String, String>)(a) -> f1StrRev(a));
+		f2StrCat = new cMethodProc((iFn2<String, String, String>)(a, b) -> f2StrCat(a, b));
+		f3MathMax = new cMethodProc((iFn3<Double, Double, Double, Double>)(a, b, c) -> f3MathMax((double)a, (double)b, (double)c));
+		f4MathMin = new cMethodProc((iFn4<Double, Double, Double, Double, Double>)(a, b, c, d) -> f4MathMin((double)a, (double)b, (double)c, (double)d));
+		f5ListAdd = new cMethodProc((iFn5<Double, Double, Double, Double, Double, List>)(a, b, c, d, e) -> f5ListAdd((double)a, (double)b, (double)c, (double)d, (double)e));
+		f6MapRemove = new cMethodProc((iFn6<Integer, Integer, Integer, Integer, Integer, Integer, Map>)(a, b, c, d, e, f) -> f6MapRemove((int)a, (int)b, (int)c, (int)d, (int)e, (int)f));
+		f7NumSort = new cMethodProc((iFn7<Integer, Integer, Integer, Integer, Integer, Integer, Integer, int[]>)(a, b, c, d, e, f, g) -> f7NumSort((int)a, (int)b, (int)c, (int)d, (int)e, (int)f, (int)g));
 		frun(); gcall(null); gapply(null);
 	}
 	
@@ -162,34 +162,34 @@ public class cMethodTest {
 	public void newObjClsMthd() throws NoSuchMethodException, NoSuchFieldException, SecurityException {
 		System.out.println("# cMethod(Object, Class, Method)");
 		Class<?> c = cMethodTest.class;
-		c0MathPi = new cMethod(this, c.getMethod("c0MathPi"));
-		c1StrRev = new cMethod(this, c.getMethod("c1StrRev", String.class));
-		c2StrCat = new cMethod(this, c.getMethod("c2StrCat", String.class, String.class));
-		c3MathMax = new cMethod(this, c.getMethod("c3MathMax", double.class, double.class, double.class));
-		c4MathMin = new cMethod(this, c.getMethod("c4MathMin", double.class, double.class, double.class, double.class));
-		c5ListAdd = new cMethod(this, c.getMethod("c5ListAdd", double.class, double.class, double.class, double.class, double.class));
-		c6MapRemove = new cMethod(this, c.getMethod("c6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class));
-		c7NumSort = new cMethod(this, c.getMethod("c7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class));
-		f0MathPi = new cMethod(this, c.getMethod("f0MathPi"));
-		f1StrRev = new cMethod(this, c.getMethod("f1StrRev", String.class));
-		f2StrCat = new cMethod(this, c.getMethod("f2StrCat", String.class, String.class));
-		f3MathMax = new cMethod(this, c.getMethod("f3MathMax", double.class, double.class, double.class));
-		f4MathMin = new cMethod(this, c.getMethod("f4MathMin", double.class, double.class, double.class, double.class));
-		f5ListAdd = new cMethod(this, c.getMethod("f5ListAdd", double.class, double.class, double.class, double.class, double.class));
-		f6MapRemove = new cMethod(this, c.getMethod("f6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class));
-		f7NumSort = new cMethod(this, c.getMethod("f7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class));
-		// gdfsp0 = new cMethod(this, c.getField("DFSP0"), false);
-		// sdfsp0 = new cMethod(this, c.getField("DFSP0"), true);
-		// gdfso0 = new cMethod(this, c.getField("DFSO0"), false);
-		// sdfso0 = new cMethod(this, c.getField("DFSO0"), true);
-		// gdsp0 = new cMethod(this, c.getField("DSP0"), false);
-		// sdsp0 = new cMethod(this, c.getField("DSP0"), true);
-		// gdso0 = new cMethod(this, c.getField("DSO0"), false);
-		// sdso0 = new cMethod(this, c.getField("DSO0"), true);
-		// gdp0 = new cMethod(this, c.getField("DP0"), false);
-		// sdp0 = new cMethod(this, c.getField("DP0"), true);
-		gdo0 = new cMethod(this, c.getField("do0"), false);
-		sdo0 = new cMethod(this, c.getField("do0"), true);
+		c0MathPi = new cMethodProc(this, c.getMethod("c0MathPi"));
+		c1StrRev = new cMethodProc(this, c.getMethod("c1StrRev", String.class));
+		c2StrCat = new cMethodProc(this, c.getMethod("c2StrCat", String.class, String.class));
+		c3MathMax = new cMethodProc(this, c.getMethod("c3MathMax", double.class, double.class, double.class));
+		c4MathMin = new cMethodProc(this, c.getMethod("c4MathMin", double.class, double.class, double.class, double.class));
+		c5ListAdd = new cMethodProc(this, c.getMethod("c5ListAdd", double.class, double.class, double.class, double.class, double.class));
+		c6MapRemove = new cMethodProc(this, c.getMethod("c6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class));
+		c7NumSort = new cMethodProc(this, c.getMethod("c7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class));
+		f0MathPi = new cMethodProc(this, c.getMethod("f0MathPi"));
+		f1StrRev = new cMethodProc(this, c.getMethod("f1StrRev", String.class));
+		f2StrCat = new cMethodProc(this, c.getMethod("f2StrCat", String.class, String.class));
+		f3MathMax = new cMethodProc(this, c.getMethod("f3MathMax", double.class, double.class, double.class));
+		f4MathMin = new cMethodProc(this, c.getMethod("f4MathMin", double.class, double.class, double.class, double.class));
+		f5ListAdd = new cMethodProc(this, c.getMethod("f5ListAdd", double.class, double.class, double.class, double.class, double.class));
+		f6MapRemove = new cMethodProc(this, c.getMethod("f6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class));
+		f7NumSort = new cMethodProc(this, c.getMethod("f7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class));
+		// gdfsp0 = new cMethodProc(this, c.getField("DFSP0"), false);
+		// sdfsp0 = new cMethodProc(this, c.getField("DFSP0"), true);
+		// gdfso0 = new cMethodProc(this, c.getField("DFSO0"), false);
+		// sdfso0 = new cMethodProc(this, c.getField("DFSO0"), true);
+		// gdsp0 = new cMethodProc(this, c.getField("DSP0"), false);
+		// sdsp0 = new cMethodProc(this, c.getField("DSP0"), true);
+		// gdso0 = new cMethodProc(this, c.getField("DSO0"), false);
+		// sdso0 = new cMethodProc(this, c.getField("DSO0"), true);
+		// gdp0 = new cMethodProc(this, c.getField("DP0"), false);
+		// sdp0 = new cMethodProc(this, c.getField("DP0"), true);
+		gdo0 = new cMethodProc(this, c.getField("do0"), false);
+		sdo0 = new cMethodProc(this, c.getField("do0"), true);
 		frun(); gcall(null); gapply(null);
 	}
 	
@@ -197,52 +197,52 @@ public class cMethodTest {
 	public void newClsMthd() throws NoSuchMethodException, NoSuchFieldException, SecurityException {
 		System.out.println("# cMethod(Class, Method, Parameter types)");
 		Class<?> c = cMethodTest.class;
-		c0MathPi = new cMethod(null, c.getMethod("c0MathPi"));
-		c1StrRev = new cMethod(null, c.getMethod("c1StrRev", String.class));
-		c2StrCat = new cMethod(null, c.getMethod("c2StrCat", String.class, String.class));
-		c3MathMax = new cMethod(null, c.getMethod("c3MathMax", double.class, double.class, double.class));
-		c4MathMin = new cMethod(null, c.getMethod("c4MathMin", double.class, double.class, double.class, double.class));
-		c5ListAdd = new cMethod(null, c.getMethod("c5ListAdd", double.class, double.class, double.class, double.class, double.class));
-		c6MapRemove = new cMethod(null, c.getMethod("c6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class));
-		c7NumSort = new cMethod(null, c.getMethod("c7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class));
-		f0MathPi = new cMethod(null, c.getMethod("f0MathPi"));
-		f1StrRev = new cMethod(null, c.getMethod("f1StrRev", String.class));
-		f2StrCat = new cMethod(null, c.getMethod("f2StrCat", String.class, String.class));
-		f3MathMax = new cMethod(null, c.getMethod("f3MathMax", double.class, double.class, double.class));
-		f4MathMin = new cMethod(null, c.getMethod("f4MathMin", double.class, double.class, double.class, double.class));
-		f5ListAdd = new cMethod(null, c.getMethod("f5ListAdd", double.class, double.class, double.class, double.class, double.class));
-		f6MapRemove = new cMethod(null, c.getMethod("f6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class));
-		f7NumSort = new cMethod(null, c.getMethod("f7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class));
-		// gdfsp0 = new cMethod(null, c.getField("DFSP0"), false);
-		// sdfsp0 = new cMethod(null, c.getField("DFSP0"), true);
-		// gdfso0 = new cMethod(null, c.getField("DFSO0"), false);
-		// sdfso0 = new cMethod(null, c.getField("DFSO0"), true);
-		// gdsp0 = new cMethod(null, c.getField("DSP0"), false);
-		// sdsp0 = new cMethod(null, c.getField("DSP0"), true);
-		// gdso0 = new cMethod(null, c.getField("DSO0"), false);
-		// sdso0 = new cMethod(null, c.getField("DSO0"), true);
-		// gdp0 = new cMethod(null, c.getField("DP0"), false);
-		// sdp0 = new cMethod(null, c.getField("DP0"), true);
-		gdo0 = new cMethod(null, c.getField("do0"), false);
-		sdo0 = new cMethod(null, c.getField("do0"), true);
+		c0MathPi = new cMethodProc(null, c.getMethod("c0MathPi"));
+		c1StrRev = new cMethodProc(null, c.getMethod("c1StrRev", String.class));
+		c2StrCat = new cMethodProc(null, c.getMethod("c2StrCat", String.class, String.class));
+		c3MathMax = new cMethodProc(null, c.getMethod("c3MathMax", double.class, double.class, double.class));
+		c4MathMin = new cMethodProc(null, c.getMethod("c4MathMin", double.class, double.class, double.class, double.class));
+		c5ListAdd = new cMethodProc(null, c.getMethod("c5ListAdd", double.class, double.class, double.class, double.class, double.class));
+		c6MapRemove = new cMethodProc(null, c.getMethod("c6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class));
+		c7NumSort = new cMethodProc(null, c.getMethod("c7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class));
+		f0MathPi = new cMethodProc(null, c.getMethod("f0MathPi"));
+		f1StrRev = new cMethodProc(null, c.getMethod("f1StrRev", String.class));
+		f2StrCat = new cMethodProc(null, c.getMethod("f2StrCat", String.class, String.class));
+		f3MathMax = new cMethodProc(null, c.getMethod("f3MathMax", double.class, double.class, double.class));
+		f4MathMin = new cMethodProc(null, c.getMethod("f4MathMin", double.class, double.class, double.class, double.class));
+		f5ListAdd = new cMethodProc(null, c.getMethod("f5ListAdd", double.class, double.class, double.class, double.class, double.class));
+		f6MapRemove = new cMethodProc(null, c.getMethod("f6MapRemove", int.class, int.class, int.class, int.class, int.class, int.class));
+		f7NumSort = new cMethodProc(null, c.getMethod("f7NumSort", int.class, int.class, int.class, int.class, int.class, int.class, int.class));
+		// gdfsp0 = new cMethodProc(null, c.getField("DFSP0"), false);
+		// sdfsp0 = new cMethodProc(null, c.getField("DFSP0"), true);
+		// gdfso0 = new cMethodProc(null, c.getField("DFSO0"), false);
+		// sdfso0 = new cMethodProc(null, c.getField("DFSO0"), true);
+		// gdsp0 = new cMethodProc(null, c.getField("DSP0"), false);
+		// sdsp0 = new cMethodProc(null, c.getField("DSP0"), true);
+		// gdso0 = new cMethodProc(null, c.getField("DSO0"), false);
+		// sdso0 = new cMethodProc(null, c.getField("DSO0"), true);
+		// gdp0 = new cMethodProc(null, c.getField("DP0"), false);
+		// sdp0 = new cMethodProc(null, c.getField("DP0"), true);
+		gdo0 = new cMethodProc(null, c.getField("do0"), false);
+		sdo0 = new cMethodProc(null, c.getField("do0"), true);
 		gcall(this); gapply(this); bind(this); frun(); gcall(null); gapply(null);
 	}
 	
 	@Test
 	public void newStringFn() {
 		System.out.println("# cMethod(String...)");
-		f0MathPi = new cMethod(0, new String[] {}, "return Math.PI;");
-		f1StrRev = new cMethod(1, new String[] {"a"}, "return new StringBuilder((String)a).reverse().toString();");
-		f2StrCat = new cMethod(2, new String[] {"a", "b"}, "return (String)a+(String)b;");
-		f3MathMax = new cMethod(3, new String[] {"a", "b", "c"}, "return Math.max((double)a, Math.max((double)b, (double)c));");
-		f4MathMin = new cMethod(4, new String[] {"a", "b", "c", "d"}, "return Math.min((double)a, Math.min((double)b, Math.min((double)c, (double)d)));");
+		f0MathPi = new cMethodProc(0, new String[] {}, "return Math.PI;");
+		f1StrRev = new cMethodProc(1, new String[] {"a"}, "return new StringBuilder((String)a).reverse().toString();");
+		f2StrCat = new cMethodProc(2, new String[] {"a", "b"}, "return (String)a+(String)b;");
+		f3MathMax = new cMethodProc(3, new String[] {"a", "b", "c"}, "return Math.max((double)a, Math.max((double)b, (double)c));");
+		f4MathMin = new cMethodProc(4, new String[] {"a", "b", "c", "d"}, "return Math.min((double)a, Math.min((double)b, Math.min((double)c, (double)d)));");
 		frun(); gcall(null); gapply(null);
 	}
 	
 	
 	/* test use function */
 	/**
-	 * Test of frun method, of class cMethod.
+	 * Test of frun method, of class cMethodProc.
 	 */
 	public void frun() {
 		System.out.println("## run");
@@ -348,7 +348,7 @@ public class cMethodTest {
 	}
 	
 	/**
-	 * Test of call method, of class cMethod.
+	 * Test of call method, of class cMethodProc.
 	 * @param t This object.
 	 */
 	public void gcall(Object t) {
@@ -455,7 +455,7 @@ public class cMethodTest {
 	}
 	
 	/**
-	 * Test of fapply method, of class cMethod.
+	 * Test of fapply method, of class cMethodProc.
 	 * @param t This object.
 	 */
 	public void gapply(Object t) {
@@ -562,7 +562,7 @@ public class cMethodTest {
 	}
 	
 	/**
-	 * Test of bind method, of class cMethod.
+	 * Test of bind method, of class cMethodProc.
 	 * @param t This object.
 	 */
 	public void bind(Object t) {
