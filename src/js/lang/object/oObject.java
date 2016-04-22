@@ -24,7 +24,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param value Any value.
 	 */
 	public oObject(Object value) {
-		super(value instanceof Map? (Map)value : new cObjectMap(value));
+		super(value instanceof Map? (Map)value : new cObjMap(value));
 	}
 	
 	

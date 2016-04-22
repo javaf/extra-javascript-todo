@@ -6,9 +6,9 @@ import java.util.Map.*;
 import js.lang.object.support.*;
 
 /**
- * Test cObjectMap.
+ * Test cObjMap.
  */
-public class cObjectMapTest {
+public class cObjMapTest {
 	
 	/* data */
 	public final static String[] specified = new String[] {"dfsp", "dfso", "dsp", "dso", "dp", "do", "msp", "mso", "mp", "mo"};
@@ -16,12 +16,12 @@ public class cObjectMapTest {
 	public final static String[] unspecified = new String[] {"mfpu0", "mmpu1"};
 	public final static cLevel0 lvl0 = new cLevel0();
 	public final static cLevel1 lvl1 = new cLevel1();
-	public final static Map mlvl0 = new cObjectMap(lvl0);
-	public final static Map mlvl1 = new cObjectMap(lvl1);
+	public final static Map mlvl0 = new cObjMap(lvl0);
+	public final static Map mlvl1 = new cObjMap(lvl1);
 	
 	
 	/* constructor */
-	public cObjectMapTest() {
+	public cObjMapTest() {
 	}
 	
 	
@@ -49,7 +49,7 @@ public class cObjectMapTest {
 	
 	/* test functionality */
 	/**
-	 * Test of get method, of class cObjectMap.
+	 * Test of get method, of class cObjMap.
 	 */
 	@Test
 	public void fget() {
@@ -58,7 +58,7 @@ public class cObjectMapTest {
 	}
 	
 	/**
-	 * Test of put method, of class cObjectMap.
+	 * Test of put method, of class cObjMap.
 	 */
 	@Test
 	public void fput() {
@@ -66,7 +66,7 @@ public class cObjectMapTest {
 	}
 
 	/**
-	 * Test of clear method, of class cObjectMap.
+	 * Test of clear method, of class cObjMap.
 	 */
 	@Test
 	public void fclear() {
@@ -85,7 +85,7 @@ public class cObjectMapTest {
 	}
 
 	/**
-	 * Test of entrySet method, of class cObjectMap.
+	 * Test of entrySet method, of class cObjMap.
 	 */
 	@Test
 	public void fentrySet() {
@@ -93,7 +93,7 @@ public class cObjectMapTest {
 	}
 
 	/**
-	 * Test of keySet method, of class cObjectMap.
+	 * Test of keySet method, of class cObjMap.
 	 */
 	@Test
 	public void fkeySet() {

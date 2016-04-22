@@ -9,7 +9,7 @@ import js.lang.coll.*;
  * Defines a map interface for a object of normal or access-controlled class.
  * @author wolfram77
  */
-public class cObjectMap implements iMap<String, Object> {
+public class cObjMap implements iMap<String, Object> {
 	
 	/* data */
 	/** Object that is reflectively connected to this map. */
@@ -17,11 +17,11 @@ public class cObjectMap implements iMap<String, Object> {
 	/** Contains all properties which are enumerable. */
 	private final Set<String> enumerable;
 	/** Contains connected fields and methods to given object. */
-	private final Map<String, Object[]> map;
+	private final Map<String, iProc[]> map;
 	
 	
 	/* constructor */
-	public cObjectMap(Object v) {
+	public cObjMap(Object v) {
 		map = new HashMap<>();
 		enumerable = new HashSet<>();
 		Class<?> c = v.getClass();
@@ -38,21 +38,14 @@ public class cObjectMap implements iMap<String, Object> {
 	/* super property */
 	@Override
 	public Object get(Object k) {
-		Object[] o = map.get(k);
-		try { return o!=null && o[0]!=null? (o[0] instanceof Field? ((Field)o[0]).get(value) : ((iProc)o[0]).call()) : null; }
-		catch(IllegalArgumentException | IllegalAccessException e) { throw new RuntimeException(e); }
+		iProc[] o = map.get(k);
+		return o==null && o[0]==null? null : o[0].call();
 	}
 	
 	@Override
 	public Object put(String k, Object v) {
-		Object[] o = map.get(k);
-		if(o==null || o[1]==null) return null;
-		try {
-			if(o[1] instanceof Field) ((Field)o[1]).set(value, v);
-			else ((iProc)o[1]).call(v);
-			return v;
-		}
-		catch(IllegalArgumentException | IllegalAccessException e) { throw new RuntimeException(e); }
+		iProc[] o = map.get(k);
+		return o==null && o[0]==null? null : o[1].call(v);
 	}
 	
 	
@@ -88,7 +81,7 @@ public class cObjectMap implements iMap<String, Object> {
 		Object[] v = map.get(name);
 		v = v==null? new Object[2] : v;
 		if(a.enumerable()) enumerable.add(name);
-		v[ps] = new cMethodProc(o, m);
+		v[ps] = new cMethodProc(m, o);
 		map.put(name, v);
 	}
 	
