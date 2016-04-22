@@ -3,7 +3,7 @@ import java.util.function.*;
 import java.lang.invoke.*;
 
 /**
- * Represents a no input function that can be called.
+ * Represents a 1 input function that can be called.
  * @param <TA> Input argument 1 type.
  * @param <TR> Return type.
  */
@@ -11,7 +11,7 @@ public interface iFn1<TA, TR> extends iProc, Function<TA, TR> {
 	
 	/* static data */
 	/** Signature of this function. */
-	static MethodType TYPE = MethodType.genericMethodType(1);
+	static MethodType TYPE = iProc.type(true, 1);
 	
 	
 	/* super property */

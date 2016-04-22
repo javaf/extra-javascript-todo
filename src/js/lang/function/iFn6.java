@@ -2,7 +2,7 @@ package js.lang.function;
 import java.lang.invoke.*;
 
 /**
- * Represents a no input function that can be called.
+ * Represents a 6 input function that can be called.
  * @param <TA> Input argument 1 type.
  * @param <TB> Input argument 2 type.
  * @param <TC> Input argument 3 type.
@@ -15,7 +15,7 @@ public interface iFn6<TA, TB, TC, TD, TE, TF, TR> extends iProc {
 	
 	/* static data */
 	/** Signature of this function. */
-	static MethodType TYPE = MethodType.genericMethodType(6);
+	static MethodType TYPE = iProc.type(true, 6);
 	
 	
 	/* super property */

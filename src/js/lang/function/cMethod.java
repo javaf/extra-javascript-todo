@@ -21,13 +21,13 @@ public class cMethod implements iProc {
 	};
 	/** Array defining all iSub method signatures in order of input parameters */
 	private static final MethodType[] CONSUMER_SIGNATURE = new MethodType[] {
-		iSub0.SIGNATURE, iSub1.SIGNATURE, iSub2.SIGNATURE, iSub3.SIGNATURE,
-		iSub4.SIGNATURE, iSub5.SIGNATURE, iSub6.SIGNATURE, iSub7.SIGNATURE
+		iSub0.TYPE, iSub1.TYPE, iSub2.TYPE, iSub3.TYPE,
+		iSub4.TYPE, iSub5.TYPE, iSub6.TYPE, iSub7.TYPE
 	};
 	/** Array defining all iFn method signatures in order of input parameters */
 	private static final MethodType[] FUNCTION_SIGNATURE = new MethodType[] {
-		iFn0.TYPE, iFn1.SIGNATURE, iFn2.SIGNATURE, iFn3.SIGNATURE,
-		iFn4.SIGNATURE, iFn5.SIGNATURE, iFn6.SIGNATURE, iFn7.SIGNATURE
+		iFn0.TYPE, iFn1.TYPE, iFn2.TYPE, iFn3.TYPE,
+		iFn4.TYPE, iFn5.TYPE, iFn6.TYPE, iFn7.TYPE
 	};
 	/** Indicates the number of dynamically generated classes. */
 	public static long classNumber;
@@ -126,13 +126,8 @@ public class cMethod implements iProc {
 	
 	/* super property */
 	@Override
-	public int length() {
-		return method.length();
-	}
-	
-	@Override
-	public String name() {
-		return method.name();
+	public MethodType type() {
+		return method.type();
 	}
 	
 	
@@ -179,7 +174,7 @@ public class cMethod implements iProc {
 		MethodType sSig = MethodType.methodType(tRet, m.getParameterTypes());
 		Class<?> dCls = tRet==void.class? CONSUMER_INTERFACE[n] : FUNCTION_INTERFACE[n];
 		MethodType dSig = tRet==void.class? CONSUMER_SIGNATURE[n] : FUNCTION_SIGNATURE[n];
-		String dMthd = tRet==void.class? iSub.NAME : iFn.NAME;
+		String dMthd = tRet==void.class? "accept" : "apply";
 		MethodType dType = stc? MethodType.methodType(dCls) : MethodType.methodType(dCls, m.getClass());
 		MethodHandle fctry = LambdaMetafactory.metafactory(l, dMthd, dType, dSig, l.unreflect(m), sSig).getTarget();
 		return !stc && o!=null? fctry.bindTo(o) : fctry;
@@ -196,7 +191,7 @@ public class cMethod implements iProc {
 		StringBuilder s = new StringBuilder("package js.lang.function.dynamic;");
 		s.append("public class ").append(className).append(" implements js.lang.function.");
 		s.append(isvoid? "iConsumer" : "iFunction").append(argn).append(" {");
-		s.append("public ").append(isvoid? "void "+iSub.NAME : "Object "+iFn.NAME).append("(");
+		s.append("public ").append(isvoid? "void accept(" : "Object apply(");
 		for(int i=0; i<argn; i++)
 			s.append("Object ").append(argv[i]).append(", ");
 		if(argn>0) s.delete(s.length()-2, s.length());

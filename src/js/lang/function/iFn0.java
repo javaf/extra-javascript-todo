@@ -10,7 +10,7 @@ public interface iFn0<TR> extends iProc, Supplier<TR> {
 	
 	/* static data */
 	/** Signature of this function. */
-	static MethodType TYPE = MethodType.genericMethodType(0);
+	static MethodType TYPE = iProc.type(true, 0);
 	
 	
 	/* super property */

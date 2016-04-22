@@ -2,7 +2,7 @@ package js.lang.function;
 import java.lang.invoke.*;
 
 /**
- * Represents a no input function that can be called.
+ * Represents a 4 input function that can be called.
  * @param <TA> Input argument 1 type.
  * @param <TB> Input argument 2 type.
  * @param <TC> Input argument 3 type.
@@ -13,7 +13,7 @@ public interface iFn4<TA, TB, TC, TD, TR> extends iProc {
 	
 	/* static data */
 	/** Signature of this function. */
-	static MethodType TYPE = MethodType.genericMethodType(4);
+	static MethodType TYPE = iProc.type(true, 4);
 	
 	
 	/* super property */

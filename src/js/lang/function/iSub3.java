@@ -1,30 +1,29 @@
 package js.lang.function;
 import java.lang.invoke.*;
-import js.lang.array.*;
 
 /**
- * Represents a no-output and 3 input method that can be called.
- * @param <TA> Input Argument 1 type.
- * @param <TB> Input Argument 2 type.
- * @param <TC> Input Argument 3 type.
+ * Represents a 3 input subroutine that can be called.
+ * @param <TA> Input argument 1 type.
+ * @param <TB> Input argument 2 type.
+ * @param <TC> Input argument 3 type.
  */
-public interface iSub3<TA, TB, TC> extends iSub {
+public interface iSub3<TA, TB, TC> extends iProc {
 	
 	/* static data */
-	/** Method signature of this interface. */
-	static MethodType SIGNATURE = MethodType.methodType(void.class, cArray.fill(new Class<?>[3], Object.class));
+	/** Signature of this interface. */
+	static MethodType TYPE = iProc.type(false, 3);
 	
 	
 	/* super property */
 	@Override
-	default int length() {
-		return 3;
+	default MethodType type() {
+		return TYPE;
 	}
 	
 	
 	/* method */
 	/**
-	 * Represents then method to the called when "call" is called.
+	 * Represents the subroutine to be defined.
 	 * @param a Input argument 1.
 	 * @param b Input argument 2.
 	 * @param c Input argument 3.
@@ -34,13 +33,8 @@ public interface iSub3<TA, TB, TC> extends iSub {
 	
 	/* super method */
 	@Override
-	default Object call(Object... args) {
-		accept((TA)args[0], (TB)args[1], (TC)args[2]);
+	default Object call(Object... a) {
+		accept((TA)a[0], (TB)a[1], (TC)a[2]);
 		return null;
-	}
-	
-	@Override
-	default String z_toString() {
-		return "void "+name()+"(TA a, TB b, TC c) { [native code] }";
 	}
 }

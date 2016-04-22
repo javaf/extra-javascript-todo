@@ -1,6 +1,7 @@
 package js.lang.function;
 import java.lang.invoke.*;
 import js.lang.object.*;
+import js.lang.array.*;
 
 /**
  * Represents a procedure which can be called with variable arguments, and it
@@ -15,6 +16,18 @@ public interface iProc extends iToString {
 	 */
 	default MethodType type() {
 		return null;
+	}
+	
+	
+	/* static method */
+	/**
+	 * Returns generic signature for a procedure.
+	 * @param ret Return type of the procedure.
+	 * @param params Number of input parameters.
+	 * @return Method type of procedure.
+	 */
+	static MethodType type(boolean ret, int params) {
+		return MethodType.methodType(ret? Object.class : void.class, cArray.fill(new Class<?>[params], Object.class));
 	}
 	
 	

@@ -1,44 +1,40 @@
 package js.lang.function;
+import java.util.function.*;
 import java.lang.invoke.*;
-import js.lang.array.*;
 
 /**
- * Represents a no-output and 2 input method that can be called.
- * @param <TA> Input Argument 1 type.
- * @param <TB> Input Argument 2 type.
+ * Represents a 2 input subroutine that can be called.
+ * @param <TA> Input argument 1 type.
+ * @param <TB> Input argument 2 type.
  */
-public interface iSub2<TA, TB> extends iSub {
+public interface iSub2<TA, TB> extends iProc, BiConsumer<TA, TB> {
 	
 	/* static data */
-	/** Method signature of this interface. */
-	static MethodType SIGNATURE = MethodType.methodType(void.class, cArray.fill(new Class<?>[2], Object.class));
+	/** Signature of this interface. */
+	static MethodType TYPE = iProc.type(false, 2);
 	
 	
 	/* super property */
 	@Override
-	default int length() {
-		return 2;
+	default MethodType type() {
+		return TYPE;
 	}
 	
 	
 	/* method */
 	/**
-	 * Represents then method to the called when "call" is called.
+	 * Represents the subroutine to be defined.
 	 * @param a Input argument 1.
 	 * @param b Input argument 2.
 	 */
+	@Override
 	void accept(TA a, TB b);
 	
 	
 	/* super method */
 	@Override
-	default Object call(Object... args) {
-		accept((TA)args[0], (TB)args[1]);
+	default Object call(Object... a) {
+		accept((TA)a[0], (TB)a[1]);
 		return null;
-	}
-	
-	@Override
-	default String z_toString() {
-		return "void "+name()+"(TA a, TB b) { [native code] }";
 	}
 }
