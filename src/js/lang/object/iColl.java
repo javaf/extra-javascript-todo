@@ -1,4 +1,4 @@
-package js.lang.coll;
+package js.lang.object;
 
 /**
  * Represents a collection having a set of properties.

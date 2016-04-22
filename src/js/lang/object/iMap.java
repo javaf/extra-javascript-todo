@@ -1,4 +1,4 @@
-package js.lang.coll;
+package js.lang.object;
 import java.util.function.*;
 import java.util.*;
 
