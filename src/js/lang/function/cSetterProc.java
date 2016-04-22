@@ -29,9 +29,9 @@ public class cSetterProc<TR> implements iProc<TR> {
 		try {
 			boolean stc = Modifier.isStatic(f.getModifiers());
 			MethodHandle mh = MethodHandles.lookup().unreflectSetter(f);
-			if(stc) proc = (iFn1)(v)->{ try { return mh.invoke(v); } catch(Throwable e) { throw new RuntimeException(e); } };
-			else if(obj==null) proc = (iFn2)(o, v)->{ try { return mh.invoke(o, v); } catch(Throwable e) { throw new RuntimeException(e); } };
-			proc = (iFn1)(v)->{ try { return mh.invoke(obj, v); } catch(Throwable e) { throw new RuntimeException(e); } };
+			if(stc) proc = (iFn1)(v)->{ try { mh.invoke(v); return v; } catch(Throwable e) { throw new RuntimeException(e); } };
+			else if(obj==null) proc = (iFn2)(o, v)->{ try { mh.invoke(o, v); return v; } catch(Throwable e) { throw new RuntimeException(e); } };
+			proc = (iFn1)(v)->{ try { mh.invoke(obj, v); return v; } catch(Throwable e) { throw new RuntimeException(e); } };
 		}
 		catch(IllegalAccessException e) { throw new RuntimeException(e); }
 	}
