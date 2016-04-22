@@ -9,35 +9,51 @@ import java.lang.invoke.*;
 public class cGetterProc<TR> implements iProc<TR> {
 	
 	/* data */
-	private MethodHandle handle;
-	private Field field;
+	/** Defines the getter procedure for the specified field. */
 	private iProc proc;
-	private Object obj;
 	
 	
 	/* constructor */
-	public cGetterProc(Field f, Object o) {
+	/**
+	 * Creates getter procedure for specified field. If the passed field is static
+	 * or it is an instance field and the passed object is not null, then a bound
+	 * procedure is returned which takes no parameters and returns the value of the
+	 * field. However, if the passed field is an instance field and the passed object
+	 * is null, then an unbound procedure is returned which takes the object to which
+	 * the field belongs as the only parameter.
+	 * @param f Reflected field.
+	 * @param obj Object to which the field belongs. Can be null.
+	 */
+	public cGetterProc(Field f, Object obj) {
 		try {
-			handle = MethodHandles.lookup().unreflectGetter(f);
+			boolean stc = Modifier.isStatic(f.getModifiers());
+			MethodHandle mh = MethodHandles.lookup().unreflectGetter(f);
+			if(stc) proc = (iFn0)()->{ try { return mh.invoke(); } catch(Throwable e) { throw new RuntimeException(e); } };
+			else if(obj==null) proc = (iFn1)(o)->{ try { return mh.invoke(o); } catch(Throwable e) { throw new RuntimeException(e); } };
+			proc = (iFn0)()->{ try { return mh.invoke(obj); } catch(Throwable e) { throw new RuntimeException(e); } };
 		}
 		catch(IllegalAccessException e) { throw new RuntimeException(e); }
 	}
-	public cGetterProc(Field f) {
-		this(f, null);
-	}
 	
-	/* method */
-	// Returns a procedure that gets the value of a field.
-	private static iProc _proc(Field f, MethodHandle mh, Object obj) {
-		if(Modifier.isStatic(f.getModifiers())) return (iFn0)()->{ try { return mh.invoke(); } catch(Throwable e) { throw new RuntimeException(e); } };
-		else if(obj==null) return (iFn1)(o)->{ try { return mh.invoke(o); } catch(Throwable e) { throw new RuntimeException(e); } };
-		return (iFn0)()->{ try { return mh.invoke(obj); } catch(Throwable e) { throw new RuntimeException(e); } };
-	}
 	
-					
 	/* super method */
 	@Override
-	public TR apply() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public TR call(Object... a) {
+		return (TR)proc.call(a);
+	}
+	
+	@Override
+	public iProc valueOf() {
+		return proc;
+	}
+	
+	@Override
+	public String z_toString() {
+		return proc.z_toString();
+	}
+	
+	@Override
+	public String toString() {
+		return z_toString();
 	}
 }
