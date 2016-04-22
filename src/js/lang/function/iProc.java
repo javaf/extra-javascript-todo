@@ -1,4 +1,5 @@
 package js.lang.function;
+import java.lang.reflect.*;
 import java.lang.invoke.*;
 import js.lang.object.*;
 import js.lang.array.*;
@@ -21,6 +22,31 @@ public interface iProc<TR> extends iObj {
 	
 	
 	/* static method */
+	/**
+	 * Get a method object from class and its specified name. The returned method
+	 * object is obtained through reflection.
+	 * @param clazz Class object which contains the method.
+	 * @param method Name of the method.
+	 * @param parameterTypes Parameter types of the method.
+	 * @return Field object.
+	 */
+	static Method method(Class<?> clazz, String method, Class<?>[] parameterTypes) {
+		try { return clazz.getMethod(method, parameterTypes); }
+		catch(NoSuchMethodException | SecurityException e) { throw new RuntimeException(e); }
+	}
+	
+	/**
+	 * Get a field object from class and its specified name. The returned field
+	 * object is obtained through reflection.
+	 * @param clazz Class object which contains the field.
+	 * @param field Name of the field.
+	 * @return Field object.
+	 */
+	static Field field(Class<?> clazz, String field) {
+		try { return clazz.getField(field); }
+		catch(NoSuchFieldException | SecurityException e) { throw new RuntimeException(e); }
+	}
+
 	/**
 	 * Returns generic signature for a procedure.
 	 * @param ret Return type of the procedure.
