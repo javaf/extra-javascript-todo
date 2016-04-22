@@ -7,7 +7,7 @@ import java.util.*;
  * @param <K> Datatype of the key.
  * @param <V> Datatype of the value.
  */
-public interface iMap<K, V> extends Map<K, V> {
+public interface iMap<K, V> extends Map<K, V>, Iterable<K> {
 	
 	/* super method */
 	@Override
@@ -126,5 +126,10 @@ public interface iMap<K, V> extends Map<K, V> {
 		for(Entry<K, V> e : entrySet())
 			o.add(e.getValue());
 		return o;
+	}
+	
+	@Override
+	default Iterator<K> iterator() {
+		return keySet().iterator();
 	}
 }
