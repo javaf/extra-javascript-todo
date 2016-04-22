@@ -3,7 +3,7 @@ import java.lang.reflect.*;
 import java.lang.invoke.*;
 
 /**
- * Defines a procedure interface for a field which can be called.
+ * Defines a getter procedure interface for a field which can be called.
  * @param <TR> Datatype of field.
  */
 public class cGetterProc<TR> implements iProc<TR> {
