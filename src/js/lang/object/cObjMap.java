@@ -1,6 +1,5 @@
 package js.lang.object;
 import java.lang.reflect.*;
-import java.util.AbstractMap.*;
 import java.util.*;
 import js.lang.function.*;
 import js.lang.coll.*;
@@ -30,7 +29,7 @@ public class cObjMap implements iMap<String, Object> {
 		for(Field f : c.getFields())
 			_addField(enu, f);
 		for(Method m : c.getMethods())
-			_addMethod(v, c, m);
+			_addMethod(m);
 		value = v;
 	}
 	
@@ -56,15 +55,15 @@ public class cObjMap implements iMap<String, Object> {
 	 */
 	private void _addField(boolean enu, Field f) {
 		aAccess a = f.getAnnotation(aAccess.class);
+		if(!enu && a==null) return;
 		a = a==null? aAccess.DEFAULT : a;
-		if(enu) { if(a!=null && a.value().length()==0) return; }
-		else if(a==null || a.value().length()==0) return;
-		String name = (a==null? "." : a.value()).replace(".", f.getName());
-		if(a==null || a.enumerable()) enumerable.add(name);
-		Object[] v = map.get(name);
-		v = v==null? new Object[2] : v;
-		if(a==null || a.writable()) v[1] = f;
-		v[0] = f;
+		if(a.value().length()==0) return;
+		String name = a.value().replace(".", f.getName());
+		if(a.enumerable()) enumerable.add(name);
+		iProc[] v = map.get(name);
+		v = v==null? new iProc[2] : v;
+		if(a.writable()) v[1] = new cSetterProc(f, value).valueOf();
+		v[0] = new cGetterProc(f, value).valueOf();
 		map.put(name, v);
 	}
 	/**
@@ -73,15 +72,15 @@ public class cObjMap implements iMap<String, Object> {
 	 * @param c This class.
 	 * @param m Method to add.
 	 */
-	private void _addMethod(Object o, Class<?> c, Method m) {
+	private void _addMethod(Method m) {
 		int ps = m.getParameterCount();
 		aAccess a = m.getAnnotation(aAccess.class);
 		if(ps>1 || a==null || a.value().length()==0) return;
 		String name = a.value().replace(".", m.getName());
-		Object[] v = map.get(name);
-		v = v==null? new Object[2] : v;
+		iProc[] v = map.get(name);
+		v = v==null? new iProc[2] : v;
 		if(a.enumerable()) enumerable.add(name);
-		v[ps] = new cMethodProc(m, o);
+		v[ps] = new cMethodProc(m, value).valueOf();
 		map.put(name, v);
 	}
 	
@@ -97,15 +96,7 @@ public class cObjMap implements iMap<String, Object> {
 	}
 	
 	@Override
-	public Set<Entry<String, Object>> entrySet() {
-		Set<Entry<String, Object>> o = new HashSet<>();
-		for(String k : enumerable)
-			o.add(new SimpleEntry<>(k, get(k)));
-		return o;
-	}
-	
-	@Override
 	public Set<String> keySet() {
-		return new HashSet<>(enumerable);
+		return enumerable;
 	}
 }

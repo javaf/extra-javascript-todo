@@ -78,7 +78,7 @@ public class cMethodProc<TR> implements iProc<TR> {
 	}
 	
 	@Override
-	public final Object valueOf() {
+	public final iProc valueOf() {
 		return proc;
 	}
 }
