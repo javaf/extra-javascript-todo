@@ -8,18 +8,18 @@ public interface iObj<T> {
 	
 	/* method */
 	/**
-	 * Returns string representation of the object.
-	 * @return String representation of object.
-	 */
-	default String z_toString() {
-		return toString();
-	}
-	
-	/**
 	 * Returns the base value of this object.
 	 * @return Base value.
 	 */
 	default T valueOf() {
 		return (T)this;
+	}
+
+	/**
+	 * Returns string representation of the object.
+	 * @return String representation of object.
+	 */
+	default String z_toString() {
+		return toString();
 	}
 }

@@ -1,5 +1,4 @@
 package js.lang.function;
-import js.lang.code.compile.*;
 import java.lang.reflect.*;
 import java.lang.invoke.*;
 
@@ -20,25 +19,11 @@ public class cMethodProc<TR> implements iProc<TR> {
 		iFn0.class, iFn1.class, iFn2.class, iFn3.class,
 		iFn4.class, iFn5.class, iFn6.class, iFn7.class
 	};
-	/** Array defining all iSub method signatures in order of input parameters */
-	private static final MethodType[] SUB_TYPE = new MethodType[] {
-		iSub0.TYPE, iSub1.TYPE, iSub2.TYPE, iSub3.TYPE,
-		iSub4.TYPE, iSub5.TYPE, iSub6.TYPE, iSub7.TYPE
-	};
-	/** Array defining all iFn method signatures in order of input parameters */
-	private static final MethodType[] FN_TYPE = new MethodType[] {
-		iFn0.TYPE, iFn1.TYPE, iFn2.TYPE, iFn3.TYPE,
-		iFn4.TYPE, iFn5.TYPE, iFn6.TYPE, iFn7.TYPE
-	};
-	/** Indicates the number of dynamically generated classes. */
-	private static long classNo;
 	
 	
 	/* data */
-	/** Object implementing iProc interface which can be called. */
-	private final iProc method;
-	/** Original method handle that can be used to generate iProc object after binding. */
-	private final MethodHandle handle;
+	/** Defines the method call procedure for the specified method. */
+	private final iProc proc;
 	
 	
 	/* constructor */
@@ -50,173 +35,36 @@ public class cMethodProc<TR> implements iProc<TR> {
 	 */
 	public cMethodProc(Method m, Object obj) {
 		try {
-			handle = _factory(obj, m);
-			method = Modifier.isStatic(m.getModifiers()) || obj!=null? (iProc)handle.invoke() : null;
+			MethodHandles.Lookup l = MethodHandles.lookup();
+			MethodHandle fctry, mh = l.unreflect(m);
+			boolean stc = Modifier.isStatic(m.getModifiers());
+			boolean ret = m.getReturnType()==void.class;
+			int n = m.getParameterCount() + (!stc && obj==null? 1 : 0);
+			Class<?> dCls = ret? FN_CLASS[n] : SUB_CLASS[n];
+			MethodType dType = stc || obj==null? MethodType.methodType(dCls) : MethodType.methodType(dCls, m.getClass());
+			fctry = LambdaMetafactory.metafactory(l, ret? "apply" : "accept", dType, iProc.type(ret, n), mh, mh.type()).getTarget();
+			proc = (iProc)(stc || obj==null? fctry.invoke() : fctry.invoke(obj));
 		}
 		catch(Throwable e) { throw new RuntimeException(e); }
-	}
-	/**
-	 * Creates a callable oFunction object from a String specification of the function.
-	 * @param argn Number of arguments to the function.
-	 * @param argv Names to be used by the function as formal argument names. Each must
-	 * be a string that corresponds to a valid Java identifier or a list of such strings
-	 * separated with a comma; for example "x", "theValue", or "a,b".
-	 * @param code A string containing the Java statements comprising the function definition.
-	 */
-	public cMethodProc(int argn, String[] argv, String code) {
-		handle = null;
-		if(code.length()==0) { method = (Object... a) -> null; return; }
-		String className = "c"+classNumber(), content = _methodContent(className, argn, argv, code);
-		try { method = (iProc)cJavaMemoryCompiler.compile("js.lang.function.dynamic."+className, content).newInstance(); }
-		catch(Exception e) { throw new RuntimeException(e); }
-	}
-	/**
-	 * Direct field constructor.
-	 * @param m iProc object.
-	 * @param f MethodHandle methodHandle.
-	 * @param n Method name.
-	 */
-	private cMethodProc(iProc m, MethodHandle f) {
-		method = m;
-		handle = f;
-	}
-	/**
-	 * Copy constructor.
-	 * @param o cMethod object
-	 */
-	protected cMethodProc(cMethodProc o) {
-		method = o.method;
-		handle = o.handle;
-	}
-	
-	
-	/* static property */
-	/**
-	 * Returns number of dynamically generated classes, and increments it.
-	 * @return Number of dynamically generated classes.
-	 */
-	private static synchronized long classNumber() {
-		return classNo++;
 	}
 	
 	
 	/* super property */
 	@Override
 	public MethodType type() {
-		return method.type();
-	}
-	
-	
-	/* static method */
-	/**
-	 * Get a method object from class and its specified name. The returned method
-	 * object is obtained through reflection.
-	 * @param clazz Class object which contains the method.
-	 * @param method Name of the method.
-	 * @param parameterTypes Parameter types of the method.
-	 * @return Field object.
-	 */
-	public final static Method method(Class<?> clazz, String method, Class<?>[] parameterTypes) {
-		try { return clazz.getMethod(method, parameterTypes); }
-		catch(NoSuchMethodException | SecurityException e) { throw new RuntimeException(e); }
-	}
-	
-	/**
-	 * Get a field object from class and its specified name. The returned field
-	 * object is obtained through reflection.
-	 * @param clazz Class object which contains the field.
-	 * @param field Name of the field.
-	 * @return Field object.
-	 */
-	public final static Field field(Class<?> clazz, String field) {
-		try { return clazz.getField(field); }
-		catch(NoSuchFieldException | SecurityException e) { throw new RuntimeException(e); }
-	}
-	
-	/**
-	 * Get Lambda function factory from specified method handle. Invoking the returned
- factory with object yields an iProc object which can be directly called.
-	 * @param o Object which the interface object is to be bound to (can be null).
-	 * @param m Reflected method object.
-	 * @return Method handle factory.
-	 * @throws LambdaConversionException When conversion to iProc fails.
-	 * @throws IllegalAccessException When method is not accessible.
-	 */
-	private static MethodHandle _factory(Object o, Method m) throws LambdaConversionException, IllegalAccessException {
-		int n = m.getParameterCount();
-		Class<?> tRet = m.getReturnType();
-		MethodHandles.Lookup l = MethodHandles.lookup();
-		boolean stc = Modifier.isStatic(m.getModifiers());
-		MethodType sSig = MethodType.methodType(tRet, m.getParameterTypes());
-		Class<?> dCls = tRet==void.class? SUB_CLASS[n] : FN_CLASS[n];
-		MethodType dSig = tRet==void.class? SUB_TYPE[n] : FN_TYPE[n];
-		String dMthd = tRet==void.class? "accept" : "apply";
-		MethodType dType = stc? MethodType.methodType(dCls) : MethodType.methodType(dCls, m.getClass());
-		MethodHandle fctry = LambdaMetafactory.metafactory(l, dMthd, dType, dSig, l.unreflect(m), sSig).getTarget();
-		return !stc && o!=null? fctry.bindTo(o) : fctry;
-	}
-	
-	/**
-	 * Generated dynamic function code from given class name, function arguments and code
-	 * @param className Name of the class.
-	 * @param args Function arguments (without type), and code (last).
-	 * @return Generated function code.
-	 */
-	private static String _methodContent(String className, int argn, String[] argv, String code) {
-		boolean isvoid = !code.contains("return") || code.replace(" ", "").contains("return;");
-		StringBuilder s = new StringBuilder("package js.lang.function.dynamic;");
-		s.append("public class ").append(className).append(" implements js.lang.function.");
-		s.append(isvoid? "iConsumer" : "iFunction").append(argn).append(" {");
-		s.append("public ").append(isvoid? "void accept(" : "Object apply(");
-		for(int i=0; i<argn; i++)
-			s.append("Object ").append(argv[i]).append(", ");
-		if(argn>0) s.delete(s.length()-2, s.length());
-		s.append(") {").append(code).append("} }");
-		return s.toString();
-	}
-	
-	
-	/* method */
-	/**
-	 * Calls a function with a given this value and arguments provided as an
-	 * array.
-	 * @param thisArg The value of this provided for the call to function.
-	 * @param argsArray Arguments for the object.
-	 * @return Return value of function.
-	 */
-	public final Object apply(Object thisArg, Object[] argsArray) {
-		return call(thisArg, argsArray);
-	}
-	
-	/**
-	 * Creates a new function that, when called, has its "this" set to the
-	 * provided value, with a given sequence of arguments preceding any provided
-	 * when the new function is called.
-	 * @param thisArg The value to be passed as the this parameter to the target
-	 * function when the bound function is called.
-	 * @param args Arguments to prepend to arguments provided to the bound
-	 * function when invoking the target function.
-	 * @return Function with bound "this" and any arguments.
-	 */
-	public cMethodProc bind(Object thisArg, Object... args) {
-		try {
-			MethodHandle fctry = handle.bindTo(thisArg);
-			MethodHandles.insertArguments(fctry, 0, args);
-			return new cMethodProc((iProc)fctry.invoke(), fctry);
-		}
-		catch(Throwable e) { throw new RuntimeException(e); }
+		return proc.type();
 	}
 	
 	
 	/* super method */
 	@Override
 	public final TR call(Object... a) {
-		return (TR)method.call(a);
+		return (TR)proc.call(a);
 	}
 	
 	@Override
 	public final String z_toString() {
-		return method.z_toString();
+		return proc.z_toString();
 	}
 	
 	@Override
@@ -226,6 +74,6 @@ public class cMethodProc<TR> implements iProc<TR> {
 	
 	@Override
 	public final Object valueOf() {
-		return method;
+		return proc;
 	}
 }
