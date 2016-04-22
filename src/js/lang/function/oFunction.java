@@ -1,25 +1,20 @@
 package js.lang.function;
 import java.util.function.*;
 import java.lang.reflect.*;
+import java.lang.invoke.*;
 
 /**
  * The oFunction class represents generic functions.
- * @param <TA> Input argument 1 type.
- * @param <TB> Input argument 2 type.
- * @param <TC> Input argument 3 type.
- * @param <TD> Input argument 4 type.
- * @param <TE> Input argument 5 type.
- * @param <TF> Input argument 6 type.
- * @param <TG> Input argument 7 type.
- * @param <TR> Return type.
- * @author Didier L, wolfram77
+ * @param <TR> Return type of function.
  */
-public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethodProc implements
-	iSub0, iSub1<TA>, iSub2<TA, TB>, iSub3<TA, TB, TC>, iSub4<TA, TB, TC, TD>,
-	iSub5<TA, TB, TC, TD, TE>, iSub6<TA, TB, TC, TD, TE, TF>, iSub7<TA, TB, TC, TD, TE, TF, TG>,
-	iFn0<TR>, iFn1<TA, TR>, iFn2<TA, TB, TR>, iFn3<TA, TB, TC, TR>, iFn4<TA, TB, TC, TD, TR>,
-	iFn5<TA, TB, TC, TD, TE, TR>, iFn6<TA, TB, TC, TD, TE, TF, TR>, iFn7<TA, TB, TC, TD, TE, TF, TG, TR>,
-	Consumer<TA>, BiConsumer<TA, TB>, Supplier<TR>, Function<TA, TR>, BiFunction<TA, TB, TR> {
+public class oFunction<TR> implements iProc<TR> {
+	
+	/* data */
+	/** Defines the procedure for the specified object. */
+	private final iProc proc;
+	/** Contains reflected handle required for binding. */
+	private Object handle;
+	
 	
 	/* constructor */
 	/**
@@ -27,57 +22,56 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethodProc imple
 	 * @param function Function as lambda expression or object.
 	 */
 	public oFunction(iProc function) {
-		super(function);
+		proc = function;
 	}
 	/**
 	 * Create a callable oFunction object from object implementing Consumer interface.
-	 * @param m Consumer implementing object.
+	 * @param function Consumer implementing object.
 	 */
-	public oFunction(Consumer<TA> m) {
-		super((iSub1<TA>) (TA a) -> m.accept(a));
+	public oFunction(Consumer function) {
+		proc = (iSub1)(a)->function.accept(a);
 	}
 	/**
 	 * Create a callable oFunction object from object implementing BiConsumer interface.
-	 * @param m BiConsumer implementing object.
+	 * @param function BiConsumer implementing object.
 	 */
-	public oFunction(BiConsumer<TA, TB> m) {
-		super((iSub2<TA, TB>) (TA a, TB b) -> m.accept(a, b));
+	public oFunction(BiConsumer function) {
+		proc = (iSub2)(a, b)->function.accept(a, b);
 	}
 	/**
 	 * Create a callable oFunction object from object implementing Supplier interface.
-	 * @param m Supplier implementing object.
+	 * @param function Supplier implementing object.
 	 */
-	public oFunction(Supplier<TR> m) {
-		super((iFn0<TR>) () -> m.get());
+	public oFunction(Supplier function) {
+		proc = (iFn0)()->function.get();
 	}
 	/**
 	 * Create a callable oFunction object from object implementing Function interface.
-	 * @param m Function implementing object.
+	 * @param function Function implementing object.
 	 */
-	public oFunction(Function<TA, TR> m) {
-		super((iFn1<TA, TR>) (TA a) -> m.apply(a));
+	public oFunction(Function function) {
+		proc = (iFn1)(a)->function.apply(a);
 	}
 	/**
 	 * Create a callable oFunction object from object implementing BiFunction interface.
-	 * @param m BiFunction implementing object.
+	 * @param function BiFunction implementing object.
 	 */
-	public oFunction(BiFunction<TA, TB, TR> m) {
-		super((iFn2<TA, TB, TR>) (TA a, TB b) -> m.apply(a, b));
+	public oFunction(BiFunction function) {
+		proc = (iFn2)(a, b)->function.apply(a, b);
 	}
 	/**
 	 * Creates a callable oFunction object from a specific field reflectively..
 	 * @param thisArg The value to be passed as the this parameter to the target
 	 * function when the bound function is called.
-	 * @param clazz Class which contains the field.
 	 * @param field Field object of the field.
 	 * @param set If true, setter is used, otherwise getter is used.
 	 */
 	public oFunction(Object thisArg, Field field, boolean set) {
-		super(thisArg, field, set);
+		proc = set? new cSetterProc(field, thisArg) : new cGetterProc(field, thisArg);
+		handle = field;
 	}
 	/**
 	 * Creates a callable oFunction object from a specific field reflectively..
-	 * @param clazz Class which contains the field.
 	 * @param field Field object of the field.
 	 * @param set If true, setter is used, otherwise getter is used.
 	 */
@@ -93,7 +87,7 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethodProc imple
 	 * @param set If true, setter is used, otherwise getter is used.
 	 */
 	public oFunction(Object thisArg, Class<?> clazz, String field, boolean set) {
-		this(thisArg, cMethodProc.field(clazz, field), set);
+		this(thisArg, iProc.field(clazz, field), set);
 	}
 	/**
 	 * Creates a callable oFunction object from a specific field reflectively..
@@ -108,15 +102,14 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethodProc imple
 	 * Creates a callable oFunction object from a specific method reflectively..
 	 * @param thisArg The value to be passed as the this parameter to the target
 	 * function when the bound function is called.
-	 * @param clazz Class which contains the method.
 	 * @param method Method object.
 	 */
 	public oFunction(Object thisArg, Method method) {
-		super(thisArg, method);
+		proc = new cMethodProc(method, thisArg);
+		handle = method;
 	}
 	/**
 	 * Creates a callable oFunction object from a specific method reflectively..
-	 * @param clazz Class which contains the method.
 	 * @param method Method object.
 	 */
 	public oFunction(Method method) {
@@ -131,7 +124,7 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethodProc imple
 	 * @param parameterTypes Parameter types of the method.
 	 */
 	public oFunction(Object thisArg, Class<?> clazz, String method, Class<?>... parameterTypes) {
-		this(thisArg, cMethodProc.method(clazz, method, parameterTypes));
+		this(thisArg, iProc.method(clazz, method, parameterTypes));
 	}
 	/**
 	 * Creates a callable oFunction object from a specific method reflectively.
@@ -153,110 +146,56 @@ public class oFunction<TA, TB, TC, TD, TE, TF, TG, TR> extends cMethodProc imple
 	 * statements comprising the function definition.
 	 */
 	public oFunction(String... args) {
-		super(args.length-1, args, args[args.length-1]);
+		proc = new cStrMethodProc(args);
 	}
 	/**
-	 * Super copy constructor
-	 * @param o cMethodProc object.
+	 * Copy constructor.
+	 * @param o oFunction object.
 	 */
-	private oFunction(cMethodProc o) {
-		super(o);
+	private oFunction(oFunction o) {
+		proc = o.proc;
+	}
+	
+	
+	/* super property */
+	@Override
+	public MethodType type() {
+		return proc.type();
+	}
+	
+	
+	/* method */
+	/**
+	 * Bind an object to this function, if it is unbound.
+	 * @param obj Object to bind to.
+	 * @return Bound function.
+	 */
+	public oFunction<TR> bind(Object obj) {
+		if(proc instanceof cGetterProc) return new oFunction(obj, (Field)handle, false);
+		else if(proc instanceof cSetterProc) return new oFunction(obj, (Field)handle, true);
+		else if(proc instanceof cMethodProc) return new oFunction(obj, (Method)handle);
+		return this;
 	}
 	
 	
 	/* super method */
 	@Override
-	public final oFunction<TA, TB, TC, TD, TE, TF, TG, TR> bind(Object thisArg, Object... args) {
-		return new oFunction<>(super.bind(thisArg, args));
+	public final TR call(Object... a) {
+		return (TR)proc.call(a);
 	}
 	
 	@Override
-	public final void accept() {
-		apply();
-	}
-
-	@Override
-	public final void accept(TA a) {
-		apply(a);
-	}
-
-	@Override
-	public final void accept(TA a, TB b) {
-		apply(a, b);
-	}
-
-	@Override
-	public final void accept(TA a, TB b, TC c) {
-		apply(a, b, c);
-	}
-
-	@Override
-	public final void accept(TA a, TB b, TC c, TD d) {
-		apply(a, b, c, d);
-	}
-
-	@Override
-	public final void accept(TA a, TB b, TC c, TD d, TE e) {
-		apply(a, b, c, d, e);
-	}
-
-	@Override
-	public final void accept(TA a, TB b, TC c, TD d, TE e, TF f) {
-		apply(a, b, c, d, e, f);
-	}
-
-	@Override
-	public final void accept(TA a, TB b, TC c, TD d, TE e, TF f, TG g) {
-		apply(a, b, c, d, e, f, g);
+	public final String z_toString() {
+		return proc.z_toString();
 	}
 	
 	@Override
-	public final TR get() {
-		return apply();
-	}
-
-	@Override
-	public final TR apply() {
-		return (TR)((iProc)valueOf()).call();
-	}
-
-	@Override
-	public final TR apply(TA a) {
-		return (TR)((iProc)valueOf()).call(a);
-	}
-
-	@Override
-	public final TR apply(TA a, TB b) {
-		return (TR)((iProc)valueOf()).call(a, b);
-	}
-
-	@Override
-	public final TR apply(TA a, TB b, TC c) {
-		return (TR)((iProc)valueOf()).call(a, b, c);
-	}
-
-	@Override
-	public final TR apply(TA a, TB b, TC c, TD d) {
-		return (TR)((iProc)valueOf()).call(a, b, c, d);
-	}
-
-	@Override
-	public final TR apply(TA a, TB b, TC c, TD d, TE e) {
-		return (TR)((iProc)valueOf()).call(a, b, c, d, e);
-	}
-
-	@Override
-	public final TR apply(TA a, TB b, TC c, TD d, TE e, TF f) {
-		return (TR)((iProc)valueOf()).call(a, b, c, d, e, f);
-	}
-
-	@Override
-	public final TR apply(TA a, TB b, TC c, TD d, TE e, TF f, TG g) {
-		return (TR)((iProc)valueOf()).call(a, b, c, d, e, f, g);
+	public final String toString() {
+		return z_toString();
 	}
 	
 	@Override
-	public final <TV> oFunction<TA, TB, TC, TD, TE, TF, TG, TV> andThen(Function<? super TR, ? extends TV> after) {
-		return new oFunction<>((iProc)(Object... args) -> after.apply((TR)((iProc)valueOf()).call(args)));
+	public final Object valueOf() {
+		return proc;
 	}
 }
