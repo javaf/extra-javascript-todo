@@ -1,5 +1,4 @@
 package js.lang.object;
-import js.lang.coll.*;
 import java.util.*;
 
 /**

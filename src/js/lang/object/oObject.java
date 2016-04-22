@@ -4,24 +4,24 @@ import java.util.*;
 /**
  * Creates an object which contains properties.
  * @param <K> Datatype of property name.
- * @param <V> Datatype of property value.
+ * @param <V> Datatype of property map.
  */
 public class oObject<K, V> extends cProtoMap<K, V> {
 	
 	/* constructor */
 	/**
 	 * Create an oObject.
-	 * @param nameValuePairs Pairs of names (strings) and values (any value) where
-	 * the name is separated from the value by a colon.
+	 * @param nameValuePairs Pairs of names (strings) and values (any map) where
+ the name is separated from the map by a colon.
 	 */
 	public oObject(Entry... nameValuePairs) {
 		super(new HashMap<>());
 		for(Entry e : nameValuePairs)
-			value.put(e.getKey(), e.getValue());
+			map.put(e.getKey(), e.getValue());
 	}
 	/**
 	 * Create an oObject.
-	 * @param value Any value.
+	 * @param value Any map.
 	 */
 	public oObject(Object value) {
 		super(value instanceof Map? (Map)value : new cObjMap(value));
@@ -44,13 +44,13 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	}
 	
 	/**
-	 * Creates a new object with the specified prototype object and properties.
-	 * @param proto The object which should be the prototype of the newly-created object.
+	 * Creates a new object with the specified proto object and properties.
+	 * @param proto The object which should be the proto of the newly-created object.
 	 * @param propertiesObject Optional. If specified and not undefined, an object whose
-	 * enumerable own properties (that is, those properties defined upon itself and not
-	 * enumerable properties along its prototype chain) specify property descriptors to
-	 * be added to the newly-created object, with the corresponding property names. These
-	 * properties correspond to the second argument of Object.defineProperties().
+ enumerable own properties (that is, those properties defined upon itself and not
+ enumerable properties along its proto chain) specify property descriptors to
+ be added to the newly-created object, with the corresponding property names. These
+ properties correspond to the second argument of Object.defineProperties().
 	 * @return Newly created object.
 	 */
 	public static oObject create(oObject proto, Map propertiesObject) {
@@ -59,8 +59,8 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 		return o;
 	}
 	/**
-	 * Creates a new object with the specified prototype object and properties.
-	 * @param proto The object which should be the prototype of the newly-created object.
+	 * Creates a new object with the specified proto object and properties.
+	 * @param proto The object which should be the proto of the newly-created object.
 	 * @return Newly created object.
 	 */
 	public static oObject create(oObject proto) {
@@ -96,10 +96,10 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	}
 	
 	/**
-	 * Returns an array of a given object's own enumerable property [key, value] pairs,
-	 * in the same order as that provided by a for...in loop (the difference being that
-	 * a for-in loop enumerates properties in the prototype chain as well).
-	 * @param obj The object whose enumerable own property [key, value] pairs are to be returned.
+	 * Returns an array of a given object's own enumerable property [key, map] pairs,
+ in the same order as that provided by a for...in loop (the difference being that
+ a for-in loop enumerates properties in the proto chain as well).
+	 * @param obj The object whose enumerable own property [key, map] pairs are to be returned.
 	 * @return Set of object's own enumerable properties.
 	 */
 	public static Set<Map.Entry<String, Object>> entries(oObject obj) {
@@ -126,7 +126,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	/**
 	 * Returns a property access for an own property (that is, one directly
  present on an object, not present by dint of being along an object's
- prototype chain) of a given object.
+ proto chain) of a given object.
 	 * @param obj The object in which to look for the property.
 	 * @param prop The name of the property whose description is to be retrieved.
 	 * @return Descriptor of specified property.
@@ -141,7 +141,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @return All own properties of object.
 	 */
 	public static Set<String> getOwnPropertyNames(oObject obj) {
-		return obj.value.keySet();
+		return obj.map.keySet();
 	}
 	
 	/**
@@ -154,8 +154,8 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	}
 	
 	/**
-	 * Returns the prototype of the specified object.
-	 * @param obj The object whose prototype is to be returned.
+	 * Returns the proto of the specified object.
+	 * @param obj The object whose proto is to be returned.
 	 * @return Prototype of the specified object.
 	 */
 	public static oObject getPrototypeOf(oObject obj) {
@@ -163,10 +163,10 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	}
 	
 	/**
-	 * Determines whether two values are the same value.
-	 * @param value1 The first value to compare.
-	 * @param value2 The second value to compare.
-	 * @return Whether the two arguments are the same value.
+	 * Determines whether two values are the same map.
+	 * @param value1 The first map to compare.
+	 * @param value2 The second map to compare.
+	 * @return Whether the two arguments are the same map.
 	 */
 	public static boolean is(Object value1, Object value2) {
 		return value1.equals(value2);
@@ -201,8 +201,8 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	
 	/**
 	 * Returns an array of a given object's own enumerable properties, in the same
-	 * order as that provided by a for...in loop (the difference being that a
-	 * for-in loop enumerates properties in the prototype chain as well).
+ order as that provided by a for...in loop (the difference being that a
+ for-in loop enumerates properties in the proto chain as well).
 	 * @param obj The object whose enumerable own properties are to be returned.
 	 * @return Own enumerable key-set of object.
 	 */
@@ -234,10 +234,10 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	}
 	
 	/**
-	 * Sets the prototype of a specified object to another object or null.
-	 * @param obj The object which is to have its prototype set.
-	 * @param prototype The object's new prototype (an object or null).
-	 * @return Object whose prototype was set.
+	 * Sets the proto of a specified object to another object or null.
+	 * @param obj The object which is to have its proto set.
+	 * @param prototype The object's new proto (an object or null).
+	 * @return Object whose proto was set.
 	 */
 	public static oObject setPrototypeOf(oObject obj, oObject prototype) {
 		obj.prototype(prototype);
@@ -246,8 +246,8 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	
 	/**
 	 * Returns an array of a given object's own enumerable property values, in the
-	 * same order as that provided by a for...in loop (the difference being that 
-	 * for-in loop enumerates properties in the prototype chain as well).
+ same order as that provided by a for...in loop (the difference being that 
+ for-in loop enumerates properties in the proto chain as well).
 	 * @param obj The object whose enumerable own property values are to be returned.
 	 * @return Array of values.
 	 */

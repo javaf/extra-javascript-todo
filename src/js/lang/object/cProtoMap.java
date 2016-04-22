@@ -1,37 +1,36 @@
 package js.lang.object;
 import java.util.*;
-import js.lang.coll.*;
 
 
 /**
  * Defines a prototypal and access-controlled map implementation.
  * @param <K> Datatype of the key.
- * @param <V> Datatype of the value.
+ * @param <V> Datatype of the map.
  */
 public class cProtoMap<K, V> implements iProtoMap<K, V>, iMap<K, V> {
 	
 	/* data */
-	/** Defines the prototype of this object. */
-	protected iProtoMap prototype;
+	/** Defines the proto of this object. */
+	protected iProtoMap proto;
 	/** Tells whether this object is extensible. */
 	protected boolean extensible;
 	/** Describes the accessibility of properties. */
 	protected final Map<K, cAccess> access;
 	/** Stores the actual map values. */
-	protected final Map value;
+	protected final Map map;
 	/** Defines enumerable key set for this object. */
 	protected final Set<K> keySet;
 	
 	
 	/* constructor */
 	/**
-	 * Creates a new object value.
-	 * @param v Object value.
+	 * Creates a new object map.
+	 * @param v Object map.
 	 */
 	public cProtoMap(Map v) {
 		access = new HashMap<>();
 		keySet = v.keySet();
-		value = v;
+		map = v;
 	}
 	
 	
@@ -45,8 +44,8 @@ public class cProtoMap<K, V> implements iProtoMap<K, V>, iMap<K, V> {
 		cAccess a = access.get(k);
 		a = a!=null? a : new cAccess();
 		if(a.configurable) a.set(v);
-		if(!value.containsKey(k)) value.put(k, null);
-		if(a.writable && a.value!=null) { value.put(k, a.value); a.value = null; }
+		if(!map.containsKey(k)) map.put(k, null);
+		if(a.writable && a.value!=null) { map.put(k, a.value); a.value = null; }
 		access.put(k, a);
 		if(a.enumerable) keySet.add(k);
 		else keySet.remove(k);
@@ -64,26 +63,26 @@ public class cProtoMap<K, V> implements iProtoMap<K, V>, iMap<K, V> {
 	/* super property */
 		@Override
 	public iProtoMap prototype() {
-		return prototype;
+		return proto;
 	}
 
 	@Override
 	public iProtoMap prototype(iProtoMap prototype) {
-		return this.prototype=prototype;
+		return this.proto=prototype;
 	}
 
 	@Override
 	public V get(Object key) {
 		cAccess d = access.get(key);
 		if(d!=null && !d.isData()) return d.get!=null? (V)d.get.get() : null;
-		return value.containsKey(key)? (V)value.get(key) : (prototype!=null? (V)prototype.get(key) : null);
+		return map.containsKey(key)? (V)map.get(key) : (proto!=null? (V)proto.get(key) : null);
 	}
 
 	@Override
 	public V put(K key, V value) {
 		cAccess desc = access.get(key);
-		if(desc==null) return !this.value.containsKey(key) && prototype!=null && prototype.containsKey((String)key)?	(V)prototype.put((String)key, (V)value) : (V)this.value.put((Object)key, value);
-		if(desc.isData()) { if(desc.writable) return (V)this.value.put(key, value); }
+		if(desc==null) return !this.map.containsKey(key) && proto!=null && proto.containsKey((String)key)?	(V)proto.put((String)key, (V)value) : (V)this.map.put((Object)key, value);
+		if(desc.isData()) { if(desc.writable) return (V)this.map.put(key, value); }
 		else if(desc.set!=null) desc.set.accept(value);
 		return null;
 	}
@@ -123,14 +122,15 @@ public class cProtoMap<K, V> implements iProtoMap<K, V>, iMap<K, V> {
 		boolean hasd = access.containsKey((K)key);
 		if(!containsKey((K)key) || hasd && !access.get((K)key).configurable) return null;
 		if(hasd) access.remove(key);
-		return (V)value.remove(key);
+		return (V)map.remove(key);
 	}
 	
 	@Override
 	public Set<K> keySet() {
-		if(prototype==null) return keySet;
-		Set<K> s = prototype.keySet();
-		s.addAll(keySet);
+		if(proto==null) return keySet;
+		Set<K> s = new HashSet<>(keySet);
+		for(iProtoMap<K, V> m=proto; m!=null; m=m.prototype())
+			s.addAll(m.keySet());
 		return s;
 	}
 }

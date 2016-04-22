@@ -2,7 +2,6 @@ package js.lang.object;
 import java.lang.reflect.*;
 import java.util.*;
 import js.lang.function.*;
-import js.lang.coll.*;
 
 /**
  * Defines a map interface for a object of normal or access-controlled class.
