@@ -7,7 +7,7 @@ import js.lang.function.*;
  * Defines a map interface for a object of normal or access-controlled class.
  * @author wolfram77
  */
-public class cObjMap implements iMap<String, Object> {
+public class cObjMap implements iEnumMap<String, Object> {
 	
 	/* data */
 	/** Object that is reflectively connected to this map. */
@@ -86,7 +86,13 @@ public class cObjMap implements iMap<String, Object> {
 	
 	/* super method */
 	@Override
-	public void clear() {
+	public Set<String> keySetAll() {
+		return map.keySet();
+	}
+	
+	@Override
+	public Set<String> keySet() {
+		return enumerable;
 	}
 	
 	@Override
@@ -95,7 +101,6 @@ public class cObjMap implements iMap<String, Object> {
 	}
 	
 	@Override
-	public Set<String> keySet() {
-		return enumerable;
+	public void clear() {
 	}
 }
