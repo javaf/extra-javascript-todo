@@ -6,8 +6,9 @@ import js.lang.array.*;
 /**
  * Represents a procedure which can be called with variable arguments, and it
  * returns a value or null.
+ * @param <TR> Return type.
  */
-public interface iProc extends iToString {
+public interface iProc<TR> extends iObj {
 
 	/* property */
 	/**
@@ -38,7 +39,7 @@ public interface iProc extends iToString {
 	 * @param args The input arguments to pass to the procedure.
 	 * @return The output value.
 	 */
-	Object call(Object... args);
+	TR call(Object... args);
 	
 	/**
 	 * Returns string representation of the procedure.

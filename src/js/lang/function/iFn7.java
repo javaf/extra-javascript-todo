@@ -12,7 +12,7 @@ import java.lang.invoke.*;
  * @param <TG> Input argument 7 type.
  * @param <TR> Return type.
  */
-public interface iFn7<TA, TB, TC, TD, TE, TF, TG, TR> extends iProc {
+public interface iFn7<TA, TB, TC, TD, TE, TF, TG, TR> extends iProc<TR> {
 	
 	/* static data */
 	/** Signature of this function. */
@@ -43,7 +43,7 @@ public interface iFn7<TA, TB, TC, TD, TE, TF, TG, TR> extends iProc {
 	
 	/* super method */
 	@Override
-	default Object call(Object... a) {
+	default TR call(Object... a) {
 		return apply((TA)a[0], (TB)a[1], (TC)a[2], (TD)a[3], (TE)a[4], (TF)a[5], (TG)a[6]);
 	}
 }

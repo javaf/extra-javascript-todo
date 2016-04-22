@@ -8,7 +8,7 @@ import java.lang.invoke.*;
  * @param <TC> Input argument 3 type.
  * @param <TR> Return type.
  */
-public interface iFn3<TA, TB, TC, TR> extends iProc {
+public interface iFn3<TA, TB, TC, TR> extends iProc<TR> {
 	
 	/* static data */
 	/** Signature of this function. */
@@ -35,7 +35,7 @@ public interface iFn3<TA, TB, TC, TR> extends iProc {
 	
 	/* super method */
 	@Override
-	default Object call(Object... a) {
+	default TR call(Object... a) {
 		return apply((TA)a[0], (TB)a[1], (TC)a[2]);
 	}
 }

@@ -11,7 +11,7 @@ import java.lang.invoke.*;
  * @param <TF> Input argument 6 type.
  * @param <TR> Return type.
  */
-public interface iFn6<TA, TB, TC, TD, TE, TF, TR> extends iProc {
+public interface iFn6<TA, TB, TC, TD, TE, TF, TR> extends iProc<TR> {
 	
 	/* static data */
 	/** Signature of this function. */
@@ -41,7 +41,7 @@ public interface iFn6<TA, TB, TC, TD, TE, TF, TR> extends iProc {
 	
 	/* super method */
 	@Override
-	default Object call(Object... a) {
+	default TR call(Object... a) {
 		return apply((TA)a[0], (TB)a[1], (TC)a[2], (TD)a[3], (TE)a[4], (TF)a[5]);
 	}
 }

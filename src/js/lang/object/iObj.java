@@ -2,8 +2,9 @@ package js.lang.object;
 
 /**
  * Defines a object to string conversion interface, which can implemented by any interface.
+ * @param <T> Datatype of base value of this object.
  */
-public interface iToString {
+public interface iObj<T> {
 	
 	/* method */
 	/**
@@ -12,5 +13,13 @@ public interface iToString {
 	 */
 	default String z_toString() {
 		return toString();
+	}
+	
+	/**
+	 * Returns the base value of this object.
+	 * @return Base value.
+	 */
+	default T valueOf() {
+		return (T)this;
 	}
 }

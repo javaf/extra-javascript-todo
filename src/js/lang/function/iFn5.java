@@ -10,7 +10,7 @@ import java.lang.invoke.*;
  * @param <TE> Input argument 5 type.
  * @param <TR> Return type.
  */
-public interface iFn5<TA, TB, TC, TD, TE, TR> extends iProc {
+public interface iFn5<TA, TB, TC, TD, TE, TR> extends iProc<TR> {
 	
 	/* static data */
 	/** Signature of this function. */
@@ -39,7 +39,7 @@ public interface iFn5<TA, TB, TC, TD, TE, TR> extends iProc {
 	
 	/* super method */
 	@Override
-	default Object call(Object... a) {
+	default TR call(Object... a) {
 		return apply((TA)a[0], (TB)a[1], (TC)a[2], (TD)a[3], (TE)a[4]);
 	}
 }

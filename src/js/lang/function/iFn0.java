@@ -6,7 +6,7 @@ import java.lang.invoke.*;
  * Represents a no input function that can be called.
  * @param <TR> Return type.
  */
-public interface iFn0<TR> extends iProc, Supplier<TR> {
+public interface iFn0<TR> extends iProc<TR>, Supplier<TR> {
 	
 	/* static data */
 	/** Signature of this function. */
@@ -35,7 +35,7 @@ public interface iFn0<TR> extends iProc, Supplier<TR> {
 	}
 	
 	@Override
-	default Object call(Object... a) {
+	default TR call(Object... a) {
 		return apply();
 	}
 }
