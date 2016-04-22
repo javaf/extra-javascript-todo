@@ -28,10 +28,15 @@ public class cMethodProc<TR> implements iProc<TR> {
 	
 	/* constructor */
 	/**
-	 * Create a callable Method object from class, method name, and parameter types.
-	 * @param obj Object bound to function. Can be null if method is static, or
-	 * binding is to be done later using bind().
-	 * @param m Method to be made callable.
+	 * Creates method call procedure for specified method. If the passed method is
+	 * static or it is an instance method and the passed object is not null, then
+	 * a bound procedure is returned which the same generic signature as the original
+	 * method. However, if the passed method is an instance method and the passed
+	 * object is null, then an unbound procedure is returned which takes the object
+	 * to which the field belongs as the 1st parameter and the remaining parameters
+	 * are the same as the original function.
+	 * @param m Reflected method.
+	 * @param obj Object to which the method belongs. Can be null.
 	 */
 	public cMethodProc(Method m, Object obj) {
 		try {
