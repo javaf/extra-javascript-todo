@@ -1,7 +1,7 @@
 package js.lang.object;
 
 /**
- * Defines a object to string conversion interface, which can implemented by any interface.
+ * Defines fundamental object operations, which can implemented by any interface.
  * @param <T> Datatype of base value of this object.
  */
 public interface iObj<T> {

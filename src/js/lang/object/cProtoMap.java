@@ -8,11 +8,11 @@ import js.lang.coll.*;
  * @param <K> Datatype of the key.
  * @param <V> Datatype of the value.
  */
-public class cProtoMap<K, V> implements iJsObject<K, V>, iMap<K, V> {
+public class cProtoMap<K, V> implements iProtoMap<K, V>, iMap<K, V> {
 	
 	/* data */
 	/** Defines the prototype of this object. */
-	protected iJsObject prototype;
+	protected iProtoMap prototype;
 	/** Tells whether this object is extensible. */
 	protected boolean extensible;
 	/** Describes the accessibility of properties. */
@@ -63,12 +63,12 @@ public class cProtoMap<K, V> implements iJsObject<K, V>, iMap<K, V> {
 	
 	/* super property */
 		@Override
-	public iJsObject prototype() {
+	public iProtoMap prototype() {
 		return prototype;
 	}
 
 	@Override
-	public iJsObject prototype(iJsObject prototype) {
+	public iProtoMap prototype(iProtoMap prototype) {
 		return this.prototype=prototype;
 	}
 
