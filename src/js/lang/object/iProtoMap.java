@@ -68,11 +68,4 @@ public interface iProtoMap<K, V> extends Map<K, V>, iColl<K, V> {
 	default Object valueOf() {
 		return this;
 	}
-	
-	
-	/* super method */
-	@Override
-	default Iterator<K> iterator() {
-		return keySet().iterator();
-	}
 }
