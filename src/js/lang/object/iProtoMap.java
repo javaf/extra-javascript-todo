@@ -6,7 +6,7 @@ import java.util.*;
  * @param <K> Key datatype.
  * @param <V> Value datatype.
  */
-public interface iProtoMap<K, V> extends Map<K, V>, iColl<K, V> {
+public interface iProtoMap<K, V> extends iEnumMap<K, V> {
 	
 	/* property */
 	/**
@@ -62,10 +62,17 @@ public interface iProtoMap<K, V> extends Map<K, V>, iColl<K, V> {
 	}
 	
 	/**
-	 * Returns the primitive value of the specified object.
-	 * @return Object.
+	 * Returns a key set containing all own keys of this object, including those
+	 * which are not enumerable. Own keys are those which are part of this object,
+	 * not of its prototype object.
+	 * @return Own key set of all keys.
 	 */
-	default Object valueOf() {
-		return this;
-	}
+	Set<K> ownKeySetAll();
+	
+	/**
+	 * Returns a key set containing only enumerable own keys of this object. Own
+	 * keys are those which are part of this object, not of its prototype object.
+	 * @return Own key set of enumerable keys.
+	 */
+	Set<K> ownKeySet();
 }
