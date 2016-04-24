@@ -17,7 +17,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	public oObject(Entry... nameValuePairs) {
 		super(new HashMap<>());
 		for(Entry e : nameValuePairs)
-			map.put(e.getKey(), e.getValue());
+			put((K)e.getKey(), (V)e.getValue());
 	}
 	/**
 	 * Create an oObject.
@@ -38,7 +38,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 */
 	public static oObject assign(oObject target, oObject... sources) {
 		for(oObject s : sources)
-			for(Object k : s.keySet)
+			for(Object k : s.ownKeySet())
 				target.put(k, s.get(k));
 		return target;
 	}
@@ -104,7 +104,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 */
 	public static Set<Map.Entry<String, Object>> entries(oObject obj) {
 		Set<Map.Entry<String, Object>> s = new HashSet<>();
-		for(Object k : obj.keySet)
+		for(Object k : obj.ownKeySet())
 			s.add(new AbstractMap.SimpleEntry<>(k.toString(), obj.get(k)));
 		return s;
 	}
@@ -141,7 +141,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @return All own properties of object.
 	 */
 	public static Set<String> getOwnPropertyNames(oObject obj) {
-		return obj.map.keySet();
+		return obj.ownKeySetAll();
 	}
 	
 	/**
@@ -207,7 +207,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @return Own enumerable key-set of object.
 	 */
 	public static Set<String> keys(oObject obj) {
-		return obj.keySet;
+		return obj.ownKeySet();
 	}
 	
 	/**
@@ -253,7 +253,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 */
 	public static Collection<Object> values(oObject obj) {
 		Collection<Object> o = new ArrayList<>();
-		for(Object k : obj.keySet)
+		for(Object k : obj.ownKeySet())
 			o.add(obj.get(k));
 		return o;
 	}
