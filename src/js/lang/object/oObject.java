@@ -36,7 +36,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param sources The source object(s).
 	 * @return The target object which was assigned.
 	 */
-	public static oObject assign(oObject target, oObject... sources) {
+	public final static oObject assign(oObject target, oObject... sources) {
 		for(oObject s : sources)
 			for(Object k : s.ownKeySet())
 				target.put(k, s.get(k));
@@ -53,7 +53,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
  properties correspond to the second argument of Object.defineProperties().
 	 * @return Newly created object.
 	 */
-	public static oObject create(oObject proto, Map propertiesObject) {
+	public final static oObject create(oObject proto, Map propertiesObject) {
 		oObject o = new oObject(new HashMap<>(propertiesObject));
 		o.prototype(proto);
 		return o;
@@ -63,7 +63,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param proto The object which should be the proto of the newly-created object.
 	 * @return Newly created object.
 	 */
-	public static oObject create(oObject proto) {
+	public final static oObject create(oObject proto) {
 		return create(proto, null);
 	}
 	
@@ -76,7 +76,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * (see Object.defineProperty() for more details).
 	 * @return Object whose properties were defined.
 	 */
-	public static oObject defineProperties(oObject obj, Map props) {
+	public final static oObject defineProperties(oObject obj, Map props) {
 		for(Object e : props.entrySet())
 			defineProperty(obj, ((Entry)e).getKey(), (Map)((Entry)e).getValue());
 		return null;
@@ -90,7 +90,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param descriptor The descriptor for the property being defined or modified.
 	 * @return Object whose property was defined.
 	 */
-	public static oObject defineProperty(oObject obj, Object prop, Map descriptor) {
+	public final static oObject defineProperty(oObject obj, Object prop, Map descriptor) {
 		obj.access(prop, descriptor);;
 		return obj;
 	}
@@ -102,7 +102,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param obj The object whose enumerable own property [key, map] pairs are to be returned.
 	 * @return Set of object's own enumerable properties.
 	 */
-	public static Set<Map.Entry<String, Object>> entries(oObject obj) {
+	public final static Set<Map.Entry<String, Object>> entries(oObject obj) {
 		Set<Map.Entry<String, Object>> s = new HashSet<>();
 		for(Object k : obj.ownKeySet())
 			s.add(new AbstractMap.SimpleEntry<>(k.toString(), obj.get(k)));
@@ -118,7 +118,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param obj The object to freeze.
 	 * @return Object that was frozen.
 	 */
-	public static oObject freeze(oObject obj) {
+	public final static oObject freeze(oObject obj) {
 		obj.lock(3);
 		return obj;
 	}
@@ -131,7 +131,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param prop The name of the property whose description is to be retrieved.
 	 * @return Descriptor of specified property.
 	 */
-	public static Map getOwnPropertyDescriptor(oObject obj, Object prop) {
+	public final static Map getOwnPropertyDescriptor(oObject obj, Object prop) {
 		return obj.access(prop).get(new HashMap<>());
 	}
 	
@@ -140,7 +140,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param obj The object whose enumerable and non-enumerable own properties are to be returned.
 	 * @return All own properties of object.
 	 */
-	public static Set<String> getOwnPropertyNames(oObject obj) {
+	public final static Set<String> getOwnPropertyNames(oObject obj) {
 		return obj.ownKeySetAll();
 	}
 	
@@ -149,7 +149,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param obj The object whose symbol properties are to be returned.
 	 * @return Set of keys.
 	 */
-	public static Set<String> getOwnPropertySymbols(oObject obj) {
+	public final static Set<String> getOwnPropertySymbols(oObject obj) {
 		return getOwnPropertyNames(obj);
 	}
 	
@@ -158,7 +158,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param obj The object whose proto is to be returned.
 	 * @return Prototype of the specified object.
 	 */
-	public static oObject getPrototypeOf(oObject obj) {
+	public final static oObject getPrototypeOf(oObject obj) {
 		return (oObject)obj.prototype();
 	}
 	
@@ -168,7 +168,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param value2 The second map to compare.
 	 * @return Whether the two arguments are the same map.
 	 */
-	public static boolean is(Object value1, Object value2) {
+	public final static boolean is(Object value1, Object value2) {
 		return value1.equals(value2);
 	}
 	
@@ -177,7 +177,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param obj The object which should be checked.
 	 * @return Whether the object is extensible.
 	 */
-	public static boolean isExtensible(oObject obj) {
+	public final static boolean isExtensible(oObject obj) {
 		return obj.isLocked(1);
 	}
 	
@@ -186,7 +186,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param obj The object which should be checked.
 	 * @return Whether object is frozen.
 	 */
-	public static boolean isFrozen(oObject obj) {
+	public final static boolean isFrozen(oObject obj) {
 		return obj.isLocked(3);
 	}
 	
@@ -195,7 +195,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param obj The object which should be checked.
 	 * @return Whether the object id sealed.
 	 */
-	public static boolean isSealed(oObject obj) {
+	public final static boolean isSealed(oObject obj) {
 		return obj.isLocked(2);
 	}
 	
@@ -206,7 +206,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param obj The object whose enumerable own properties are to be returned.
 	 * @return Own enumerable key-set of object.
 	 */
-	public static Set<String> keys(oObject obj) {
+	public final static Set<String> keys(oObject obj) {
 		return obj.ownKeySet();
 	}
 	
@@ -216,7 +216,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param obj The object which should be made non-extensible.
 	 * @return Object that was made non-extensible.
 	 */
-	public static oObject preventExtensions(oObject obj) {
+	public final static oObject preventExtensions(oObject obj) {
 		obj.lock(1);
 		return obj;
 	}
@@ -228,7 +228,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param obj The object which should be sealed.
 	 * @return Object that was sealed.
 	 */
-	public static oObject seal(oObject obj) {
+	public final static oObject seal(oObject obj) {
 		obj.lock(2);
 		return obj;
 	}
@@ -239,7 +239,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param prototype The object's new proto (an object or null).
 	 * @return Object whose proto was set.
 	 */
-	public static oObject setPrototypeOf(oObject obj, oObject prototype) {
+	public final static oObject setPrototypeOf(oObject obj, oObject prototype) {
 		obj.prototype(prototype);
 		return obj;
 	}
@@ -251,7 +251,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param obj The object whose enumerable own property values are to be returned.
 	 * @return Array of values.
 	 */
-	public static Collection<Object> values(oObject obj) {
+	public final static Collection<Object> values(oObject obj) {
 		Collection<Object> o = new ArrayList<>();
 		for(Object k : obj.ownKeySet())
 			o.add(obj.get(k));
@@ -263,7 +263,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param prop The name of the property to test.
 	 * @return Whether the object has the specified own property.
 	 */
-	public boolean hasOwnProperty(K prop) {
+	public final boolean hasOwnProperty(K prop) {
 		return ownKeySetAll().contains(prop);
 	}
 	
@@ -272,7 +272,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param obj The object whose prototype chain will be searched.
 	 * @return Whether this object is the specified object's prototype.
 	 */
-	public boolean isPrototypeOf(iProtoMap obj) {
+	public final boolean isPrototypeOf(iProtoMap obj) {
 		for(; obj!=null; obj=obj.prototype())
 			if(obj==this) return true;
 		return false;
@@ -283,7 +283,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param prop The name of the property to test.
 	 * @return Whether property is iterable.
 	 */
-	public boolean propertyIsEnumerable(K prop) {
+	public final boolean propertyIsEnumerable(K prop) {
 		return ownKeySet().contains(prop);
 	}
 	
