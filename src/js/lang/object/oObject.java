@@ -257,4 +257,41 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 			o.add(obj.get(k));
 		return o;
 	}
+	
+	/**
+	 * Returns a boolean indicating whether the object has the specified property.
+	 * @param prop The name of the property to test.
+	 * @return Whether the object has the specified own property.
+	 */
+	default boolean hasOwnProperty(K prop) {
+		return this.containsKey(prop);
+	}
+	
+	/**
+	 * Tests for an object in another object's prototype chain.
+	 * @param obj The object whose prototype chain will be searched.
+	 * @return Whether this object is the specified object's prototype.
+	 */
+	default boolean isPrototypeOf(iProtoMap obj) {
+		for(; obj!=null; obj=obj.prototype())
+			if(obj==this) return true;
+		return false;
+	}
+	
+	/**
+	 * Returns a Boolean indicating whether the specified property is enumerable.
+	 * @param prop The name of the property to test.
+	 * @return Whether property is iterable.
+	 */
+	default boolean propertyIsEnumerable(String prop) {
+		return false;
+	}
+	
+	/**
+	 * Returns a locale-specific string representing the object.
+	 * @return Locale-specific string.
+	 */
+	default String toLocaleString() {
+		return toString();
+	}
 }
