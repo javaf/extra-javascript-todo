@@ -13,14 +13,14 @@ public interface iProtoMap<K, V> extends iEnumMap<K, V> {
 	 * Returns the prototype of this object.
 	 * @return This object's prototype.
 	 */
-	iProtoMap prototype();
+	iProtoMap<K, V> prototype();
 	
 	/**
 	 * Sets the prototype of this object.
 	 * @param prototype This object's prototype
 	 * @return This object's prototype.
 	 */
-	iProtoMap prototype(iProtoMap prototype);
+	iProtoMap<K, V> prototype(iProtoMap<K, V> prototype);
 	
 	
 	/* method */
@@ -38,4 +38,24 @@ public interface iProtoMap<K, V> extends iEnumMap<K, V> {
 	 * @return Own key set of enumerable keys.
 	 */
 	Set<K> ownKeySet();
+	
+	
+	/* super method */
+	@Override
+	default Set<K> keySetAll() {
+		if(prototype()==null) return ownKeySetAll();
+		Set<K> s = new HashSet<>(ownKeySetAll());
+		for(iProtoMap<K, V> m=prototype(); m!=null; m=m.prototype())
+			s.addAll(m.ownKeySetAll());
+		return s;
+	}
+	
+	@Override
+	default Set<K> keySet() {
+		if(prototype()==null) return ownKeySet();
+		Set<K> s = new HashSet<>(ownKeySet());
+		for(iProtoMap<K, V> m=prototype(); m!=null; m=m.prototype())
+			s.addAll(m.ownKeySet());
+		return s;
+	}
 }
