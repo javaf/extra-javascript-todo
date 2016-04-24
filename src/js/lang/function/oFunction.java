@@ -159,7 +159,7 @@ public class oFunction<TR> implements iProc<TR> {
 	
 	/* super property */
 	@Override
-	public MethodType type() {
+	public final MethodType type() {
 		return proc.type();
 	}
 	
@@ -170,7 +170,7 @@ public class oFunction<TR> implements iProc<TR> {
 	 * @param obj Object to bind to.
 	 * @return Bound function.
 	 */
-	public oFunction<TR> bind(Object obj) {
+	public final oFunction<TR> bind(Object obj) {
 		if(proc instanceof cGetterProc) return new oFunction(obj, (Field)handle, false);
 		else if(proc instanceof cSetterProc) return new oFunction(obj, (Field)handle, true);
 		else if(proc instanceof cMethodProc) return new oFunction(obj, (Method)handle);
@@ -185,6 +185,11 @@ public class oFunction<TR> implements iProc<TR> {
 	}
 	
 	@Override
+	public final iProc valueOf() {
+		return proc;
+	}
+	
+	@Override
 	public final String z_toString() {
 		return proc.z_toString();
 	}
@@ -192,10 +197,5 @@ public class oFunction<TR> implements iProc<TR> {
 	@Override
 	public final String toString() {
 		return z_toString();
-	}
-	
-	@Override
-	public final Object valueOf() {
-		return proc;
 	}
 }
