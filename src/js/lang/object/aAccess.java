@@ -26,6 +26,7 @@ public @interface aAccess {
 	 */
 	boolean writable() default true;
 	/** Tells the name of the property for this element.
-	 * @return Name of the property this element represents. */
+	 * @return Name of the property this element represents.
+	 */
 	String value() default ".";
 }
