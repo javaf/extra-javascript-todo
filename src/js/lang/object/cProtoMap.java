@@ -24,8 +24,8 @@ public class cProtoMap<K, V> implements iProtoMap<K, V> {
 	
 	/* constructor */
 	/**
-	 * Creates a new object map.
-	 * @param v Object map.
+	 * Creates a new prototypal and access-controlled map using specified map implementation.
+	 * @param v Map to be used as own map.
 	 */
 	public cProtoMap(Map v) {
 		access = new HashMap<>();
