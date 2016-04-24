@@ -45,7 +45,7 @@ public class cProtoMap<K, V> implements iProtoMap<K, V> {
 		a = a!=null? a : new cAccess();
 		if(a.configurable) a.set(v);
 		if(!map.containsKey(k)) map.put(k, null);
-		if(a.writable && a.value!=null) { map.put(k, a.value); a.value = null; }
+		if(a.writable && v.containsKey("value")) { map.put(k, a.value); a.value = null; }
 		access.put(k, a);
 		if(a.enumerable) keySet.add(k);
 		else keySet.remove(k);
@@ -62,13 +62,13 @@ public class cProtoMap<K, V> implements iProtoMap<K, V> {
 	
 	/* super property */
 		@Override
-	public iProtoMap prototype() {
+	public iProtoMap<K, V> prototype() {
 		return proto;
 	}
 
 	@Override
-	public iProtoMap prototype(iProtoMap prototype) {
-		return this.proto=prototype;
+	public iProtoMap<K, V> prototype(iProtoMap p) {
+		return proto=p;
 	}
 
 	@Override
