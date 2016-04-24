@@ -12,7 +12,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	/**
 	 * Create an oObject.
 	 * @param nameValuePairs Pairs of names (strings) and values (any map) where
- the name is separated from the map by a colon.
+	 * the name is separated from the map by a colon.
 	 */
 	public oObject(Entry... nameValuePairs) {
 		super(new HashMap<>());
@@ -47,10 +47,10 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * Creates a new object with the specified proto object and properties.
 	 * @param proto The object which should be the proto of the newly-created object.
 	 * @param propertiesObject Optional. If specified and not undefined, an object whose
- enumerable own properties (that is, those properties defined upon itself and not
- enumerable properties along its proto chain) specify property descriptors to
- be added to the newly-created object, with the corresponding property names. These
- properties correspond to the second argument of Object.defineProperties().
+	 * enumerable own properties (that is, those properties defined upon itself and not
+	 * enumerable properties along its proto chain) specify property descriptors to
+	 * be added to the newly-created object, with the corresponding property names. These
+	 * properties correspond to the second argument of Object.defineProperties().
 	 * @return Newly created object.
 	 */
 	public final static oObject create(oObject proto, Map propertiesObject) {
@@ -97,8 +97,8 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	
 	/**
 	 * Returns an array of a given object's own enumerable property [key, map] pairs,
- in the same order as that provided by a for...in loop (the difference being that
- a for-in loop enumerates properties in the proto chain as well).
+	 * in the same order as that provided by a for...in loop (the difference being that
+	 * a for-in loop enumerates properties in the proto chain as well).
 	 * @param obj The object whose enumerable own property [key, map] pairs are to be returned.
 	 * @return Set of object's own enumerable properties.
 	 */
@@ -125,8 +125,8 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	
 	/**
 	 * Returns a property access for an own property (that is, one directly
- present on an object, not present by dint of being along an object's
- proto chain) of a given object.
+	 * present on an object, not present by dint of being along an object's
+	 * proto chain) of a given object.
 	 * @param obj The object in which to look for the property.
 	 * @param prop The name of the property whose description is to be retrieved.
 	 * @return Descriptor of specified property.
@@ -201,8 +201,8 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	
 	/**
 	 * Returns an array of a given object's own enumerable properties, in the same
- order as that provided by a for...in loop (the difference being that a
- for-in loop enumerates properties in the proto chain as well).
+	 * order as that provided by a for...in loop (the difference being that a
+	 * for-in loop enumerates properties in the proto chain as well).
 	 * @param obj The object whose enumerable own properties are to be returned.
 	 * @return Own enumerable key-set of object.
 	 */
@@ -246,8 +246,8 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	
 	/**
 	 * Returns an array of a given object's own enumerable property values, in the
- same order as that provided by a for...in loop (the difference being that 
- for-in loop enumerates properties in the proto chain as well).
+	 * same order as that provided by a for...in loop (the difference being that 
+	 * for-in loop enumerates properties in the proto chain as well).
 	 * @param obj The object whose enumerable own property values are to be returned.
 	 * @return Array of values.
 	 */
