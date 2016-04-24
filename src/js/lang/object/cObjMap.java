@@ -35,13 +35,13 @@ public class cObjMap implements iEnumMap<String, Object> {
 	
 	/* super property */
 	@Override
-	public Object get(Object k) {
+	public final Object get(Object k) {
 		iProc[] o = map.get(k);
 		return o==null && o[0]==null? null : o[0].call();
 	}
 	
 	@Override
-	public Object put(String k, Object v) {
+	public final Object put(String k, Object v) {
 		iProc[] o = map.get(k);
 		return o==null && o[0]==null? null : o[1].call(v);
 	}
@@ -86,21 +86,21 @@ public class cObjMap implements iEnumMap<String, Object> {
 	
 	/* super method */
 	@Override
-	public Set<String> keySetAll() {
+	public final Set<String> keySetAll() {
 		return map.keySet();
 	}
 	
 	@Override
-	public Set<String> keySet() {
+	public final Set<String> keySet() {
 		return enumerable;
 	}
 	
 	@Override
-	public Object remove(Object v) {
+	public final Object remove(Object v) {
 		return null;
 	}
 	
 	@Override
-	public void clear() {
+	public final void clear() {
 	}
 }
