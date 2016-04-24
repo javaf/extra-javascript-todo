@@ -11,15 +11,15 @@ public class cProtoMap<K, V> implements iProtoMap<K, V> {
 	
 	/* data */
 	/** Defines the proto of this object. */
-	protected iProtoMap proto;
+	private iProtoMap proto;
 	/** Tells whether this object is extensible. */
-	protected boolean extensible;
+	private boolean extensible;
 	/** Describes the accessibility of properties. */
-	protected final Map<K, cAccess> access;
+	private final Map<K, cAccess> access;
 	/** Stores the actual map values. */
-	protected final Map map;
+	private final Map map;
 	/** Defines enumerable key set for this object. */
-	protected final Set<K> keySet;
+	private final Set<K> keySet;
 	
 	
 	/* constructor */
