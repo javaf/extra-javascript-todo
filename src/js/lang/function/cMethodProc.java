@@ -56,7 +56,7 @@ public class cMethodProc<TR> implements iProc<TR> {
 	
 	/* super property */
 	@Override
-	public MethodType type() {
+	public final MethodType type() {
 		return proc.type();
 	}
 	
@@ -68,6 +68,11 @@ public class cMethodProc<TR> implements iProc<TR> {
 	}
 	
 	@Override
+	public final iProc valueOf() {
+		return proc;
+	}
+	
+	@Override
 	public final String z_toString() {
 		return proc.z_toString();
 	}
@@ -75,10 +80,5 @@ public class cMethodProc<TR> implements iProc<TR> {
 	@Override
 	public final String toString() {
 		return z_toString();
-	}
-	
-	@Override
-	public final iProc valueOf() {
-		return proc;
 	}
 }
