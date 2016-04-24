@@ -58,7 +58,7 @@ public class cStrMethodProc<TR> implements iProc<TR> {
 	
 	/* super property */
 	@Override
-	public MethodType type() {
+	public final MethodType type() {
 		return proc.type();
 	}
 	
@@ -70,7 +70,7 @@ public class cStrMethodProc<TR> implements iProc<TR> {
 	}
 	
 	@Override
-	public final Object valueOf() {
+	public final iProc valueOf() {
 		return proc;
 	}
 	
