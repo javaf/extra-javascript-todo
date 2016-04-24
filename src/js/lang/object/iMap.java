@@ -4,8 +4,8 @@ import java.util.*;
 
 /**
  * Represents an easily implementable map interface.
- * @param <K> Datatype of the key.
- * @param <V> Datatype of the value.
+ * @param <K> Datatype of key.
+ * @param <V> Datatype of value.
  */
 public interface iMap<K, V> extends Map<K, V>, Iterable<K> {
 	
