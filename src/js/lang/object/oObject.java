@@ -103,10 +103,10 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @return Set of object's own enumerable properties.
 	 */
 	public static Set<Map.Entry<String, Object>> entries(oObject obj) {
-		Set<Map.Entry<String, Object>> o = new HashSet<>();
+		Set<Map.Entry<String, Object>> s = new HashSet<>();
 		for(Object k : obj.keySet)
-			o.add(new AbstractMap.SimpleEntry<>(k.toString(), obj.get(k)));
-		return o;
+			s.add(new AbstractMap.SimpleEntry<>(k.toString(), obj.get(k)));
+		return s;
 	}
 	
 	/**
@@ -263,8 +263,8 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param prop The name of the property to test.
 	 * @return Whether the object has the specified own property.
 	 */
-	default boolean hasOwnProperty(K prop) {
-		return this.containsKey(prop);
+	public boolean hasOwnProperty(K prop) {
+		return ownKeySetAll().contains(prop);
 	}
 	
 	/**
@@ -272,7 +272,7 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param obj The object whose prototype chain will be searched.
 	 * @return Whether this object is the specified object's prototype.
 	 */
-	default boolean isPrototypeOf(iProtoMap obj) {
+	public boolean isPrototypeOf(iProtoMap obj) {
 		for(; obj!=null; obj=obj.prototype())
 			if(obj==this) return true;
 		return false;
@@ -283,15 +283,15 @@ public class oObject<K, V> extends cProtoMap<K, V> {
 	 * @param prop The name of the property to test.
 	 * @return Whether property is iterable.
 	 */
-	default boolean propertyIsEnumerable(String prop) {
-		return false;
+	public boolean propertyIsEnumerable(K prop) {
+		return ownKeySet().contains(prop);
 	}
 	
 	/**
 	 * Returns a locale-specific string representing the object.
 	 * @return Locale-specific string.
 	 */
-	default String toLocaleString() {
+	public String toLocaleString() {
 		return toString();
 	}
 }
