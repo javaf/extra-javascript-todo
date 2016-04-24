@@ -10,7 +10,7 @@ public class cGetterProc<TR> implements iProc<TR> {
 	
 	/* data */
 	/** Defines the getter procedure for the specified field. */
-	private iProc proc;
+	private final iProc proc;
 	
 	
 	/* constructor */
@@ -30,30 +30,37 @@ public class cGetterProc<TR> implements iProc<TR> {
 			MethodHandle mh = MethodHandles.lookup().unreflectGetter(f);
 			if(stc) proc = (iFn0)()->{ try { return mh.invoke(); } catch(Throwable e) { throw new RuntimeException(e); } };
 			else if(obj==null) proc = (iFn1)(o)->{ try { return mh.invoke(o); } catch(Throwable e) { throw new RuntimeException(e); } };
-			proc = (iFn0)()->{ try { return mh.invoke(obj); } catch(Throwable e) { throw new RuntimeException(e); } };
+			else proc = (iFn0)()->{ try { return mh.invoke(obj); } catch(Throwable e) { throw new RuntimeException(e); } };
 		}
 		catch(IllegalAccessException e) { throw new RuntimeException(e); }
 	}
 	
 	
+	/* super property */
+	@Override
+	public final MethodType type() {
+		return proc.type();
+	}
+	
+	
 	/* super method */
 	@Override
-	public TR call(Object... a) {
+	public final TR call(Object... a) {
 		return (TR)proc.call(a);
 	}
 	
 	@Override
-	public iProc valueOf() {
+	public final iProc valueOf() {
 		return proc;
 	}
 	
 	@Override
-	public String z_toString() {
+	public final String z_toString() {
 		return proc.z_toString();
 	}
 	
 	@Override
-	public String toString() {
+	public final String toString() {
 		return z_toString();
 	}
 }
