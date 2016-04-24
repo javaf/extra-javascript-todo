@@ -19,6 +19,10 @@ public class cObjMap implements iEnumMap<String, Object> {
 	
 	
 	/* constructor */
+	/**
+	 * Creates a map interface for specified normal or access-controlled class object.
+	 * @param v Object whose map interface is to be created.
+	 */
 	public cObjMap(Object v) {
 		map = new HashMap<>();
 		enumerable = new HashSet<>();
