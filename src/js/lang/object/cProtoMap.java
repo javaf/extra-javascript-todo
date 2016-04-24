@@ -7,7 +7,7 @@ import java.util.*;
  * @param <K> Datatype of the key.
  * @param <V> Datatype of the map.
  */
-public class cProtoMap<K, V> implements iProtoMap<K, V>, iMap<K, V> {
+public class cProtoMap<K, V> implements iProtoMap<K, V> {
 	
 	/* data */
 	/** Defines the proto of this object. */
@@ -126,11 +126,12 @@ public class cProtoMap<K, V> implements iProtoMap<K, V>, iMap<K, V> {
 	}
 	
 	@Override
-	public Set<K> keySet() {
-		if(proto==null) return keySet;
-		Set<K> s = new HashSet<>(keySet);
-		for(iProtoMap<K, V> m=proto; m!=null; m=m.prototype())
-			s.addAll(m.keySet());
-		return s;
+	public Set<K> ownKeySetAll() {
+		return map.keySet();
+	}
+	
+	@Override
+	public Set<K> ownKeySet() {
+		return keySet;
 	}
 }
