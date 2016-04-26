@@ -1,11 +1,11 @@
 package js.lang.array;
-import java.util.*;
+import js.lang.object.*;
 
 /**
  *
  * @author wolfram77
  */
-public class cByteArray {
+public class cByteArray implements iMap<Integer, Byte> {
 	
 	/* data */
 	private final byte[] array;
@@ -16,5 +16,4 @@ public class cByteArray {
 	public cByteArray() {
 		this.array = null;
 	}
-	
 }
