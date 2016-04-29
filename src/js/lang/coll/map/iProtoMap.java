@@ -1,4 +1,4 @@
-package js.lang.object;
+package js.lang.coll.map;
 import js.lang.coll.map.iEnumMap;
 import java.util.*;
 
