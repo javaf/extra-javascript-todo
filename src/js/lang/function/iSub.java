@@ -6,7 +6,7 @@ package js.lang.function;
 public interface iSub extends iProc {
 	
 	/* static data */
-	/** Name of the method. */
+	/** Name of the procedure. */
 	static String NAME = "accept";
 	/** Array defining all iSub interfaces in order of input parameters */
 	static Class<?>[] CLASS = new Class<?>[] {
