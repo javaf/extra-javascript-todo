@@ -1,8 +1,9 @@
-package js.lang.object;
+package js.lang.coll.map;
 import js.lang.coll.map.iEnumMap;
 import java.lang.reflect.*;
 import java.util.*;
 import js.lang.function.*;
+import js.lang.object.aAccess;
 
 /**
  * Defines a map interface for a object of normal or access-controlled class.

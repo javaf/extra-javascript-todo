@@ -1,4 +1,5 @@
 package js.lang.object;
+import js.lang.coll.map.cObjMap;
 import js.lang.coll.map.iProtoMap;
 import java.util.*;
 

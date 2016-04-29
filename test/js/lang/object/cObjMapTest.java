@@ -1,4 +1,5 @@
 package js.lang.object;
+import js.lang.coll.map.cObjMap;
 import static org.junit.Assert.*;
 import org.junit.*;
 import java.util.*;
