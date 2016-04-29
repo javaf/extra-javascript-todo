@@ -4,9 +4,9 @@ import org.junit.*;
 import java.util.*;
 
 /**
- * Test iProc.
+ * Test iFn*.
  */
-public class iFunctionTest {
+public class iFnTest {
 	
 	/* data */
 	public Object ans;
@@ -21,15 +21,15 @@ public class iFunctionTest {
 	
 	
 	/* constructor */
-	public iFunctionTest() {
+	public iFnTest() {
 	}
 	
 	
 	/* set up and clear */
 	@BeforeClass
 	public static void setUpClass() {
-		System.out.println("Test: iFunction");
-		System.out.println("===============");
+		System.out.println("Test: iFn*");
+		System.out.println("==========");
 		System.out.println();
 	}
 	
@@ -166,14 +166,14 @@ public class iFunctionTest {
 	
 	public void flength() {
 		System.out.println("## length");
-		if(f0MathPi!=null) assertEquals(f0MathPi.length(), 0);
-		if(f1StrRev!=null) assertEquals(f1StrRev.length(), 1);
-		if(f2StrCat!=null) assertEquals(f2StrCat.length(), 2);
-		if(f3MathMax!=null) assertEquals(f3MathMax.length(), 3);
-		if(f4MathMin!=null) assertEquals(f4MathMin.length(), 4);
-		if(f5ListAdd!=null) assertEquals(f5ListAdd.length(), 5);
-		if(f6MapRemove!=null) assertEquals(f6MapRemove.length(), 6);
-		if(f7NumSort!=null) assertEquals(f7NumSort.length(), 7);
+		if(f0MathPi!=null) assertEquals(f0MathPi.type().parameterCount(), 0);
+		if(f1StrRev!=null) assertEquals(f1StrRev.type().parameterCount(), 1);
+		if(f2StrCat!=null) assertEquals(f2StrCat.type().parameterCount(), 2);
+		if(f3MathMax!=null) assertEquals(f3MathMax.type().parameterCount(), 3);
+		if(f4MathMin!=null) assertEquals(f4MathMin.type().parameterCount(), 4);
+		if(f5ListAdd!=null) assertEquals(f5ListAdd.type().parameterCount(), 5);
+		if(f6MapRemove!=null) assertEquals(f6MapRemove.type().parameterCount(), 6);
+		if(f7NumSort!=null) assertEquals(f7NumSort.type().parameterCount(), 7);
 	}
 	
 	
