@@ -51,8 +51,8 @@ public class cAccessTest {
 			boolean configurable = (i&1)==1;
 			boolean enumerable = (i&2)==2;
 			boolean writable = (i&4)==4;
-			Supplier get = new oFunction(() -> 0);
-			Consumer set = new oFunction((a) -> { ans = a; });
+			Supplier get = (iFn0)()->0;
+			Consumer set = (iSub1)(a)->{ ans = a; };
 			Object value = i<3? null : i;
 			acc = new cAccess(configurable, enumerable, writable, get, set, value);
 			System.out.println(acc.get(new HashMap()));
@@ -75,8 +75,8 @@ public class cAccessTest {
 			boolean configurable = (i&1)==1;
 			boolean enumerable = (i&2)==2;
 			boolean writable = (i&4)==4;
-			Supplier get = new oFunction(() -> 0);
-			Consumer set = new oFunction((a) -> { ans = a; });
+			Supplier get = (iFn0)()->0;
+			Consumer set = (iSub1)(a)->{ ans = a; };
 			Object value = i<3? null : i;
 			acc = new cAccess(configurable, enumerable, writable, get, set, value);
 			Map mo = acc.get(new HashMap());
@@ -101,8 +101,8 @@ public class cAccessTest {
 			mi.put("configurable", (i&1)==1);
 			mi.put("enumerable", (i&2)==2);
 			mi.put("writable", (i&4)==4);
-			mi.put("get", new oFunction(() -> 0));
-			mi.put("set", new oFunction((a) -> { ans = a; }));
+			mi.put("get", (iFn0)()->0);
+			mi.put("set", (iSub1)(a)->{ ans = a; });
 			mi.put("value", i<3? null : i);
 			acc = new cAccess();
 			acc.set(mi);
@@ -124,8 +124,8 @@ public class cAccessTest {
 	@Test
 	public void fisData() {
 		System.out.println("# Is Data");
-		Supplier get = new oFunction(() -> 0);
-		Consumer set = new oFunction((a) -> { ans = a; });
+		Supplier get = (iFn0)()->0;
+		Consumer set = (iSub1)(a)->{ ans = a; };
 		for(int i=0; i<8; i++) {
 			Map mi = new HashMap();
 			mi.put("get", (i&1)==1? get : null);
