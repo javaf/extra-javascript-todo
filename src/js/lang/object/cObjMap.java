@@ -1,4 +1,5 @@
 package js.lang.object;
+import js.lang.coll.map.iEnumMap;
 import java.lang.reflect.*;
 import java.util.*;
 import js.lang.function.*;
