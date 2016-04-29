@@ -1,4 +1,4 @@
-package js.lang.array;
+package js.lang.coll.list;
 import js.lang.coll.map.iMap;
 import js.lang.object.*;
 
