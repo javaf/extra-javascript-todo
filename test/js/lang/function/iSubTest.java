@@ -4,7 +4,7 @@ import org.junit.*;
 import java.util.*;
 
 /**
- * Test iProc.
+ * Test iSub*.
  */
 public class iSubTest {
 	
