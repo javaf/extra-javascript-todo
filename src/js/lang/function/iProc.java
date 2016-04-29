@@ -10,16 +10,6 @@ import js.lang.array.*;
  * @param <TR> Return type.
  */
 public interface iProc<TR> extends iObj {
-
-	/* property */
-	/**
-	 * Specifies the method type of the functional method.
-	 * @return Method type.
-	 */
-	default MethodType type() {
-		return null;
-	}
-	
 	
 	/* static method */
 	/**
@@ -56,7 +46,17 @@ public interface iProc<TR> extends iObj {
 	static MethodType type(boolean ret, int params) {
 		return MethodType.methodType(ret? Object.class : void.class, cArray.fill(new Class<?>[params], Object.class));
 	}
+
 	
+	/* property */
+	/**
+	 * Specifies the method type of the functional method.
+	 * @return Method type.
+	 */
+	default MethodType type() {
+		return null;
+	}
+
 	
 	/* method */
 	/**
