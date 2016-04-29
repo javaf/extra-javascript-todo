@@ -1,4 +1,4 @@
-package js.lang.object;
+package js.lang.coll.map;
 import java.util.function.*;
 import java.util.*;
 

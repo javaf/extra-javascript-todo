@@ -1,4 +1,5 @@
 package js.lang.object;
+import js.lang.coll.map.iMap;
 import java.util.*;
 
 /**
