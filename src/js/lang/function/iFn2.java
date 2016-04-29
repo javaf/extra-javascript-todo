@@ -8,7 +8,7 @@ import java.lang.invoke.*;
  * @param <TB> Input argument 2 type.
  * @param <TR> Return type.
  */
-public interface iFn2<TA, TB, TR> extends iProc<TR>, BiFunction<TA, TB, TR> {
+public interface iFn2<TA, TB, TR> extends iFn<TR>, BiFunction<TA, TB, TR> {
 	
 	/* static data */
 	/** Signature of this function. */

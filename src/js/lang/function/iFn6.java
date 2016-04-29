@@ -11,7 +11,7 @@ import java.lang.invoke.*;
  * @param <TF> Input argument 6 type.
  * @param <TR> Return type.
  */
-public interface iFn6<TA, TB, TC, TD, TE, TF, TR> extends iProc<TR> {
+public interface iFn6<TA, TB, TC, TD, TE, TF, TR> extends iFn<TR> {
 	
 	/* static data */
 	/** Signature of this function. */

@@ -12,7 +12,7 @@ import java.lang.invoke.*;
  * @param <TG> Input argument 7 type.
  * @param <TR> Return type.
  */
-public interface iFn7<TA, TB, TC, TD, TE, TF, TG, TR> extends iProc<TR> {
+public interface iFn7<TA, TB, TC, TD, TE, TF, TG, TR> extends iFn<TR> {
 	
 	/* static data */
 	/** Signature of this function. */

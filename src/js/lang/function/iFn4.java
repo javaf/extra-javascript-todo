@@ -9,7 +9,7 @@ import java.lang.invoke.*;
  * @param <TD> Input argument 4 type.
  * @param <TR> Return type.
  */
-public interface iFn4<TA, TB, TC, TD, TR> extends iProc<TR> {
+public interface iFn4<TA, TB, TC, TD, TR> extends iFn<TR> {
 	
 	/* static data */
 	/** Signature of this function. */

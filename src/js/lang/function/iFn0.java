@@ -6,7 +6,7 @@ import java.lang.invoke.*;
  * Represents a no input function that can be called.
  * @param <TR> Return type.
  */
-public interface iFn0<TR> extends iProc<TR>, Supplier<TR> {
+public interface iFn0<TR> extends iFn<TR>, Supplier<TR> {
 	
 	/* static data */
 	/** Signature of this function. */

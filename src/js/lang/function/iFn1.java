@@ -7,7 +7,7 @@ import java.lang.invoke.*;
  * @param <TA> Input argument 1 type.
  * @param <TR> Return type.
  */
-public interface iFn1<TA, TR> extends iProc<TR>, Function<TA, TR> {
+public interface iFn1<TA, TR> extends iFn<TR>, Function<TA, TR> {
 	
 	/* static data */
 	/** Signature of this function. */
