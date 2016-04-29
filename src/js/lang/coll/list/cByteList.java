@@ -1,4 +1,4 @@
-package js.lang.array;
+package js.lang.coll.list;
 // import js.lang.object.*;
 
 /**
