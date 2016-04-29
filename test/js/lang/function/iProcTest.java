@@ -1,26 +1,27 @@
 package js.lang.function;
+import java.lang.invoke.*;
 import static org.junit.Assert.*;
 import org.junit.*;
 
 /**
  * Test iProc.
  */
-public class iMethodTest implements iProc {
+public class iProcTest implements iProc {
 	
 	/* data */
 	public iProc strCat;
 	
 	
 	/* constructor */
-	public iMethodTest() {
+	public iProcTest() {
 	}
 	
 	
 	/* set up and clear */
 	@BeforeClass
 	public static void setUpClass() {
-		System.out.println("Test: iMethod");
-		System.out.println("=============");
+		System.out.println("Test: iProc");
+		System.out.println("===========");
 		System.out.println();
 	}
 	
@@ -46,9 +47,8 @@ public class iMethodTest implements iProc {
 		System.out.println("# Ref Method");
 		strCat = this::strCatVararg;
 		assertEquals(strCat.call("Mum", "my"), "Mummy");
-		assertEquals(strCat.name(), "");
-		assertEquals(strCat.length(), 0);
-		assertEquals(strCat.z_toString(), "? (...) { [native code] }");
+		assertEquals(strCat.type(), null);
+		assertEquals(strCat.z_toString(), "? (Object... args) { [native code] }");
 		System.out.println();
 	}
 	
@@ -57,9 +57,8 @@ public class iMethodTest implements iProc {
 		System.out.println("# Lambda Method");
 		strCat = (Object... a) -> strCatDirect((String)a[0], (String)a[1]);
 		assertEquals(strCat.call("Mum", "my"), "Mummy");
-		assertEquals(strCat.name(), "");
-		assertEquals(strCat.length(), 0);
-		assertEquals(strCat.z_toString(), "? (...) { [native code] }");
+		assertEquals(strCat.type(), null);
+		assertEquals(strCat.z_toString(), "? (Object... args) { [native code] }");
 		System.out.println();
 	}
 	
@@ -68,8 +67,7 @@ public class iMethodTest implements iProc {
 		System.out.println("# Class Method");
 		strCat = this;
 		assertEquals(strCat.call("Mum", "my"), "Mummy");
-		assertEquals(strCat.name(), "strCat");
-		assertEquals(strCat.length(), 2);
+		assertEquals(strCat.type().parameterCount(), 2);
 		assertEquals(strCat.toString(), "String (String a, String b) { ... }");
 		System.out.println();
 	}
@@ -79,13 +77,8 @@ public class iMethodTest implements iProc {
 		System.out.println("# Impl Method");
 		strCat = new iProc() {
 			@Override
-			public int length() {
-				return 2;
-			}
-			
-			@Override
-			public String name() {
-				return "strCat";
+			public MethodType type() {
+				return iProc.type(true, 2);
 			}
 			
 			@Override
@@ -104,8 +97,7 @@ public class iMethodTest implements iProc {
 			}
 		};
 		assertEquals(strCat.call("Mum", "my"), "Mummy");
-		assertEquals(strCat.name(), "strCat");
-		assertEquals(strCat.length(), 2);
+		assertEquals(strCat.type().parameterCount(), 2);
 		assertEquals(strCat.toString(), "String (String a, String b) { ... }");
 		System.out.println();
 	}
@@ -129,15 +121,9 @@ public class iMethodTest implements iProc {
 	}
 	
 	@Override
-	public int length() {
-		System.out.print("length.");
-		return 2;
-	}
-	
-	@Override
-	public String name() {
-		System.out.print("name.");
-		return "strCat";
+	public MethodType type() {
+		System.out.print("type.");
+		return iProc.type(true, 2);
 	}
 	
 	@Override
