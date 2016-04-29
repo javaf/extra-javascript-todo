@@ -5,7 +5,7 @@ package js.lang.array;
  *
  * @author wolfram77
  */
-public class cByteArray {
+public class cByteList {
 	
 	/* data */
 	private final byte[] array;
@@ -13,7 +13,7 @@ public class cByteArray {
 	
 	/* constructor */
 
-	public cByteArray() {
+	public cByteList() {
 		this.array = null;
 	}
 }
