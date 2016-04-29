@@ -6,7 +6,7 @@ import java.util.*;
 /**
  * Test iProc.
  */
-public class iConsumerTest {
+public class iSubTest {
 	
 	/* data */
 	public Object ans;
@@ -21,15 +21,15 @@ public class iConsumerTest {
 	
 	
 	/* constructor */
-	public iConsumerTest() {
+	public iSubTest() {
 	}
 	
 	
 	/* set up and clear */
 	@BeforeClass
 	public static void setUpClass() {
-		System.out.println("Test: iConsumer");
-		System.out.println("===============");
+		System.out.println("Test: iSub*");
+		System.out.println("===========");
 		System.out.println();
 	}
 	
@@ -166,14 +166,14 @@ public class iConsumerTest {
 	
 	public void flength() {
 		System.out.println("## length");
-		if(c0MathPi!=null) assertEquals(c0MathPi.length(), 0);
-		if(c1StrRev!=null) assertEquals(c1StrRev.length(), 1);
-		if(c2StrCat!=null) assertEquals(c2StrCat.length(), 2);
-		if(c3MathMax!=null) assertEquals(c3MathMax.length(), 3);
-		if(c4MathMin!=null) assertEquals(c4MathMin.length(), 4);
-		if(c5ListAdd!=null) assertEquals(c5ListAdd.length(), 5);
-		if(c6MapRemove!=null) assertEquals(c6MapRemove.length(), 6);
-		if(c7NumSort!=null) assertEquals(c7NumSort.length(), 7);
+		if(c0MathPi!=null) assertEquals(c0MathPi.type().parameterCount(), 0);
+		if(c1StrRev!=null) assertEquals(c1StrRev.type().parameterCount(), 1);
+		if(c2StrCat!=null) assertEquals(c2StrCat.type().parameterCount(), 2);
+		if(c3MathMax!=null) assertEquals(c3MathMax.type().parameterCount(), 3);
+		if(c4MathMin!=null) assertEquals(c4MathMin.type().parameterCount(), 4);
+		if(c5ListAdd!=null) assertEquals(c5ListAdd.type().parameterCount(), 5);
+		if(c6MapRemove!=null) assertEquals(c6MapRemove.type().parameterCount(), 6);
+		if(c7NumSort!=null) assertEquals(c7NumSort.type().parameterCount(), 7);
 	}
 	
 	
