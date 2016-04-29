@@ -4,7 +4,7 @@ import java.lang.invoke.*;
 /**
  * Represents a no input subroutine that can be called.
  */
-public interface iSub0 extends iProc {
+public interface iSub0 extends iSub {
 	
 	/* static data */
 	/** Signature of this interface. */

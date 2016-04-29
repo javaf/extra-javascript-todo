@@ -9,7 +9,7 @@ import java.lang.invoke.*;
  * @param <TD> Input argument 4 type.
  * @param <TE> Input argument 5 type.
  */
-public interface iSub5<TA, TB, TC, TD, TE> extends iProc {
+public interface iSub5<TA, TB, TC, TD, TE> extends iSub {
 	
 	/* static data */
 	/** Signature of this interface. */

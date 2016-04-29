@@ -7,7 +7,7 @@ import java.lang.invoke.*;
  * @param <TA> Input argument 1 type.
  * @param <TB> Input argument 2 type.
  */
-public interface iSub2<TA, TB> extends iProc, BiConsumer<TA, TB> {
+public interface iSub2<TA, TB> extends iSub, BiConsumer<TA, TB> {
 	
 	/* static data */
 	/** Signature of this interface. */

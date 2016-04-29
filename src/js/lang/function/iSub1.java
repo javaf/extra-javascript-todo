@@ -6,7 +6,7 @@ import java.lang.invoke.*;
  * Represents a 1 input subroutine that can be called.
  * @param <TA> Input argument 1 type.
  */
-public interface iSub1<TA> extends iProc, Consumer<TA> {
+public interface iSub1<TA> extends iSub, Consumer<TA> {
 	
 	/* static data */
 	/** Signature of this interface. */
